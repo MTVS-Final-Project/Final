@@ -7,7 +7,7 @@ public class AvatarCustomization : MonoBehaviour
     public SpriteRenderer head;
     public Image spuareHeadDisplay;
     public Color[] colors;
-    public int WhatColor;
+    public int WhatColor = 1;
 
     void Update()
     {

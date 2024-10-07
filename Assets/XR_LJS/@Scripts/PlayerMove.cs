@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    public float speed = 5f;
 
     void Start()
     {
@@ -11,5 +12,6 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {
         
+
     }
 }
