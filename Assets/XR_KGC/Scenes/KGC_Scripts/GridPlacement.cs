@@ -17,6 +17,14 @@ public class GridPlacement : MonoBehaviour
     {
         mainCamera = Camera.main;
         DrawGrid();
+        if (mainCamera != null)
+        {
+            print("카메라 있음");
+        }
+        else
+        {
+            print("없음");
+        }
     }
 
     private void Update()
