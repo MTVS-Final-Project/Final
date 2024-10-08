@@ -624,13 +624,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 1155875337}
-  body: {fileID: 0}
+  body: {fileID: 169940877}
   spuareHeadDisplay: {fileID: 1640080943}
   colors:
-  - {r: 1, g: 0.2784314, b: 0.5686275, a: 1}
-  - {r: 0.91372555, g: 0.9607844, b: 0.27058825, a: 1}
+  - {r: 0.9960785, g: 0.9607844, b: 0.9568628, a: 1}
+  - {r: 0.9960785, g: 0.94117653, b: 0.93725497, a: 1}
   - {r: 0.9490197, g: 0.7490196, b: 0.7490196, a: 1}
-  - {r: 0, g: 1, b: 0.909804, a: 1}
+  - {r: 0.9960785, g: 0.86274517, b: 0.85098046, a: 1}
   WhatColor: 0
 --- !u!1 &399403819
 GameObject:
@@ -838,20 +838,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 778ceafcba1362840817bfd84e462685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part: {fileID: 0}
+  part: {fileID: 1000600924}
   option:
-  - {fileID: 21300000, guid: 31e5769e3c04c5d41b3630599212ea20, type: 3}
-  - {fileID: 21300000, guid: 6e517233aa5892c408b76a0adc3827b3, type: 3}
-  - {fileID: 21300000, guid: 2f5ac012b6b6a224d8d5446aa1937279, type: 3}
-  - {fileID: 21300000, guid: 162653214ec0e2d44bee1053a25b2c47, type: 3}
-  - {fileID: 21300000, guid: 68d2ae09e1ca20f4a828f30ab825bd72, type: 3}
-  - {fileID: 21300000, guid: 848e97ed7be7cf246a4d6d28df0a84f1, type: 3}
-  - {fileID: 21300000, guid: 7c063ef0e726b1043a8cf91c564eb78f, type: 3}
-  - {fileID: 21300000, guid: ae29ae53f1ec9fb41b73d9b51b5d8834, type: 3}
-  - {fileID: 21300000, guid: b84eaee860fb03c46941370ac94803e2, type: 3}
-  - {fileID: 21300000, guid: eb626c8b1a8535a4b95927f05a838416, type: 3}
-  - {fileID: 21300000, guid: 19ecc2d1884c2254eafaa44cd03972d7, type: 3}
-  - {fileID: 21300000, guid: 9a68ff412e2920847ab69532ccaeddde, type: 3}
+  - {fileID: 21300000, guid: 32e463f595aac9a47866fd849ca3f362, type: 3}
+  - {fileID: 21300000, guid: 1a125529eefb7b740a7d22238ba90d57, type: 3}
   index: 0
 --- !u!114 &525175084
 MonoBehaviour:
@@ -1036,7 +1026,7 @@ GameObject:
   - component: {fileID: 576370797}
   - component: {fileID: 576370796}
   m_Layer: 5
-  m_Name: bodyColorText
+  m_Name: skinColorText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1094,7 +1084,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'BODY COLOR
+  m_Text: 'SKIN COLOR
 
 '
 --- !u!222 &576370797
@@ -1764,12 +1754,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 778ceafcba1362840817bfd84e462685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part: {fileID: 0}
+  part: {fileID: 174379815}
   option:
-  - {fileID: 21300000, guid: 21eff0d67f3a060429ff10500bf8f19f, type: 3}
-  - {fileID: 21300000, guid: ffd8f06cb0209c24f8567c9a5e401b1f, type: 3}
-  - {fileID: 21300000, guid: af91f75119427cb439b1e8a169fe42ac, type: 3}
-  - {fileID: 21300000, guid: d882a69774022fb4b8239e5827cf90a7, type: 3}
+  - {fileID: 21300000, guid: 8506475c979943043a1d33e63afd12ef, type: 3}
+  - {fileID: 21300000, guid: 7d8ea5d974e9e2d44b104064d7e6135f, type: 3}
   index: 0
 --- !u!1 &907397402
 GameObject:
@@ -1784,7 +1772,7 @@ GameObject:
   - component: {fileID: 907397405}
   - component: {fileID: 907397404}
   m_Layer: 5
-  m_Name: Mint
+  m_Name: skin4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1878,7 +1866,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.9084611, a: 1}
+  m_Color: {r: 0.99607843, g: 0.8627451, b: 0.8509804, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2662,7 +2650,7 @@ GameObject:
   - component: {fileID: 1241571225}
   - component: {fileID: 1241571224}
   m_Layer: 5
-  m_Name: Pink1
+  m_Name: skin1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2756,7 +2744,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.27987415, b: 0.5677257, a: 1}
+  m_Color: {r: 0.9960785, g: 0.9686275, b: 0.9686275, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2794,7 +2782,7 @@ GameObject:
   - component: {fileID: 1379369641}
   - component: {fileID: 1379369640}
   m_Layer: 5
-  m_Name: Spink
+  m_Name: skin3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3179,7 +3167,7 @@ GameObject:
   - component: {fileID: 1640080943}
   - component: {fileID: 1640080942}
   m_Layer: 5
-  m_Name: spuarebodyDisplay
+  m_Name: spuareSkinDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3484,8 +3472,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1825946123}
-  - component: {fileID: 1825946127}
-  - component: {fileID: 1825946129}
   - component: {fileID: 1825946126}
   m_Layer: 0
   m_Name: Character
@@ -3580,46 +3566,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &1825946127
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1825946122}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 0.0001
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &1825946129
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1825946122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dc058222dd0bbf4d9fafc9764e6919d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
 --- !u!1 &1851064556
 GameObject:
   m_ObjectHideFlags: 0
@@ -3633,7 +3579,7 @@ GameObject:
   - component: {fileID: 1851064559}
   - component: {fileID: 1851064558}
   m_Layer: 5
-  m_Name: Yellow
+  m_Name: skin2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3727,7 +3673,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.91350454, g: 0.9607843, b: 0.2705883, a: 1}
+  m_Color: {r: 0.99607843, g: 0.9411765, b: 0.9372549, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
