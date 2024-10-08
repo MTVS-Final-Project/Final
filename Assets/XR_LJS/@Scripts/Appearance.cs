@@ -9,12 +9,9 @@ public class Appearance : MonoBehaviour
 
     void Update()
     {
-        for (int i = 0; i < option.Length; i++)
+        if (index >= 0 && index < option.Length) // 인덱스 범위 체크
         {
-            if (i == index)
-            {
-                part.sprite = option[i];
-            }
+            part.sprite = option[index]; // 현재 인덱스의 스프라이트로 설정
         }
     }
 

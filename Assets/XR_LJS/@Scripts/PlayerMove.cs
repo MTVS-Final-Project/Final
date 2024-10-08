@@ -1,37 +1,34 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMove : MonoBehaviour
 {
-    public float moveSpeed;
-    public Vector2 inputVec;
-    public Rigidbody2D rb;
-    public SpriteRenderer sp;
-    private void Awake()
-    {
-        sp = GetComponent<SpriteRenderer>();
-        rb = GetComponent<Rigidbody2D>();
-    }
+    public float moveSpeed = 5f; // 아바타 이동 속도
 
-    private void FixedUpdate()
+    private void Update()
     {
-        Vector2 nextVec = inputVec.normalized * moveSpeed * Time.fixedDeltaTime;
-        rb.MovePosition(rb.position + nextVec);
-    }
-
-    private void LateUpdate()
-    {
-        if (inputVec.x != 0)
+        // 마우스 클릭 입력을 처리합니다.
+        if (Mouse.current.leftButton.wasPressedThisFrame) // 마우스 왼쪽 버튼 클릭
         {
-            sp.flipX = inputVec.x < 0;
+            Vector3 mousePosition = Mouse.current.position.ReadValue(); // 클릭한 위치를 읽습니다.
+            mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane)); // 월드 좌표로 변환
+            mousePosition.z = 0; // 2D이므로 Z축은 0으로 설정
+
+            // 클릭한 위치로 아바타 이동
+            StartCoroutine(MoveToPosition(mousePosition)); // 코루틴 호출
         }
     }
 
-    void OnMove(InputValue value)
+    private IEnumerator MoveToPosition(Vector3 targetPosition)
     {
-        inputVec = value.Get<Vector2>();
-    }
+        while (Vector3.Distance(transform.position, targetPosition) > 0.1f) // 목표 위치까지 가까워질 때까지
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime); // 아바타 위치 이동
+            yield return null; // 다음 프레임까지 대기
+        }
 
+        // 목표 위치에 도달하면 위치를 정확히 설정 (소수점 오차 방지)
+        transform.position = targetPosition;
+    }
 }
