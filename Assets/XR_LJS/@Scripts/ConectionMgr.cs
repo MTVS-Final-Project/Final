@@ -6,7 +6,6 @@ using Photon.Realtime;
 public class ConectionMgr : MonoBehaviourPunCallbacks
 {
     public Text loadingText;
-    public Button loadSceneButton; // 버튼에 대한 참조
     void Start()
     {
         // Photon 환경설정을 기반으로 마스터 서버에 접속을 시도
@@ -76,4 +75,11 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
         // 버튼 클릭 시 씬을 로드
         PhotonNetwork.LoadLevel("SecondScene_LJS");
     }
+
+    public void LoadFirstScene()
+    {
+        // 버튼 클릭 시 씬을 로드
+        PhotonNetwork.LoadLevel("FirstScene_LJSs");
+    }
+
 }
