@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: dd52307739b0f4e39b35f029fe7e14f5
+timeCreated: 1508333282
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Demo/Materials/City theme textures/Road
+    Bit.mat
+  uploadId: 634825

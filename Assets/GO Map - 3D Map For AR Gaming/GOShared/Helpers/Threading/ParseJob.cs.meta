@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 02d837643e74d4adc985820de2e2667d
+timeCreated: 1472632543
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/GOShared/Helpers/Threading/ParseJob.cs
+  uploadId: 634825

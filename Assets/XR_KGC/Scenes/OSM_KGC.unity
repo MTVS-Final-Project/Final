@@ -634,10 +634,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4881fca45dc9dd4d82b9cc247385993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  latitude: 35.8742
-  longitude: 128.625
   mapPlane: {fileID: 1260955554}
-  zoomLevel: 15
+  zoom: 16
+  useManualCoordinates: 1
+  manualLatitude: 37.5665
+  manualLongitude: 126.978
+  minDistanceUpdate: 0.0001
 --- !u!1 &1481088781
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 1a4fdde691afd435f897afcc229df5c4
+timeCreated: 1512647308
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Demo/Marauder's Map/POIs/Gyms/GymPrefab.prefab
+  uploadId: 634825

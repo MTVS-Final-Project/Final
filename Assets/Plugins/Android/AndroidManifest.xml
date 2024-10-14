@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.yourapp">
+
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+	<application>
+		<!-- Unity 관련 Activity 설정이나 기타 설정이 여기에 들어갑니다 -->
+	</application>
+</manifest>

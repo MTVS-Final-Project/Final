@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 487a1c68c96c64b4ab95841001e80f4d
+timeCreated: 1472542013
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Demo/Materials/Road Outline.mat
+  uploadId: 634825

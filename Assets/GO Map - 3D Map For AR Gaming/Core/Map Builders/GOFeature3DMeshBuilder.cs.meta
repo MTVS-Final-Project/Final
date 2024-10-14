@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: a9c3aef565cfd42b2934cdeed0acdab4
+timeCreated: 1505136771
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Core/Map Builders/GOFeature3DMeshBuilder.cs
+  uploadId: 634825

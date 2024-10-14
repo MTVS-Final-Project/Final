@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8bbc18c28d15f4a329ead42cd330118c
+timeCreated: 1478276259
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Demo/Prefabs/Environment/Materials/balwave.mat
+  uploadId: 634825

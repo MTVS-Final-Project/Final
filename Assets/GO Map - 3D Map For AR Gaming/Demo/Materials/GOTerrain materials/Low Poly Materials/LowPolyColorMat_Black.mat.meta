@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: f78f520f436784e7f91bc038cb4e19f4
+timeCreated: 1484861340
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Demo/Materials/GOTerrain materials/Low
+    Poly Materials/LowPolyColorMat_Black.mat
+  uploadId: 634825

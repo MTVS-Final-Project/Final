@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: dc884a6ec589ce249acc9b5326859165
+timeCreated: 1430167048
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Demo/Projectors/SelectionCirclePrefab.prefab
+  uploadId: 634825
