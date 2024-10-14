@@ -2,84 +2,81 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections.Generic;
 
 public class ConectionMgr : MonoBehaviourPunCallbacks
 {
     public Text loadingText;
+    private const string FIRST_SCENE_NAME = "FirstScene_LJS";
+    private const string SECOND_SCENE_NAME = "SecondScene_LJS";
+
+    // DontDestroyOnLoad 객체들을 추적하기 위한 리스트
+    private static List<GameObject> dontDestroyObjects = new List<GameObject>();
+
     void Start()
     {
-        // Photon 환경설정을 기반으로 마스터 서버에 접속을 시도
         PhotonNetwork.ConnectUsingSettings();
         loadingText.text = "마스터 서버 접속...";
+
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
 
-    void Update()
+    // DontDestroyOnLoad로 설정된 객체를 추적 리스트에 추가하는 메서드
+    public static void AddDontDestroyOnLoadObject(GameObject obj)
     {
-        
-    }
-
-    //마스터 서버에 접속이 되면 호출되는 함수
-    public override void OnConnectedToMaster()
-    {
-        base.OnConnectedToMaster();
-        loadingText.text = "마스터 서버 접속";
-
-        // 로비 접속
-        JoinLobby();
-    }
-    public void JoinLobby()
-    {
-        // 닉네임 설정
-        PhotonNetwork.NickName = "이준수";
-        // 기본 Lobby 입장
-        PhotonNetwork.JoinLobby();
-    }
-
-    // 로비에 참여가 성공하면 호출되는 함수
-    public override void OnJoinedLobby()
-    {
-        base.OnJoinedLobby();
-        loadingText.text = "로비 입장 완료";
-        JoinOrCreateRoom();
-    }
-    
-    // Room을 참여하자, 만약에 해당 Room이 없으면 Room을 만들겠다
-    public void JoinOrCreateRoom()
-    {
-        // 방 생성 옵션
-        RoomOptions  roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers = 12;
-
-        // Room 참여 or 생성
-        PhotonNetwork.JoinOrCreateRoom("name", roomOptions, TypedLobby.Default);
-    }
-
-    // 방 생성 성공했을 때 호출되는 함수
-    public override void OnCreatedRoom()
-    {
-        base.OnCreatedRoom();
-        loadingText.text = "방 생성 완료";
-    }
-
-    // 방 입장 성공했을 때 호출되는 함수
-    public override void OnJoinedRoom()
-    {
-        base.OnJoinedRoom();
-        loadingText.text = "방 입장 완료";
-        // 버튼을 활성화하여 씬 로딩 가능하게 함
-
-    }
-    // 씬 로드를 위한 메서드
-    public void LoadSecondScene()
-    {
-        // 버튼 클릭 시 씬을 로드
-        PhotonNetwork.LoadLevel("SecondScene_LJS");
+        if (!dontDestroyObjects.Contains(obj))
+        {
+            dontDestroyObjects.Add(obj);
+            DontDestroyOnLoad(obj);
+        }
     }
 
     public void LoadFirstScene()
     {
-        // 버튼 클릭 시 씬을 로드
-        PhotonNetwork.LoadLevel("FirstScene_LJSs");
+        if (PhotonNetwork.IsMasterClient)
+        {
+            DestroyDontDestroyOnLoadObjects();
+            PhotonNetwork.LoadLevel(FIRST_SCENE_NAME);
+        }
     }
 
+    public void LoadSecondScene()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            DestroyDontDestroyOnLoadObjects();
+            PhotonNetwork.LoadLevel(SECOND_SCENE_NAME);
+        }
+    }
+
+
+    private void DestroyDontDestroyOnLoadObjects()
+    {
+        Debug.Log($"Found {dontDestroyObjects.Count} DontDestroyOnLoad objects.");
+
+        for (int i = dontDestroyObjects.Count - 1; i >= 0; i--)
+        {
+            GameObject obj = dontDestroyObjects[i];
+            if (obj != null && obj != this.gameObject)
+            {
+                string objName = obj.name;
+                PhotonView photonView = PhotonView.Get(obj);
+                if (photonView != null && photonView.IsMine)
+                {
+                    PhotonNetwork.Destroy(obj);
+                    Debug.Log($"Destroyed Photon object: {objName}");
+                }
+                else if (photonView == null)
+                {
+                    Destroy(obj);
+                    Debug.Log($"Destroyed regular object: {objName}");
+                }
+                else
+                {
+                    Debug.Log($"Cannot destroy non-owned Photon object: {objName}");
+                }
+                dontDestroyObjects.RemoveAt(i);
+            }
+        }
+    }
 }

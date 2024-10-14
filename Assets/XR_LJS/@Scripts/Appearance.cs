@@ -6,57 +6,86 @@ public class Appearance : MonoBehaviourPunCallbacks
 {
     public SpriteRenderer part;
     public Sprite[] option;
-    public int index;
+    private int _index;
+
+    private PhotonView _photonView;
+
+    private void Awake()
+    {
+        _photonView = GetComponent<PhotonView>();
+    }
+
+    public int Index
+    {
+        get => _index;
+        set
+        {
+            _index = Mathf.Clamp(value, 0, option.Length - 1);
+            UpdateSprite();
+        }
+    }
 
     void Start()
     {
-        // 외형 인덱스가 저장된 Custom Properties를 불러옴
-        if (!photonView.IsMine && PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("AppearanceIndex"))
+        if (_photonView == null)
         {
-            index = (int)PhotonNetwork.LocalPlayer.CustomProperties["AppearanceIndex"];
-            part.sprite = option[index];
+            return;
+        }
+
+        if (_photonView.IsMine)
+        {
+            if (PhotonNetwork.LocalPlayer != null && PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("AppearanceIndex", out object savedIndex))
+            {
+                Index = (int)savedIndex;
+            }
+        }
+        else if (_photonView.Owner != null && _photonView.Owner.CustomProperties.TryGetValue("AppearanceIndex", out object remoteIndex))
+        {
+            Index = (int)remoteIndex;
         }
     }
 
-    void Update()
+    private void UpdateSprite()
     {
-        if (index >= 0 && index < option.Length)
+        if (part != null && Index >= 0 && Index < option.Length)
         {
-            part.sprite = option[index]; // 스프라이트 업데이트
+            part.sprite = option[Index];
         }
     }
 
-    // 외형 변경 시 Custom Properties도 갱신
+    [PunRPC]
     public void Swap()
     {
-        if (index < option.Length - 1)
+        Index = (Index + 1) % option.Length;
+
+        if (_photonView != null && _photonView.IsMine && PhotonNetwork.IsMessageQueueRunning)
         {
-            index++;
+            ExitGames.Client.Photon.Hashtable properties = new ExitGames.Client.Photon.Hashtable
+            {
+                { "AppearanceIndex", Index }
+            };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
+        }
+    }
+
+    public void SwapLocalAndSync()
+    {
+        if (_photonView != null && PhotonNetwork.IsMessageQueueRunning)
+        {
+            _photonView.RPC("Swap", RpcTarget.All);
         }
         else
         {
-            index = 0;
+            Debug.LogWarning("Cannot sync appearance change: PhotonView is null or network is not ready.");
+            Swap(); // Fall back to local swap if network is not available
         }
-
-        // 변경 사항을 Photon Custom Properties에 저장
-        ExitGames.Client.Photon.Hashtable properties = new ExitGames.Client.Photon.Hashtable
-        {
-            { "AppearanceIndex", index }
-        };
-        PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
     }
 
-    // Photon의 Player Properties 업데이트를 위한 콜백 함수
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
-        if (changedProps.ContainsKey("AppearanceIndex"))
+        if (_photonView != null && !_photonView.IsMine && targetPlayer == _photonView.Owner && changedProps.TryGetValue("AppearanceIndex", out object newIndex))
         {
-            int newIndex = (int)changedProps["AppearanceIndex"];
-            if (targetPlayer == photonView.Owner)
-            {
-                index = newIndex;
-                part.sprite = option[index];
-            }
+            Index = (int)newIndex;
         }
     }
 }
