@@ -47,7 +47,6 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
     {
         base.OnCreatedRoom();
         loadingText.text = "规 积己 肯丰. 规俊 立加钦聪促...";
-        LoadSecondScene();
     }
 
     public override void OnJoinedRoom()
