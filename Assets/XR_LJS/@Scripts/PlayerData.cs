@@ -34,6 +34,8 @@ public class Data
     public Color hairColor;
     public int body;
     public Color bodyColor;
+    public int pant;
+    public Color pantColor;
     public int rightArm;
     public Color rightArmColor;
     public int leftArm;
