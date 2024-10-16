@@ -10,7 +10,7 @@ public class PlayerData : MonoBehaviour
     {
         data = new Data();
         PlayerData.Instance = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     public string AvatarToString()

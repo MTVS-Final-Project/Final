@@ -19,11 +19,6 @@ public class TouchCharacterMovement : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        if (spriteRenderer == null)
-        {
-            Debug.LogError("SpriteRenderer component not found on this object!");
-        }
-
         // EventSystem √ ±‚»≠
         eventSystem = EventSystem.current;
 
