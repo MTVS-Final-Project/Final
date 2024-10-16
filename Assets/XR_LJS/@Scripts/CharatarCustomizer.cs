@@ -47,7 +47,7 @@ public class CharatarCustomizer : MonoBehaviour
             PlayerData.Instance.data.hair = avatar.hairCount - 1;
         }
         PlayerPrefs.SetInt("hair", PlayerData.Instance.data.hair);
-        avatar.SetAvatar(PlayerData.Instance.data);
+        //avatar.SetAvatar(PlayerData.Instance.data);
     }
 
     public void ChangeBody(int param)
@@ -63,7 +63,7 @@ public class CharatarCustomizer : MonoBehaviour
             PlayerData.Instance.data.body = avatar.bodyCount - 1;
         }
         PlayerPrefs.SetInt("body", PlayerData.Instance.data.body);
-        avatar.SetAvatar(PlayerData.Instance.data);
+        //avatar.SetAvatar(PlayerData.Instance.data);
     }
 }
 

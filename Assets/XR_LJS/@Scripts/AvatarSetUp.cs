@@ -65,7 +65,7 @@ public class AvatarSetUp : MonoBehaviour
         leftShoesCount = fleftShoes.Length;
 
         // 사용자의 아바타 데이터 로드
-        StartCoroutine(LoadAvatarData());
+        //StartCoroutine(LoadAvatarData());
     }
 
     public void SetAvatar(AvatarData avatarData)
@@ -155,69 +155,68 @@ public class AvatarSetUp : MonoBehaviour
         string json = JsonUtility.ToJson(data);
         string userId = PhotonNetwork.LocalPlayer.UserId; // Photon에서 사용자 ID 가져오기
 
-        StartCoroutine(apiClient.SaveAvatarData(userId, json, (success) => {
-            if (success)
-            {
-                Debug.Log("Avatar data saved successfully");
-                SyncAvatarToOthers(); // 저장 성공 시 다른 플레이어들과 동기화
-            }
-            else
-            {
-                Debug.LogError("Failed to save avatar data");
-            }
-        }));
+        //StartCoroutine(apiClient.SaveAvatarData(userId, json, (success) => {
+        //    if (success)
+        //    {
+        //        Debug.Log("Avatar data saved successfully");
+        //        SyncAvatarToOthers(); // 저장 성공 시 다른 플레이어들과 동기화
+        //    }
+        //    else
+        //    {
+        //        Debug.LogError("Failed to save avatar data");
+        //    }
+        //}));
     }
 
     // 서버에서 아바타 데이터를 받아 적용하는 메서드
-    private IEnumerator LoadAvatarData()
-    {
-        string userId = PhotonNetwork.LocalPlayer.UserId; // Photon에서 사용자 ID 가져오기
+    //private IEnumerator LoadAvatarData()
+    //{
+    //    string userId = PhotonNetwork.LocalPlayer.UserId; // Photon에서 사용자 ID 가져오기
 
-        yield return StartCoroutine(apiClient.LoadAvatarData(userId, (json) => {
-            if (json != null)
-            {
-                AvatarData data = JsonUtility.FromJson<AvatarData>(json);
-                SetAvatar(data);
-                Debug.Log("Avatar data loaded and applied successfully");
-            }
-            else
-            {
-                Debug.LogError("Failed to load avatar data");
-            }
-        }));
+        //yield return StartCoroutine(apiClient.LoadAvatarData(userId, (json) => {
+        //    if (json != null)
+        //    {
+        //        AvatarData data = JsonUtility.FromJson<AvatarData>(json);
+        //        SetAvatar(data);
+        //        Debug.Log("Avatar data loaded and applied successfully");
+        //    }
+        //    else
+        //    {
+        //        Debug.LogError("Failed to load avatar data");
+        //    }
+        //}));
     }
 
     // Photon을 통해 다른 플레이어에게 아바타 데이터 전송
-    [PunRPC]
-    private void SyncAvatarData(string avatarJson)
-    {
-        AvatarData data = JsonUtility.FromJson<AvatarData>(avatarJson);
-        SetAvatar(data);
-    }
+    //[PunRPC]
+    //private void SyncAvatarData(string avatarJson)
+    //{
+    //    AvatarData data = JsonUtility.FromJson<AvatarData>(avatarJson);
+    //    SetAvatar(data);
+    //}
 
-    // 로컬 플레이어의 아바타 변경사항을 다른 플레이어들에게 동기화
-    public void SyncAvatarToOthers()
-    {
-        if (myPV.IsMine)
-        {
-            string avatarJson = JsonUtility.ToJson(GetCurrentAvatarData());
-            myPV.RPC("SyncAvatarData", RpcTarget.Others, avatarJson);
-        }
-    }
+    //// 로컬 플레이어의 아바타 변경사항을 다른 플레이어들에게 동기화
+    //public void SyncAvatarToOthers()
+    //{
+    //    if (myPV.IsMine)
+    //    {
+    //        string avatarJson = JsonUtility.ToJson(GetCurrentAvatarData());
+    //        myPV.RPC("SyncAvatarData", RpcTarget.Others, avatarJson);
+    //    }
+    //}
 
-    // 아바타 부위 변경 메서드 (예: 머리 변경)
-    public void ChangeHair(int index)
-    {
-        SetActiveGameObject(fhair, mhair, index);
-        SaveAvatarData(); // 변경사항 저장 및 동기화
-    }
+    //// 아바타 부위 변경 메서드 (예: 머리 변경)
+    //public void ChangeHair(int index)
+    //{
+    //    SetActiveGameObject(fhair, mhair, index);
+    //    SaveAvatarData(); // 변경사항 저장 및 동기화
+    //}
 
-    // 아바타 색상 변경 메서드 (예: 피부색 변경)
-    public void ChangeSkinColor(Color color)
-    {
-        SetColor(skinColor, AvatarData.ColorToHex(color));
-        SaveAvatarData(); // 변경사항 저장 및 동기화
-    }
+    //// 아바타 색상 변경 메서드 (예: 피부색 변경)
+    //public void ChangeSkinColor(Color color)
+    //{
+    //    SetColor(skinColor, AvatarData.ColorToHex(color));
+    //    SaveAvatarData(); // 변경사항 저장 및 동기화
+    //}
 
-    // 기타 아바타 부위 및 색상 변경 메서드들...
-}
+    //// 기타 아바타 부위 및 색상 변경 메서드들...
