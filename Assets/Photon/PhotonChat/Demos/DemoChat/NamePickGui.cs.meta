@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 696a5174ff5e707479b3540eb56d14b7
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 120838
+  packageName: Photon PUN 2+
+  packageVersion: 2.47
+  assetPath: Assets/Photon/PhotonChat/Demos/DemoChat/NamePickGui.cs
+  uploadId: 689047
