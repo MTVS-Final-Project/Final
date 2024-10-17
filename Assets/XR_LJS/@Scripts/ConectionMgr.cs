@@ -6,12 +6,19 @@ using Photon.Realtime;
 public class ConectionMgr : MonoBehaviourPunCallbacks
 {
     [SerializeField] Text loadingText;
+    [SerializeField] Button joinButton; // 새로 추가한 버튼
 
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
         if (loadingText != null)
             loadingText.text = "마스터 서버 접속중...";
+
+        // 버튼 이벤트 리스너 추가
+        if (joinButton != null)
+            joinButton.onClick.AddListener(JoinOrCreateRoom);
+        else
+            Debug.LogError("Join button is not assigned in the inspector!");
     }
 
     public override void OnConnectedToMaster()
@@ -30,15 +37,15 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         base.OnJoinedLobby();
-        loadingText.text = "방 생성 중...";
-        JoinOrCreateRoom();
+        loadingText.text = "결정 버튼을 눌러 방에 참가하세요.";
+        joinButton.gameObject.SetActive(true); // 버튼 활성화
     }
 
     public void JoinOrCreateRoom()
     {
+        loadingText.text = "방 생성 중...";
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = 12;
-
         // Join or create a room named "name"
         PhotonNetwork.JoinOrCreateRoom("name", roomOptions, TypedLobby.Default);
     }
@@ -51,10 +58,9 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        loadingText.text = "방 접속 완료. 다른 플레이어를 기다리는 중...";
+        loadingText.text = "방 접속 완료. \n다른 플레이어를 기다리는 중";
         base.OnJoinedRoom();
-        // Optionally, you could also load the scene here if you want immediate transition.
-        // LoadSecondScene();
+        LoadSecondScene();
     }
 
     public void LoadSecondScene()
@@ -65,6 +71,7 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
             PhotonNetwork.LoadLevel("SecondScene_LJS");
         }
     }
+
     public void LoadFirstScene()
     {
         PhotonNetwork.LoadLevel("FirstScene_LJS");

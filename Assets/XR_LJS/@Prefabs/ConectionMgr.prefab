@@ -45,4 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadingText: {fileID: 0}
-  loadSceneButton: {fileID: 0}
+  joinButton: {fileID: 0}

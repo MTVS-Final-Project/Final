@@ -1088,9 +1088,9 @@ GameObject:
   - component: {fileID: 7241885827461324061}
   - component: {fileID: 2544717806922472531}
   - component: {fileID: 4984890610135035875}
-  - component: {fileID: 7164999889014463179}
   - component: {fileID: 8566677879810155335}
   - component: {fileID: 8459490141797433776}
+  - component: {fileID: 7826643825768239688}
   m_Layer: 0
   m_Name: Avatar
   m_TagString: Untagged
@@ -1145,7 +1145,9 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 2544717806922472531}
   - {fileID: 4984890610135035875}
+  - {fileID: 7826643825768239688}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1161,6 +1163,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ade52dd95ca1ac24b8f0f2e9dda28bb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data:
+    myNumberInRoom: 0
+    skin: 0
+    skinColor: {r: 0, g: 0, b: 0, a: 0}
+    Eyes: 0
+    hair: 0
+    body: 0
+    pant: 0
+    rightArm: 0
+    leftArm: 0
+    rightleg: 0
+    leftLeg: 0
+    rightShoes: 0
+    leftShoes: 0
+    hat: 0
 --- !u!114 &2544717806922472531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1190,27 +1207,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 1
   m_UseLocal: 1
---- !u!114 &7164999889014463179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6716879838603089876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6694a55bfc3190649911f88744899321, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraPositions: []
-  mainMenu: {fileID: 0}
-  avatarMenu: {fileID: 0}
-  avatar: {fileID: 0}
-  defaultColor: []
-  hairButton: {fileID: 0}
-  bodyButton: {fileID: 0}
-  pantButton: {fileID: 0}
-  shoesButton: {fileID: 0}
 --- !u!50 &8566677879810155335
 Rigidbody2D:
   serializedVersion: 5
@@ -1284,6 +1280,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 3.0622058, y: 5.6197004}
   m_EdgeRadius: 0
+--- !u!114 &7826643825768239688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6716879838603089876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12f949b02501e0c46863b0b6fc283b7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hairStyle: 0
+  eyeStyle: 0
+  mouthStyle: 0
+  bodyStyle: 0
+  pantStyle: 0
+  leftArmStyle: 0
+  rightArmStyle: 0
 --- !u!1 &6756672728084446474
 GameObject:
   m_ObjectHideFlags: 0

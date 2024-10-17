@@ -1,66 +1,67 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
-using System.Collections.Generic;
+using Photon.Pun;
+using UnityEngine.UI;
 
-public class TouchCharacterMovement : MonoBehaviour
+public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
 {
     public float moveSpeed = 5f;
-
     private Vector3 targetPosition;
     private bool isMoving = false;
-    private SpriteRenderer spriteRenderer;
-
-    // UI 관련 변수
-    private EventSystem eventSystem;
-    private PointerEventData pointerEventData;
-    private List<RaycastResult> raycastResults;
+    private PhotonView pv;
+    private SpriteRenderer[] spriteRenderers; // 캐릭터의 모든 SpriteRenderer들
 
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        pv = GetComponent<PhotonView>();
 
-        // EventSystem 초기화
-        eventSystem = EventSystem.current;
+        // 캐릭터의 모든 SpriteRenderer를 찾음 (하위 오브젝트 포함)
+        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
 
-        if (eventSystem == null)
+        if (photonView.InstantiationData != null && photonView.InstantiationData.Length > 0)
         {
-            Debug.LogError("No EventSystem found in the scene. Please add one.");
+            string jsonData = (string)photonView.InstantiationData[0];
+            CharacterCustomizationData customData = CharacterCustomizationData.FromJson(jsonData);
         }
-
-        pointerEventData = new PointerEventData(eventSystem);
-        raycastResults = new List<RaycastResult>();
     }
 
     void Update()
     {
-        // 버튼 개수 확인
-        int buttonCount = CountVisibleButtons();
+        if (!pv.IsMine) return; // 자신의 캐릭터만 제어
 
-        // 버튼이 3개 미만일 때만 터치 이동 허용
-        if (buttonCount < 3)
+        // 활성화된 버튼의 개수를 확인
+        int activeButtonCount = CountActiveButtons();
+
+        // 화면에 보이는 버튼이 5개 이상이면 캐릭터 움직임을 막음
+        if (activeButtonCount >= 5)
         {
-            HandleTouchMovement();
-        }
-        else
-        {
-            // 버튼이 3개 이상이면 이동 중지
-            isMoving = false;
+            return;
         }
 
-        // 캐릭터 이동
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began)
+            {
+                targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 10f));
+                targetPosition.z = transform.position.z;
+                isMoving = true;
+            }
+        }
+
         if (isMoving)
         {
-            Vector3 newPosition = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-
-            // 이동 중 방향이 바뀌었는지 확인하고 뒤집기
-            if (newPosition.x != transform.position.x)
+            // 이동 방향에 따라 캐릭터의 모든 SpriteRenderer에 반대 flipX를 적용
+            if (targetPosition.x > transform.position.x)
             {
-                FlipCharacter(newPosition.x > transform.position.x);
+                SetCharacterFlip(true); // 오른쪽으로 이동할 때 flipX를 true로 설정
+            }
+            else if (targetPosition.x < transform.position.x)
+            {
+                SetCharacterFlip(false); // 왼쪽으로 이동할 때 flipX를 false로 설정
             }
 
-            transform.position = newPosition;
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
-            // 목표 지점에 도달했는지 확인
             if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
             {
                 isMoving = false;
@@ -68,71 +69,45 @@ public class TouchCharacterMovement : MonoBehaviour
         }
     }
 
-    void HandleTouchMovement()
+    // 캐릭터의 모든 SpriteRenderer에 flipX 적용하는 함수
+    void SetCharacterFlip(bool flip)
     {
-        if (Input.touchCount > 0)
+        foreach (SpriteRenderer renderer in spriteRenderers)
         {
-            Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
-            {
-                // UI 요소를 터치했는지 확인
-                if (!IsPointerOverUIElement(touch.position))
-                {
-                    // 터치한 위치를 월드 좌표로 변환
-                    targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 10f));
-                    targetPosition.z = transform.position.z; // z 위치 유지
-                    isMoving = true;
+            renderer.flipX = flip;
+        }
+    }
 
-                    // 이동 방향에 따라 캐릭터 뒤집기
-                    FlipCharacter(targetPosition.x > transform.position.x);
-                }
+    // 활성화된 버튼의 개수를 계산하는 함수
+    int CountActiveButtons()
+    {
+        Button[] buttons = FindObjectsOfType<Button>(); // 화면에 있는 모든 버튼을 가져옴
+        int activeButtonCount = 0;
+
+        foreach (Button button in buttons)
+        {
+            if (button.gameObject.activeInHierarchy) // 활성화된 버튼만 카운트
+            {
+                activeButtonCount++;
             }
         }
+
+        return activeButtonCount;
     }
 
-    void FlipCharacter(bool facingRight)
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (spriteRenderer != null)
+        if (stream.IsWriting)
         {
-            spriteRenderer.flipX = facingRight; // Adjusted to set flipX directly
+            stream.SendNext(transform.position);
+            stream.SendNext(isMoving);
+            stream.SendNext(targetPosition);
         }
-
-        // Flip all child SpriteRenderers recursively
-        FlipAllChildSpriteRenderers(transform, facingRight);
-    }
-
-    void FlipAllChildSpriteRenderers(Transform parent, bool facingRight)
-    {
-        foreach (Transform child in parent)
+        else
         {
-            SpriteRenderer childSpriteRenderer = child.GetComponent<SpriteRenderer>();
-            if (childSpriteRenderer != null)
-            {
-                childSpriteRenderer.flipX = facingRight; // Adjusted to set flipX directly
-            }
-
-            // Recurse into the child to find any nested SpriteRenderers
-            FlipAllChildSpriteRenderers(child, facingRight);
+            transform.position = (Vector3)stream.ReceiveNext();
+            isMoving = (bool)stream.ReceiveNext();
+            targetPosition = (Vector3)stream.ReceiveNext();
         }
-    }
-
-    int CountVisibleButtons()
-    {
-        int count = 0;
-        Canvas[] canvases = FindObjectsOfType<Canvas>();
-        foreach (Canvas canvas in canvases)
-        {
-            UnityEngine.UI.Button[] buttons = canvas.GetComponentsInChildren<UnityEngine.UI.Button>(false);
-            count += buttons.Length;
-        }
-        return count;
-    }
-
-    bool IsPointerOverUIElement(Vector2 touchPosition)
-    {
-        pointerEventData.position = touchPosition;
-        raycastResults.Clear();
-        eventSystem.RaycastAll(pointerEventData, raycastResults);
-        return raycastResults.Count > 0;
     }
 }
