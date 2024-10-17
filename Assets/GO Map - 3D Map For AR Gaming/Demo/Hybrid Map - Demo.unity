@@ -536,7 +536,7 @@ PrefabInstance:
     - target: {fileID: 114547028180385974, guid: 7cc8dfd0538b549878c58850a02810cf,
         type: 3}
       propertyPath: mapbox_accessToken
-      value: 
+      value: pk.eyJ1Ijoibm9vdmFjYWluZSIsImEiOiJjbTIydHd6amswMDRzMmtzYWRkc2R4em4yIn0.PA5biajDGMma4Ur_6JJehA
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -660,9 +660,9 @@ MonoBehaviour:
   useLocationServices: 1
   demoLocation: 4
   updateDistance: 0.1
-  simulateMotion: 2
+  simulateMotion: 0
   useWsadInEditor: 1
-  motionMode: 1
+  motionMode: 2
   avatar: {fileID: 0}
   useBannerInsideEditor: 0
   banner: {fileID: 97163142}
