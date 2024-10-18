@@ -12,12 +12,9 @@ public class PlayerData : MonoBehaviour
         {
             Instance = this; // 인스턴스 설정
             data = new Data(); // 데이터 초기화
-            DontDestroyOnLoad(gameObject); // 씬 전환 시 파괴되지 않도록 설정
+            DontDestroyOnLoad(gameObject);
         }
-        else
-        {
-            Destroy(gameObject); // 기존 인스턴스 삭제
-        }
+        
     }
 
     public string AvatarToString()

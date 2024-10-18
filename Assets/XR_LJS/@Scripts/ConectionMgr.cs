@@ -18,7 +18,7 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
         // 버튼 이벤트 리스너 추가
         if (joinButton != null)
             joinButton.onClick.AddListener(JoinOrCreateRoom);
-        
+        ReassignPhotonViewID();
     }
 
     public override void OnConnectedToMaster()
@@ -72,8 +72,30 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
         if (PhotonNetwork.InRoom)
         {
             PhotonNetwork.LoadLevel("SecondScene_LJS");
+
         }
         
+    }
+    public void ReassignPhotonViewID()
+    {
+        // PhotonView를 가져옴
+        PhotonView photonView = GetComponent<PhotonView>();
+
+        // 현재 로컬 플레이어가 마스터 클라이언트일 때만 재설정
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // 새로운 View ID 할당
+            bool success = PhotonNetwork.AllocateViewID(photonView);
+
+            if (success)
+            {
+                Debug.Log("Photon View ID가 성공적으로 재할당되었습니다: " + photonView.ViewID);
+            }
+            else
+            {
+                Debug.LogError("Photon View ID 할당 실패!");
+            }
+        }
     }
 
     public void LoadFirstScene()
