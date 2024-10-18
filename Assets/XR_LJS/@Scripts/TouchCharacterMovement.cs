@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
@@ -5,13 +6,16 @@ using UnityEngine.UI;
 public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
 {
     public float moveSpeed = 5f;
+    public Vector2 movement = new Vector2();
     private Vector3 targetPosition;
     private bool isMoving = false;
     private PhotonView pv;
+    Rigidbody2D rb;
     private SpriteRenderer[] spriteRenderers; // 캐릭터의 모든 SpriteRenderer들
 
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         pv = GetComponent<PhotonView>();
 
         // 캐릭터의 모든 SpriteRenderer를 찾음 (하위 오브젝트 포함)
@@ -26,6 +30,15 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
 
     void Update()
     {
+        // 윈도우 테스트 용
+        if (pv.IsMine)
+        {
+            movement.x = Input.GetAxis("Horizontal");
+            movement.y = Input.GetAxis("Vertical");
+            movement.Normalize();
+            rb.linearVelocity = movement * moveSpeed;
+        }
+
         if (!pv.IsMine) return; // 자신의 캐릭터만 제어
 
         // 활성화된 버튼의 개수를 확인
@@ -47,6 +60,9 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
                 isMoving = true;
             }
         }
+        
+        
+
 
         if (isMoving)
         {

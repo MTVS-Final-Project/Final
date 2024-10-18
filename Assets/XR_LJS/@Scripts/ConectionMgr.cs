@@ -8,6 +8,7 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
     [SerializeField] Text loadingText;
     [SerializeField] Button joinButton; // 새로 추가한 버튼
 
+    
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
@@ -17,8 +18,7 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
         // 버튼 이벤트 리스너 추가
         if (joinButton != null)
             joinButton.onClick.AddListener(JoinOrCreateRoom);
-        else
-            Debug.LogError("Join button is not assigned in the inspector!");
+        
     }
 
     public override void OnConnectedToMaster()
@@ -46,7 +46,6 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
         loadingText.text = "방 생성 중...";
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = 12;
-        // Join or create a room named "name"
         PhotonNetwork.JoinOrCreateRoom("name", roomOptions, TypedLobby.Default);
     }
 
@@ -59,6 +58,10 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         loadingText.text = "방 접속 완료. \n다른 플레이어를 기다리는 중";
+        if (!PhotonNetwork.InRoom)
+        {
+            Debug.LogError("클라이언트가 같은 룸에 연결되지 않았습니다.");
+        }
         base.OnJoinedRoom();
         LoadSecondScene();
     }
@@ -70,6 +73,7 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.LoadLevel("SecondScene_LJS");
         }
+        
     }
 
     public void LoadFirstScene()
