@@ -14,6 +14,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public TMP_Text statusText;
     public GameObject lobbyUI;
     public GameObject connectingUI;
+    // InputNickName
+    public TMP_InputField inputNickName;
 
     void Start()
     {
@@ -21,7 +23,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         SetUIInteractable(false);
         connectingUI.SetActive(true);
         lobbyUI.SetActive(false);
-        statusText.text = "마스터 서버에 연결 중...";
+        statusText.text = "master sever con...";
 
         // 버튼에 리스너 추가
         createRoomButton.onClick.AddListener(CreateRoom);
@@ -29,6 +31,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         // 서버 연결
         PhotonNetwork.ConnectUsingSettings();
+        // 닉네임 설정
+        PhotonNetwork.NickName = inputNickName.text;
     }
 
     private void SetUIInteractable(bool interactable)
@@ -44,21 +48,21 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         connectingUI.SetActive(false);
         lobbyUI.SetActive(true);
         SetUIInteractable(true);
-        statusText.text = "서버에 연결됨";
+        statusText.text = "sever on";
     }
 
     public void CreateRoom()
     {
         if (string.IsNullOrEmpty(createRoomInput.text))
         {
-            statusText.text = "방 이름을 입력하세요";
+            statusText.text = "room name pl";
             return;
         }
 
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = 10;
         PhotonNetwork.CreateRoom(createRoomInput.text, roomOptions);
-        statusText.text = "방 생성 중...";
+        statusText.text = "room create...";
         SetUIInteractable(false);
     }
 
@@ -66,30 +70,30 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if (string.IsNullOrEmpty(joinRoomInput.text))
         {
-            statusText.text = "방 이름을 입력하세요";
+            statusText.text = "room name";
             return;
         }
 
         PhotonNetwork.JoinRoom(joinRoomInput.text);
-        statusText.text = "방 참가 중...";
+        statusText.text = "room j...";
         SetUIInteractable(false);
     }
 
     public override void OnJoinedRoom()
     {
-        statusText.text = "방 참가 성공!";
+        statusText.text = "room su!";
         PhotonNetwork.LoadLevel("CharacterCustomization");
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        statusText.text = "방 생성 실패: " + message;
+        statusText.text = " room: " + message;
         SetUIInteractable(true);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        statusText.text = "방 참가 실패: " + message;
+        statusText.text = "room " + message;
         SetUIInteractable(true);
     }
 }

@@ -14,7 +14,6 @@ public class PlayerData : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);  // 씬 전환시에도 유지
         data = new Data();
     }
 
