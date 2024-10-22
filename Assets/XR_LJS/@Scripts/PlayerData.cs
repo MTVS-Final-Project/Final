@@ -1,57 +1,86 @@
-
 using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
-    public static PlayerData Instance;
+    public static PlayerData Instance { get; private set; }
     public Data data;
 
-    private void OnEnable()
+    private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);  // 중복된 인스턴스 제거
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);  // 씬 전환시에도 유지
         data = new Data();
-        PlayerData.Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
+    // JSON 변환 메서드들
     public string AvatarToString()
     {
-        string returnString = JsonUtility.ToJson(PlayerData.Instance.data);
-        return returnString;
+        return JsonUtility.ToJson(data);
+    }
+
+    public void LoadFromJson(string jsonData)
+    {
+        data = JsonUtility.FromJson<Data>(jsonData);
     }
 }
 
+[System.Serializable]
 public class Data
 {
-    // Room 
+    // Room 정보
     public int myNumberInRoom;
 
-    // 아바타
+    // 기본 외형
+    [Header("Basic Appearance")]
     public int skin;
     public Color skinColor;
-    public int Eyes;
-    public Color EyesColor;
+    public int eyes;  // 변수명 소문자로 시작
     public int hair;
-    public Color hairColor;
+
+    // 의상
+    [Header("Clothing")]
     public int body;
-    public Color bodyColor;
     public int pant;
-    public Color pantColor;
+
+    // 팔다리
+    [Header("Limbs")]
     public int rightArm;
-    public Color rightArmColor;
     public int leftArm;
-    public Color leftArmColor;
-    public int rightleg;
-    public Color rightLegColor;
+    public int rightLeg;
     public int leftLeg;
-    public Color leftLegColor;
+
+    // 신발
+    [Header("Shoes")]
     public int rightShoes;
-    public Color rightShoesColor;
     public int leftShoes;
-    public Color leftShoesColor;
 
-
-    // 악세서리 
+    // 액세서리
+    [Header("Accessories")]
     public int hat;
-    public Color hatColor;
 
+    // 기본값 설정을 위한 생성자
+    public Data()
+    {
+        // 기본값 초기화
+        myNumberInRoom = -1;
+        skin = 0;
+        skinColor = Color.white;
+        eyes = 0;
+        hair = 0;
+        body = 0;
+        pant = 0;
+        rightArm = 0;
+        leftArm = 0;
+        rightLeg = 0;
+        leftLeg = 0;
+        rightShoes = 0;
+        leftShoes = 0;
+        hat = 0;
+    }
 }
