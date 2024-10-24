@@ -30,7 +30,7 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
             CharacterCustomizationData customData = CharacterCustomizationData.FromJson(jsonData);
         }
 
-        playerNickname.text = photonView.Owner.NickName;
+        //playerNickname.text = photonView.Owner.NickName;
     }
 
     void Update()

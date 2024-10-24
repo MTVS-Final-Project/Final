@@ -13,6 +13,7 @@ public class PlayerData : MonoBehaviour
             return;
         }
 
+        DontDestroyOnLoad(gameObject);
         Instance = this;
         data = new Data();
     }

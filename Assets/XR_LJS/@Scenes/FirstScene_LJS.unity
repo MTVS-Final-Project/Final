@@ -4709,12 +4709,17 @@ PrefabInstance:
     - target: {fileID: 5996135528458650102, guid: 78913e5dea0f7a9418a0fa2a5a8f38d8,
         type: 3}
       propertyPath: sceneViewId
-      value: 2222222
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6480592739165298155, guid: 78913e5dea0f7a9418a0fa2a5a8f38d8,
         type: 3}
       propertyPath: m_Name
       value: Avatar1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6480592739165298155, guid: 78913e5dea0f7a9418a0fa2a5a8f38d8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6143,6 +6148,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8568460418700483947, guid: 6c06d87e6f2bd514bb5c8fbb552551c4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -29,7 +29,7 @@ public class CatInteraction : MonoBehaviour
         {
             // 고양이와 카메라 동시에 확대
             cat.localScale = Vector3.Lerp(cat.localScale, new Vector3(enlargedCatScale, enlargedCatScale, 1f), Time.deltaTime * 2f);
-            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, enlargedCameraSize, Time.deltaTime * 2f);
+            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, enlargedCameraSize, Time.deltaTime * 1.5f);
 
             // 고양이와 가까울 때만 터치 상호작용 허용
             HandleTouchInput();
@@ -70,7 +70,27 @@ public class CatInteraction : MonoBehaviour
                 }
             }
         }
+        // 마우스 클릭 입력 처리
+        if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 클릭
+        {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition); // 마우스 클릭 위치를 월드 좌표로 변환
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+
+            if (hit.collider != null)
+            {
+                if (hit.collider.gameObject == catHead) // 고양이 머리와 충돌 감지
+                {
+                    ShowTextBox("고양이: 머리를 만졌어!");
+                }
+                else if (hit.collider.gameObject == catButt) // 고양이 엉덩이와 충돌 감지
+                {
+                    ShowTextBox("고양이: 엉덩이를 만졌어!");
+                    ChangeCatPose(); // 고양이 자세 변경
+                }
+            }
+        }
     }
+
 
     private void ShowTextBox(string message)
     {

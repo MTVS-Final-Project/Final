@@ -1561,7 +1561,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &992233165480012244
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1862,6 +1862,7 @@ MonoBehaviour:
   moveSpeed: 5
   movement: {x: 0, y: 0}
   playerNickname: {fileID: 1274012000553964741}
+  cat: {fileID: 0}
 --- !u!114 &9053640039315737884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2085,8 +2086,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1c2f891a9f056254cb9b76f87a32e05d, type: 2}
+  m_sharedMaterial: {fileID: 3059577797740510127, guid: 1c2f891a9f056254cb9b76f87a32e05d,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
