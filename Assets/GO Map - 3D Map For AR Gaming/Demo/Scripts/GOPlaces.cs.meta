@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 20103238619fc4a7497d21e4074d5644
+timeCreated: 1473434710
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Demo/Scripts/GOPlaces.cs
+  uploadId: 634825

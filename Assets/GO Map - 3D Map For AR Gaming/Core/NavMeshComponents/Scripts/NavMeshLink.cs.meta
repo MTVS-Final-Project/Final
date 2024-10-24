@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: ea10d9f7e6c374c35a59b89565cbb6a3
+timeCreated: 1477924439
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {fileID: 2800000, guid: 92f4afa3e25264f5b964937ccea49ff2, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Core/NavMeshComponents/Scripts/NavMeshLink.cs
+  uploadId: 634825

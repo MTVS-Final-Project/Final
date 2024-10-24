@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 1f17a6e33c9cf4cf3b65b72d8e4668ab
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Demo/Prefabs/Wizards - Prefabs/tower
+    roof.mat
+  uploadId: 634825

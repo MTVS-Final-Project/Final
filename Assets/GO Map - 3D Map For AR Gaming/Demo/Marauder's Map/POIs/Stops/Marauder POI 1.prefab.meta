@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: c1bc969165b1e4f31a676c8caeb6ea1b
+timeCreated: 1512578634
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Demo/Marauder's Map/POIs/Stops/Marauder
+    POI 1.prefab
+  uploadId: 634825

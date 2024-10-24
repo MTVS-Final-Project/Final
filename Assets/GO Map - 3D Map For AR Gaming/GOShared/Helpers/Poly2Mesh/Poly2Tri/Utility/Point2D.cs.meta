@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 1208c7cc17d6c4ea8aa56d8237667b4b
+timeCreated: 1477156698
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/GOShared/Helpers/Poly2Mesh/Poly2Tri/Utility/Point2D.cs
+  uploadId: 634825

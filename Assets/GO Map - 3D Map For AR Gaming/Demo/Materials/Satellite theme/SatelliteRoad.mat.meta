@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a8ed71969d0144c58bb288d11bae8be9
+timeCreated: 1477245136
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Demo/Materials/Satellite theme/SatelliteRoad.mat
+  uploadId: 634825

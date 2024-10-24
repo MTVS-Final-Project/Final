@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 47b04cc0e7b4f4a99aaf5c4661333bfb
+timeCreated: 1512384444
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Demo/Marauder's Map/Materials/Marauders
+    map - Buildings outline.mat
+  uploadId: 634825

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0eba8a9160e330e4bb32540ce2bd8f9a
+timeCreated: 1430165197
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Demo/Projectors/ProjectorMaterial.mat
+  uploadId: 634825
