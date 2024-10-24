@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
+    path: Assets/XR_KSY/Scenes/MainScene_KSY.unity
+    guid: 3e20e6cb72883f6449a92f944c77acf2
+  - enabled: 0
     path: Assets/XR_LJS/@Scenes/LobbyScene_LJS.unity
     guid: c0f70f3543b263841ac578810da7a93c
   - enabled: 1
@@ -14,7 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/XR_LJS/@Scenes/SecondScene_LJS.unity
     guid: 4a0dde2d0865b8940b34e68a906b6af2
-  - enabled: 1
+  - enabled: 0
     path: Assets/XR_LJS/@Scenes/CharacterCustomization.unity
     guid: 929d5cec971e7524b8a81b51eb8f89d6
   m_configObjects:
