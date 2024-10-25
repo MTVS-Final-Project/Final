@@ -31,6 +31,7 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
         }
 
         //playerNickname.text = photonView.Owner.NickName;
+        cat = GameObject.Find("Cat").GetComponent<GameObject>();
     }
 
     void Update()
