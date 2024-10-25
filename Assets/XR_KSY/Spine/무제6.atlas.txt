@@ -1,0 +1,27 @@
+무제6.png
+size:214,283
+filter:Linear,Linear
+pma:true
+레이어 2
+bounds:135,42,71,96
+offsets:1,1,73,98
+레이어 3
+bounds:177,185,31,46
+offsets:1,1,33,48
+레이어 4
+bounds:177,144,31,39
+offsets:1,1,33,41
+레이어 5
+bounds:2,171,173,110
+offsets:1,1,175,112
+레이어 6
+bounds:177,233,35,48
+offsets:1,1,37,50
+레이어 7
+bounds:135,140,29,39
+offsets:1,1,31,41
+rotate:90
+레이어 8
+bounds:2,2,167,131
+offsets:1,1,169,133
+rotate:90
