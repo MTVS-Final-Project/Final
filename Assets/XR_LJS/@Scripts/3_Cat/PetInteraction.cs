@@ -1,12 +1,19 @@
 using TMPro;
 using UnityEngine;
 using System.Collections;
+
 public class PetInteraction : MonoBehaviour
 {
     private Vector3 initialMousePosition;
     public GameObject head; // 자식 오브젝트 머리
     public GameObject body; // 자식 오브젝트 몸통
     public TMP_Text text;
+    public GameObject whiteImage; // Canvas의 하얀색 이미지 오브젝트
+
+    void Start()
+    {
+        whiteImage.SetActive(false); // 처음에 하얀색 이미지 비활성화
+    }
 
     void OnMouseDown() // 고양이 클릭 시
     {
@@ -30,6 +37,7 @@ public class PetInteraction : MonoBehaviour
                 text.text = "고양이 엉덩이를 쓰다듬었습니다.";
                 ReactToPetting("body");
             }
+            ShowWhiteImage(); // 하얀색 이미지 활성화 및 2초 뒤에 비활성화
         }
     }
 
@@ -49,13 +57,26 @@ public class PetInteraction : MonoBehaviour
             }
             else if (part == "body")
             {
-                text.text = "고양이가 엉덩이을 쓰다듬는 것을 싫어하며 도망갑니다.";
+                text.text = "고양이가 엉덩이를 쓰다듬는 것을 싫어하며 도망갑니다.";
 
                 // 전체 고양이를 Y축으로 1만큼 이동
                 Vector3 newPosition = transform.parent.position + new Vector3(0, 1, 0);
                 StartCoroutine(MoveCat(newPosition));
             }
+            ShowWhiteImage(); // 하얀색 이미지 활성화 및 2초 뒤에 비활성화
         }
+    }
+
+    private void ShowWhiteImage()
+    {
+        whiteImage.SetActive(true); // 하얀색 이미지 활성화
+        StartCoroutine(HideImage()); // 2초 후에 비활성화
+    }
+
+    private IEnumerator HideImage()
+    {
+        yield return new WaitForSeconds(2); // 2초 대기
+        whiteImage.SetActive(false); // 하얀색 이미지 비활성화
     }
 
     private IEnumerator MoveCat(Vector3 targetPosition)
