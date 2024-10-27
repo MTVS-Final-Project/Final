@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 9071425c535e54670ae24e3cd7489d6d
+timeCreated: 1527579279
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Demo/Prefabs/Blue_theme_prefabs/Tree_4b_blue.prefab
+  uploadId: 634825

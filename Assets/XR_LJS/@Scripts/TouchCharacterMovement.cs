@@ -1,7 +1,7 @@
-
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
+using TMPro;
 
 public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -12,11 +12,14 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
     private PhotonView pv;
     Rigidbody2D rb;
     private SpriteRenderer[] spriteRenderers; // 캐릭터의 모든 SpriteRenderer들
+    public TMP_Text playerNickname; // 플레이어 닉네임 담는 변수 선언.
+
+    // 고양이 GameObject를 참조하는 변수 추가
+    public GameObject cat; // 고양이가 존재하는지 확인할 변수
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        pv = GetComponent<PhotonView>();
 
         // 캐릭터의 모든 SpriteRenderer를 찾음 (하위 오브젝트 포함)
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
@@ -26,12 +29,16 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
             string jsonData = (string)photonView.InstantiationData[0];
             CharacterCustomizationData customData = CharacterCustomizationData.FromJson(jsonData);
         }
+
+        //playerNickname.text = photonView.Owner.NickName;
+        cat = GameObject.Find("Cat").GetComponent<GameObject>(); //Cat
+
     }
 
     void Update()
     {
         // 윈도우 테스트 용
-        if (pv.IsMine)
+        if (photonView.IsMine)
         {
             movement.x = Input.GetAxis("Horizontal");
             movement.y = Input.GetAxis("Vertical");
@@ -39,7 +46,7 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
             rb.linearVelocity = movement * moveSpeed;
         }
 
-        if (!pv.IsMine) return; // 자신의 캐릭터만 제어
+        if (!photonView.IsMine) return; // 자신의 캐릭터만 제어
 
         // 활성화된 버튼의 개수를 확인
         int activeButtonCount = CountActiveButtons();
@@ -48,6 +55,12 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
         if (activeButtonCount >= 5)
         {
             return;
+        }
+
+        // 고양이가 존재하면 이동 중지
+        if (cat != null && cat.activeInHierarchy)
+        {
+            return; // 고양이가 활성화된 경우 캐릭터의 이동을 멈춤
         }
 
         if (Input.touchCount > 0)
@@ -60,9 +73,6 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
                 isMoving = true;
             }
         }
-        
-        
-
 
         if (isMoving)
         {

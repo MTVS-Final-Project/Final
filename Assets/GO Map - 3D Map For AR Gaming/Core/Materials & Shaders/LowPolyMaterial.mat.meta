@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 0f433d3b22d2f414f9c5a4cf6b601604
+timeCreated: 1512033164
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Core/Materials & Shaders/LowPolyMaterial.mat
+  uploadId: 634825

@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 0f87b4b89221f48619768a18d38172fa
+timeCreated: 1494499821
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/GOShared/Inspector/InspectorButton.cs
+  uploadId: 634825

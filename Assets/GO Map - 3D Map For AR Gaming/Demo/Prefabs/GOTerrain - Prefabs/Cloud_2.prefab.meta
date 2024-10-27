@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e7e520a987a0c455ab6f4c12795b3d83
+timeCreated: 1487884306
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Demo/Prefabs/GOTerrain - Prefabs/Cloud_2.prefab
+  uploadId: 634825

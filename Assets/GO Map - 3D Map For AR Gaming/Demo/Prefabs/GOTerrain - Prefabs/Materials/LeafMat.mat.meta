@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 887aab190d7a64d15a5f96071a287d2f
+timeCreated: 1487876870
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Demo/Prefabs/GOTerrain - Prefabs/Materials/LeafMat.mat
+  uploadId: 634825

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 1cb91910dde534af4b3d5701e79aa0c0
+timeCreated: 1512982407
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Demo/Marauder's Map/Marauder's
+    Map - Post Processing Profile.asset
+  uploadId: 634825

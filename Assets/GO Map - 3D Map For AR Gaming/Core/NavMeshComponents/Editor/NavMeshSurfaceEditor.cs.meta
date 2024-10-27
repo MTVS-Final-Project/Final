@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: a96014d7277b84d4eb47432158eddc44
+timeCreated: 1476968447
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Core/NavMeshComponents/Editor/NavMeshSurfaceEditor.cs
+  uploadId: 634825

@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: ecb3b05d80c68484fbd8a8ec0a8b7dc3
+timeCreated: 1527580020
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Demo/Prefabs/Blue_theme_prefabs/baloon_blue2.mat
+  uploadId: 634825

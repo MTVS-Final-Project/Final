@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 8f630814e9c734b07bb4fd8977eefc84
+timeCreated: 1527579297
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Demo/Prefabs/Wireframe_theme_prefabs/Tree_wire.mat
+  uploadId: 634825

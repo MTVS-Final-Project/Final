@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 26e139c114d234465a8acea2d51582ca
+timeCreated: 1484649866
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/GOShared/CameraControls/GOOrbit.cs
+  uploadId: 634825

@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 5e3a7a6a7e92d44e4b6cc2565e9440c5
+timeCreated: 1527580005
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Demo/Prefabs/Wireframe_theme_prefabs/ballon_wire.mat
+  uploadId: 634825

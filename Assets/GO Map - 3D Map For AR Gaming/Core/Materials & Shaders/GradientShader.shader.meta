@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 88396839d287e4711aa12f3972a6554b
+timeCreated: 1512032672
+licenseType: Store
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Core/Materials & Shaders/GradientShader.shader
+  uploadId: 634825

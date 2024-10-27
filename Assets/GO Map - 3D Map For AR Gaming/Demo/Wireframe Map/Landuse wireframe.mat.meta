@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 6da219dfbc3724afb9c4fdc600a91ac1
+timeCreated: 1510336429
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 68889
+  packageName: GO Map - 3D Map for AR Gaming
+  packageVersion: 3.7.3
+  assetPath: Assets/GO Map - 3D Map For AR Gaming/Demo/Wireframe Map/Landuse wireframe.mat
+  uploadId: 634825
