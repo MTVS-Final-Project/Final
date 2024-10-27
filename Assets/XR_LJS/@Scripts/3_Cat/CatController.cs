@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Spine.Unity;
 
 public class CatController : MonoBehaviour
 {
@@ -8,11 +9,11 @@ public class CatController : MonoBehaviour
     public float doubleClickTimeLimit = 1f;
 
     private float lastClickTime = 0f;
-    private SpriteRenderer[] spriteRenderers;
     private Collider2D headCollider;
     private Collider2D bodyCollider;
     private Vector3 headOriginalOffset;
     private Vector3 bodyOriginalOffset;
+    private SkeletonAnimation skeletonAnimation; // SkeletonAnimation 컴포넌트 참조
     [SerializeField] private Camera cam; // 카메라 참조
     public float zoomMultiplier = 2.0f;
     public float minZoom = 2f;
@@ -25,9 +26,17 @@ public class CatController : MonoBehaviour
     private float targetZoom;
     private float zoomVelocity = 0f;
     private Vector3 cameraVelocity = Vector3.zero;
+
     private void Awake()
     {
-        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+        // SkeletonAnimation 컴포넌트 가져오기
+        skeletonAnimation = GetComponent<SkeletonAnimation>();
+
+        // 초기 위치 설정
+        if (skeletonAnimation != null)
+        {
+            skeletonAnimation.skeleton.ScaleX = -1f; // Initial Flip X 활성화 (오른쪽을 바라보게 함)
+        }
 
         headCollider = transform.Find("Head").GetComponent<Collider2D>();
         bodyCollider = transform.Find("Body").GetComponent<Collider2D>();
@@ -38,6 +47,7 @@ public class CatController : MonoBehaviour
 
         player = GameObject.Find("Avatar1").GetComponent<Transform>();
     }
+
     private void Start()
     {
         GameObject catObject = GameObject.FindGameObjectWithTag("Cat");
@@ -48,7 +58,23 @@ public class CatController : MonoBehaviour
 
         targetZoom = cam.orthographicSize;
     }
+
     void Update()
+    {
+        HandleClick();
+
+        // 카메라의 줌 부드럽게 전환
+        cam.orthographicSize = Mathf.SmoothDamp(cam.orthographicSize, targetZoom, ref zoomVelocity, smoothTime);
+
+        // 카메라 확대 상태라면 고양이를 따라 이동
+        if (cam.orthographicSize <= minZoom + 0.1f) // 확대 완료 근처에서 고양이 위치로 이동
+        {
+            Vector3 targetPosition = new Vector3(catTransform.position.x, catTransform.position.y, cam.transform.position.z);
+            cam.transform.position = Vector3.SmoothDamp(cam.transform.position, targetPosition, ref cameraVelocity, moveSmoothTime);
+        }
+    }
+
+    private void HandleClick()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -65,6 +91,7 @@ public class CatController : MonoBehaviour
             }
             lastClickTime = Time.time;
         }
+
         if (Input.GetMouseButtonDown(0) && catTransform != null) // 마우스 왼쪽 버튼 클릭 감지
         {
             Vector3 mouseWorldPosition = cam.ScreenToWorldPoint(Input.mousePosition);
@@ -78,16 +105,6 @@ public class CatController : MonoBehaviour
                 targetZoom = minZoom;
             }
         }
-
-        // 카메라의 줌 부드럽게 전환
-        cam.orthographicSize = Mathf.SmoothDamp(cam.orthographicSize, targetZoom, ref zoomVelocity, smoothTime);
-
-        // 카메라 확대 상태라면 고양이를 따라 이동
-        if (cam.orthographicSize <= minZoom + 0.1f) // 확대 완료 근처에서 고양이 위치로 이동
-        {
-            Vector3 targetPosition = new Vector3(catTransform.position.x, catTransform.position.y, cam.transform.position.z);
-            cam.transform.position = Vector3.SmoothDamp(cam.transform.position, targetPosition, ref cameraVelocity, moveSmoothTime);
-        }
     }
 
     private IEnumerator MoveTowards(Vector3 targetPosition)
@@ -97,15 +114,8 @@ public class CatController : MonoBehaviour
         Vector3 startingPosition = transform.position;
         Vector3 direction = (targetPosition - startingPosition).normalized;
 
-        // 이동 방향에 따라 스프라이트 및 Collider 위치 반전 설정
-        if (direction.x < 0)
-        {
-            FlipSpriteAndCollider(false); // 왼쪽
-        }
-        else if (direction.x > 0)
-        {
-            FlipSpriteAndCollider(true); // 오른쪽
-        }
+        // 이동 방향에 따라 SkeletonAnimation의 ScaleX 설정
+        FlipSkeletonAnimation(direction.x > 0); // 오른쪽이면 flipRight=true, 왼쪽이면 false
 
         while (elapsed < duration)
         {
@@ -117,11 +127,11 @@ public class CatController : MonoBehaviour
         transform.position = targetPosition;
     }
 
-    private void FlipSpriteAndCollider(bool flipRight)
+    private void FlipSkeletonAnimation(bool flipRight)
     {
-        foreach (var spriteRenderer in spriteRenderers)
+        if (skeletonAnimation != null)
         {
-            spriteRenderer.flipX = flipRight;
+            skeletonAnimation.skeleton.ScaleX = flipRight ? 1f : -1f; // ScaleX 속성으로 방향 반전
         }
 
         // Collider의 offset 위치를 flip 방향에 따라 반전
