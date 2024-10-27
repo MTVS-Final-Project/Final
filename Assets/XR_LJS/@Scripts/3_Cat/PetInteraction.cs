@@ -8,11 +8,13 @@ public class PetInteraction : MonoBehaviour
     public GameObject head; // 자식 오브젝트 머리
     public GameObject body; // 자식 오브젝트 몸통
     public TMP_Text text;
-    public GameObject whiteImage; // Canvas의 하얀색 이미지 오브젝트
+    public GameObject whiteImageFriendly; // Friendly 이미지
+    public GameObject whiteImagePicky; // Picky 이미지
 
     void Start()
     {
-        whiteImage.SetActive(false); // 처음에 하얀색 이미지 비활성화
+        whiteImageFriendly.SetActive(false); // 처음에 Friendly 이미지 비활성화
+        whiteImagePicky.SetActive(false); // 처음에 Picky 이미지 비활성화
     }
 
     void OnMouseDown() // 고양이 클릭 시
@@ -45,20 +47,26 @@ public class PetInteraction : MonoBehaviour
     {
         CatBehavior catBehavior = GetComponentInParent<CatBehavior>();
 
+        // 모든 이미지 비활성화
+        whiteImageFriendly.SetActive(false);
+        whiteImagePicky.SetActive(false);
+
         if (catBehavior.catPersonality == CatBehavior.CatPersonality.Friendly)
         {
             text.text = "고양이가 긍정적으로 반응합니다!";
+            whiteImageFriendly.SetActive(true); // Friendly 이미지 활성화
         }
         else if (catBehavior.catPersonality == CatBehavior.CatPersonality.Picky)
         {
             if (part == "head")
             {
                 text.text = "고양이가 머리를 쓰다듬어 긍정적으로 반응합니다.";
+                whiteImagePicky.SetActive(true); // Picky 이미지 활성화
             }
             else if (part == "body")
             {
                 text.text = "고양이가 엉덩이를 쓰다듬는 것을 싫어하며 도망갑니다.";
-
+                whiteImagePicky.SetActive(true);
                 // 전체 고양이를 Y축으로 1만큼 이동
                 Vector3 newPosition = transform.parent.position + new Vector3(0, 1, 0);
                 StartCoroutine(MoveCat(newPosition));
@@ -69,14 +77,15 @@ public class PetInteraction : MonoBehaviour
 
     private void ShowWhiteImage()
     {
-        whiteImage.SetActive(true); // 하얀색 이미지 활성화
+        // 이곳은 현재 하얀색 이미지를 보여주는 기능입니다.
         StartCoroutine(HideImage()); // 2초 후에 비활성화
     }
 
     private IEnumerator HideImage()
     {
         yield return new WaitForSeconds(2); // 2초 대기
-        whiteImage.SetActive(false); // 하얀색 이미지 비활성화
+        whiteImageFriendly.SetActive(false); // Friendly 이미지 비활성화
+        whiteImagePicky.SetActive(false); // Picky 이미지 비활성화
     }
 
     private IEnumerator MoveCat(Vector3 targetPosition)
