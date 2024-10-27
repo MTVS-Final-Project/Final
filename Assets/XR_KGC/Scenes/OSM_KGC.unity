@@ -1624,6 +1624,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tongro
       objectReference: {fileID: 0}
+    - target: {fileID: 3161572387610241934, guid: 8a2b86fd00b30564ba403cbd013efcd2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7289839707917216765, guid: 8a2b86fd00b30564ba403cbd013efcd2,
         type: 3}
       propertyPath: m_LocalPosition.x
