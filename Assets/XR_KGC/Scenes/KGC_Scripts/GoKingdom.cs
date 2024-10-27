@@ -1,4 +1,5 @@
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class GoKingdom : MonoBehaviour
@@ -6,6 +7,8 @@ public class GoKingdom : MonoBehaviour
     public bool inRange;
 
     public GameObject player;
+
+    public int SceneNumber;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -38,5 +41,16 @@ public class GoKingdom : MonoBehaviour
         }
 
 
+    }
+
+    public void ToKingdom()
+    {
+
+        if (inRange)
+        {
+            SceneManager.LoadScene(SceneNumber);
+             print("æ¿¿Ãµø");
+        }
+        
     }
 }

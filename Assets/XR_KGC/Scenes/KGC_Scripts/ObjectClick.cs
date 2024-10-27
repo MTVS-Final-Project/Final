@@ -26,6 +26,7 @@ public class ObjectClick : MonoBehaviour
            // print("2222222222222222222222222222222222222222");
             GameObject clickedObject = hit.collider.gameObject;
 
+            clickedObject.GetComponent<GoKingdom>().ToKingdom();
 
             Debug.Log("Clicked on object: " + clickedObject.name); // 오브젝트 이름 출력
         }
