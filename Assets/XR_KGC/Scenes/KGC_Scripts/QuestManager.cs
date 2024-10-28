@@ -45,5 +45,6 @@ public class QuestManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         QUI.SetActive(false);
 
+        GameObject.Find("tokenCount").GetComponent<TokenScript>().tokenCount += 20;
     }
 }
