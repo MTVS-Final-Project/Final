@@ -4170,6 +4170,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8958045891923967238, guid: 4a3d4ee404cb0754f860c66c7499443a,
         type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8958045891923967238, guid: 4a3d4ee404cb0754f860c66c7499443a,
+        type: 3}
       propertyPath: m_TagString
       value: Ground
       objectReference: {fileID: 0}
@@ -4796,6 +4801,13 @@ MonoBehaviour:
   minZoom: 2
   maxZoom: 5
   approachDistance: 3
+  moveAwayDistance: 2
+  moveAwayDuration: 0.5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  tapTimeWindow: 0.5
+  requiredTapCount: 2
 --- !u!1 &1182832750
 GameObject:
   m_ObjectHideFlags: 0
@@ -5497,6 +5509,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Floor2x4m (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8958045891923967238, guid: 4a3d4ee404cb0754f860c66c7499443a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8958045891923967238, guid: 4a3d4ee404cb0754f860c66c7499443a,
         type: 3}
@@ -6822,7 +6839,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1601632795}
   - component: {fileID: 1601632794}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 2dColl
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -6863,7 +6880,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.3891009}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -6873,7 +6890,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 0.22179818}
   m_EdgeRadius: 0
 --- !u!4 &1601632795
 Transform:
@@ -7665,6 +7682,13 @@ MonoBehaviour:
   minZoom: 2
   maxZoom: 5
   approachDistance: 3
+  moveAwayDistance: 2
+  moveAwayDuration: 0.5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  tapTimeWindow: 0.5
+  requiredTapCount: 2
 --- !u!1 &1890086351
 GameObject:
   m_ObjectHideFlags: 0
