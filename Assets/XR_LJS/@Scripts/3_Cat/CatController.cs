@@ -113,8 +113,9 @@ public class CatController : MonoBehaviour
         targetZoom = minZoom;
         isZoomedIn = true;
 
-        yield return new WaitForSeconds(1.5f); // 줌인 유지 시간
-        backButton.SetActive(true); // 줌인 후 버튼 활성화
+        // 줌인 완료 후 버튼을 활성화 (줌인 애니메이션 후 버튼 활성화)
+        yield return new WaitForSeconds(smoothTime);
+        backButton.SetActive(true);
     }
 
     public void ZoomOut()

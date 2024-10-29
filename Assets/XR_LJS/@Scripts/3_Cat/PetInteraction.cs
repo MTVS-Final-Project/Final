@@ -174,11 +174,12 @@ public class PetInteraction : MonoBehaviour
 
         while (elapsed < duration)
         {
-            transform.position = Vector3.Lerp(startPosition, targetPosition, elapsed / duration);
+            transform.parent.position = Vector3.Lerp(startPosition, targetPosition, elapsed / duration);
             elapsed += Time.deltaTime;
             yield return null;
         }
 
+        // 정확한 최종 위치로 설정
         transform.parent.position = targetPosition;
     }
 }
