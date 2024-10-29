@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using Spine.Unity;
 
@@ -26,26 +27,28 @@ public class CatController : MonoBehaviour
     private float targetZoom;
     private float zoomVelocity = 0f;
     private Vector3 cameraVelocity = Vector3.zero;
+    private bool isZoomedIn = false; // 현재 줌인 상태를 추적
+
+    public GameObject backButton; // 돌아가기 버튼 오브젝트
 
     private void Awake()
     {
-        // SkeletonAnimation 컴포넌트 가져오기
         skeletonAnimation = GetComponent<SkeletonAnimation>();
-
-        // 초기 위치 설정
         if (skeletonAnimation != null)
         {
-            skeletonAnimation.skeleton.ScaleX = -1f; // Initial Flip X 활성화 (오른쪽을 바라보게 함)
+            skeletonAnimation.skeleton.ScaleX = -1f;
         }
 
         headCollider = transform.Find("Head").GetComponent<Collider2D>();
         bodyCollider = transform.Find("Body").GetComponent<Collider2D>();
 
-        // 초기 위치 오프셋 저장
         headOriginalOffset = headCollider.offset;
         bodyOriginalOffset = bodyCollider.offset;
 
         player = GameObject.Find("Avatar1").GetComponent<Transform>();
+
+        // 돌아가기 버튼을 초기 비활성화
+        backButton.SetActive(false);
     }
 
     private void Start()
@@ -66,8 +69,7 @@ public class CatController : MonoBehaviour
         // 카메라의 줌 부드럽게 전환
         cam.orthographicSize = Mathf.SmoothDamp(cam.orthographicSize, targetZoom, ref zoomVelocity, smoothTime);
 
-        // 카메라 확대 상태라면 고양이를 따라 이동
-        if (cam.orthographicSize <= minZoom + 0.1f) // 확대 완료 근처에서 고양이 위치로 이동
+        if (isZoomedIn && cam.orthographicSize <= minZoom + 0.1f)
         {
             Vector3 targetPosition = new Vector3(catTransform.position.x, catTransform.position.y, cam.transform.position.z);
             cam.transform.position = Vector3.SmoothDamp(cam.transform.position, targetPosition, ref cameraVelocity, moveSmoothTime);
@@ -92,19 +94,41 @@ public class CatController : MonoBehaviour
             lastClickTime = Time.time;
         }
 
-        if (Input.GetMouseButtonDown(0) && catTransform != null) // 마우스 왼쪽 버튼 클릭 감지
+        if (Input.GetMouseButtonDown(0) && catTransform != null)
         {
             Vector3 mouseWorldPosition = cam.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPosition.z = 0f;
 
             float distanceToCat = Vector3.Distance(mouseWorldPosition, catTransform.position);
 
-            if (distanceToCat <= clickRadius) // 클릭이 고양이 주변에 있는지 확인
+            if (distanceToCat <= clickRadius)
             {
-                // Cat 오브젝트 근처 클릭 시 확대 설정
-                targetZoom = minZoom;
+                StartCoroutine(ZoomIn());
             }
         }
+    }
+
+    private IEnumerator ZoomIn()
+    {
+        targetZoom = minZoom;
+        isZoomedIn = true;
+
+        yield return new WaitForSeconds(1.5f); // 줌인 유지 시간
+        backButton.SetActive(true); // 줌인 후 버튼 활성화
+    }
+
+    public void ZoomOut()
+    {
+        StartCoroutine(ZoomOutCoroutine());
+    }
+
+    private IEnumerator ZoomOutCoroutine()
+    {
+        targetZoom = maxZoom;
+        isZoomedIn = false;
+        backButton.SetActive(false); // 줌아웃 시 버튼 비활성화
+
+        yield return new WaitForSeconds(smoothTime);
     }
 
     private IEnumerator MoveTowards(Vector3 targetPosition)
@@ -114,8 +138,7 @@ public class CatController : MonoBehaviour
         Vector3 startingPosition = transform.position;
         Vector3 direction = (targetPosition - startingPosition).normalized;
 
-        // 이동 방향에 따라 SkeletonAnimation의 ScaleX 설정
-        FlipSkeletonAnimation(direction.x > 0); // 오른쪽이면 flipRight=true, 왼쪽이면 false
+        FlipSkeletonAnimation(direction.x > 0);
 
         while (elapsed < duration)
         {
@@ -131,11 +154,10 @@ public class CatController : MonoBehaviour
     {
         if (skeletonAnimation != null)
         {
-            skeletonAnimation.skeleton.ScaleX = flipRight ? 1f : -1f; // ScaleX 속성으로 방향 반전
+            skeletonAnimation.skeleton.ScaleX = flipRight ? 1f : -1f;
         }
 
-        // Collider의 offset 위치를 flip 방향에 따라 반전
-        headCollider.offset = flipRight ? new Vector2(-headOriginalOffset.x, headOriginalOffset.y) : headOriginalOffset;
+        headCollider.offset = flipRight ? new Vector2(headOriginalOffset.x, headOriginalOffset.y) : headOriginalOffset;
         bodyCollider.offset = flipRight ? new Vector2(-bodyOriginalOffset.x, bodyOriginalOffset.y) : bodyOriginalOffset;
     }
 }

@@ -67,7 +67,7 @@ public class IncorrectInteraction : MonoBehaviour
     private void MoveCatUp()
     {
         // 부모 오브젝트의 Y축을 5만큼 이동
-        Vector3 newPosition = transform.parent.position + new Vector3(0, 5, 0);
+        Vector3 newPosition = transform.parent.position + new Vector3(5, 5, 0);
         transform.parent.position = newPosition;
     }
 }
