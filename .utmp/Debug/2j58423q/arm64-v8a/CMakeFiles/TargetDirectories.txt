@@ -1,0 +1,5 @@
+C:/Users/tkdgn/Desktop/UnityProjects/Unity/.utmp/Debug/2j58423q/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/tkdgn/Desktop/UnityProjects/Unity/.utmp/Debug/2j58423q/arm64-v8a/CMakeFiles/rebuild_cache.dir
+C:/Users/tkdgn/Desktop/UnityProjects/Unity/.utmp/Debug/2j58423q/arm64-v8a/GameActivity/CMakeFiles/game.dir
+C:/Users/tkdgn/Desktop/UnityProjects/Unity/.utmp/Debug/2j58423q/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
+C:/Users/tkdgn/Desktop/UnityProjects/Unity/.utmp/Debug/2j58423q/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir
