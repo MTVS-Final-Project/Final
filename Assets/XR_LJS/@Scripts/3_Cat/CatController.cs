@@ -45,7 +45,7 @@ public class CatController : MonoBehaviour
         headOriginalOffset = headCollider.offset;
         bodyOriginalOffset = bodyCollider.offset;
 
-        player = GameObject.Find("Avatar1").GetComponent<Transform>();
+        player = GameObject.Find("ChairDinningB").GetComponent<Transform>();
 
         // 돌아가기 버튼을 초기 비활성화
         backButton.SetActive(false);
@@ -113,8 +113,9 @@ public class CatController : MonoBehaviour
         targetZoom = minZoom;
         isZoomedIn = true;
 
-        yield return new WaitForSeconds(1.5f); // 줌인 유지 시간
-        backButton.SetActive(true); // 줌인 후 버튼 활성화
+        // 줌인 완료 후 버튼을 활성화 (줌인 애니메이션 후 버튼 활성화)
+        yield return new WaitForSeconds(smoothTime);
+        backButton.SetActive(true);
     }
 
     public void ZoomOut()
@@ -138,7 +139,7 @@ public class CatController : MonoBehaviour
         Vector3 startingPosition = transform.position;
         Vector3 direction = (targetPosition - startingPosition).normalized;
 
-        FlipSkeletonAnimation(direction.x > 0);
+       
 
         while (elapsed < duration)
         {
@@ -150,14 +151,5 @@ public class CatController : MonoBehaviour
         transform.position = targetPosition;
     }
 
-    private void FlipSkeletonAnimation(bool flipRight)
-    {
-        if (skeletonAnimation != null)
-        {
-            skeletonAnimation.skeleton.ScaleX = flipRight ? 1f : -1f;
-        }
-
-        headCollider.offset = flipRight ? new Vector2(headOriginalOffset.x, headOriginalOffset.y) : headOriginalOffset;
-        bodyCollider.offset = flipRight ? new Vector2(-bodyOriginalOffset.x, bodyOriginalOffset.y) : bodyOriginalOffset;
-    }
+    
 }

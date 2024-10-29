@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class SpawnNyangMill : MonoBehaviour
@@ -14,6 +15,20 @@ public class SpawnNyangMill : MonoBehaviour
 
         GameObject go = Instantiate(nm);
         go.transform.position = randomPosition;
+
+        StartCoroutine(Respawn());
+    }
+
+    public IEnumerator Respawn()
+    {
+        yield return new WaitForSeconds(5);
+        Vector3 randomPosition = GetRandomPositionInCircleRelativeToSelf(radius, yOffset);
+        Debug.Log("Random Position: " + randomPosition);
+
+        GameObject go = Instantiate(nm);
+        go.transform.position = randomPosition;
+        StartCoroutine(Respawn());
+
     }
 
     Vector3 GetRandomPositionInCircleRelativeToSelf(float radius, float yOffset)

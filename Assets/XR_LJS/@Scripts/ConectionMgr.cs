@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
-
 public class ConectionMgr : MonoBehaviourPunCallbacks
 {
     [SerializeField] Text loadingText;
@@ -71,7 +70,7 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
         // Only load the second scene if we are in a room
         if (PhotonNetwork.InRoom)
         {
-            PhotonNetwork.LoadLevel("SecondScene_LJS");
+            PhotonNetwork.LoadLevel("Room_KGC");
 
         }
         

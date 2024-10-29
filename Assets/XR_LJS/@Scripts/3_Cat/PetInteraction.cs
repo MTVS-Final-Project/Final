@@ -1,106 +1,258 @@
-using TMPro;
 using UnityEngine;
 using System.Collections;
 
 public class PetInteraction : MonoBehaviour
 {
     private Vector3 initialMousePosition;
-    public GameObject head; // 자식 오브젝트 머리
-    public GameObject body; // 자식 오브젝트 몸통
-    public TMP_Text text;
-    public GameObject whiteImageFriendly; // Friendly 이미지
-    public GameObject whiteImagePicky; // Picky 이미지
+    public GameObject head;
+    public GameObject body;
+    public GameObject whiteImageFriendly;
+    public GameObject whiteImagePicky;
+    public GameObject backButton;
+    [SerializeField] private Camera cam;
+    public float minZoom = 2f;
+    public float maxZoom = 5f;
+    public float approachDistance = 3.0f;
+    public float moveAwayDistance = 2f;
+    public float moveAwayDuration = 0.5f;
 
-    void Start()
+    // Ground layer reference
+    public LayerMask groundLayer;
+
+    private bool isZoomedIn = false;
+    private Vector3 originalCameraPosition;
+    private float originalZoom;
+
+    public float tapTimeWindow = 0.5f;
+    public int requiredTapCount = 2;
+
+    private int tapCount = 0;
+    private float lastTapTime = 0;
+
+    private void Start()
     {
-        whiteImageFriendly.SetActive(false); // 처음에 Friendly 이미지 비활성화
-        whiteImagePicky.SetActive(false); // 처음에 Picky 이미지 비활성화
+        whiteImageFriendly.SetActive(false);
+        whiteImagePicky.SetActive(false);
+        backButton.SetActive(false);
+        originalCameraPosition = cam.transform.position;
+        originalZoom = cam.orthographicSize;
     }
 
-    void OnMouseDown() // 고양이 클릭 시
+    private void Update()
     {
-        initialMousePosition = Input.mousePosition;
+        if (Input.GetMouseButtonDown(0))
+        {
+            HandleClick();
+            HandleTouch();
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            HandleRightClick();
+        }
     }
 
-    void OnMouseDrag()
+    private void HandleTouch()
+    {
+        Vector3 touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        touchPosition.z = 0f;
+        RaycastHit2D hit = Physics2D.Raycast(touchPosition, Vector2.zero);
+
+        if (hit.collider != null)
+        {
+            // Check object tags
+            if (hit.collider.CompareTag("Head"))
+            {
+                StartCoroutine(MoveCatAwayOnGround());
+                StartCoroutine(ShowScaredReaction());
+                ZoomOut();
+            }
+            else if (hit.collider.CompareTag("Butt"))
+            {
+                StartCoroutine(ShowFriendlyReaction());
+            }
+        }
+    }
+
+    private void HandleClick()
+    {
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, Mathf.Infinity, groundLayer);
+
+        if (hit.collider != null)
+        {
+            if (hit.collider.gameObject == head || hit.collider.gameObject == body)
+            {
+                ZoomIn();
+                initialMousePosition = Input.mousePosition;
+            }
+            else if (hit.collider.CompareTag("Ground"))
+            {
+                StartCoroutine(ApproachCatOnGround(hit.point));
+            }
+        }
+    }
+
+    private void HandleRightClick()
+    {
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, Mathf.Infinity, groundLayer);
+
+        if (hit.collider != null)
+        {
+            if (hit.collider.gameObject == head)
+            {
+                ReactToPetting("head", true);
+            }
+            else if (hit.collider.gameObject == body)
+            {
+                ReactToPetting("body", false);
+            }
+        }
+    }
+
+    private IEnumerator ApproachCatOnGround(Vector3 targetPosition)
+    {
+        // Ensure the target position is on the ground
+        RaycastHit2D groundHit = Physics2D.Raycast(targetPosition, Vector2.zero, Mathf.Infinity, groundLayer);
+        if (groundHit.collider != null)
+        {
+            Vector3 startPos = transform.position;
+            targetPosition.z = startPos.z; // Maintain the same Z position
+            float distance = Vector3.Distance(startPos, targetPosition);
+
+            if (distance > approachDistance)
+            {
+                float elapsed = 0;
+                float duration = distance / 2.0f;
+
+                while (elapsed < duration)
+                {
+                    Vector3 newPos = Vector3.Lerp(startPos, targetPosition, elapsed / duration);
+                    // Ensure movement stays on ground
+                    RaycastHit2D moveCheck = Physics2D.Raycast(newPos, Vector2.zero, Mathf.Infinity, groundLayer);
+                    if (moveCheck.collider != null)
+                    {
+                        transform.position = newPos;
+                    }
+                    elapsed += Time.deltaTime;
+                    yield return null;
+                }
+                transform.position = targetPosition;
+            }
+        }
+    }
+
+    private void ZoomIn()
+    {
+        if (!isZoomedIn)
+        {
+            cam.orthographicSize = minZoom;
+            cam.transform.position = new Vector3(transform.position.x, transform.position.y, cam.transform.position.z);
+            isZoomedIn = true;
+            backButton.SetActive(true);
+        }
+    }
+
+    public void ZoomOut()
+    {
+        cam.orthographicSize = originalZoom;
+        cam.transform.position = originalCameraPosition;
+        isZoomedIn = false;
+        backButton.SetActive(false);
+    }
+
+    private void OnMouseDrag()
     {
         Vector3 currentMousePosition = Input.mousePosition;
         float dragDistance = Vector3.Distance(initialMousePosition, currentMousePosition);
 
-        if (dragDistance > 50.0f) // 쓰다듬기 거리 기준
+        if (dragDistance < 4.0f)
         {
             if (gameObject == head)
             {
-                text.text = "고양이 머리를 쓰다듬었습니다.";
-                ReactToPetting("head");
+                ReactToPetting("head", true);
             }
             else if (gameObject == body)
             {
-                text.text = "고양이 엉덩이를 쓰다듬었습니다.";
-                ReactToPetting("body");
+                ReactToPetting("body", false);
             }
-            ShowWhiteImage(); // 하얀색 이미지 활성화 및 2초 뒤에 비활성화
+            ShowWhiteImage();
         }
     }
 
-    void ReactToPetting(string part)
+    private void ReactToPetting(string part, bool positiveReaction)
     {
-        CatBehavior catBehavior = GetComponentInParent<CatBehavior>();
-
-        // 모든 이미지 비활성화
         whiteImageFriendly.SetActive(false);
         whiteImagePicky.SetActive(false);
 
-        if (catBehavior.catPersonality == CatBehavior.CatPersonality.Friendly)
+        if (positiveReaction)
         {
-            text.text = "고양이가 긍정적으로 반응합니다!";
-            whiteImageFriendly.SetActive(true); // Friendly 이미지 활성화
+            whiteImageFriendly.SetActive(true);
         }
-        else if (catBehavior.catPersonality == CatBehavior.CatPersonality.Picky)
+        else
         {
-            if (part == "head")
+            whiteImagePicky.SetActive(true);
+            if (part == "body" || part == "head")
             {
-                text.text = "고양이가 머리를 쓰다듬어 긍정적으로 반응합니다.";
-                whiteImagePicky.SetActive(true); // Picky 이미지 활성화
+                StartCoroutine(MoveCatAwayOnGround());
+                ZoomOut();
             }
-            else if (part == "body")
-            {
-                text.text = "고양이가 엉덩이를 쓰다듬는 것을 싫어하며 도망갑니다.";
-                whiteImagePicky.SetActive(true);
-                // 전체 고양이를 Y축으로 1만큼 이동
-                Vector3 newPosition = transform.parent.position + new Vector3(1, 1, 0);
-                StartCoroutine(MoveCat(newPosition));
-            }
-            ShowWhiteImage(); // 하얀색 이미지 활성화 및 2초 뒤에 비활성화
         }
+        ShowWhiteImage();
     }
 
     private void ShowWhiteImage()
     {
-        // 이곳은 현재 하얀색 이미지를 보여주는 기능입니다.
-        StartCoroutine(HideImage()); // 2초 후에 비활성화
+        StartCoroutine(HideImage());
     }
 
     private IEnumerator HideImage()
     {
-        yield return new WaitForSeconds(2); // 2초 대기
-        whiteImageFriendly.SetActive(false); // Friendly 이미지 비활성화
-        whiteImagePicky.SetActive(false); // Picky 이미지 비활성화
+        yield return new WaitForSeconds(2);
+        whiteImageFriendly.SetActive(false);
+        whiteImagePicky.SetActive(false);
     }
 
-    private IEnumerator MoveCat(Vector3 targetPosition)
+    private IEnumerator MoveCatAwayOnGround()
     {
-        float duration = 0.5f; // 이동하는 데 걸리는 시간
-        float elapsed = 0f;
-        Vector3 startingPosition = transform.parent.position; // 부모 오브젝트 (고양이 전체)의 현재 위치 저장
+        Vector3 startPosition = transform.parent.position;
+        Vector3 awayDirection = new Vector3(moveAwayDistance, 0, 0); // Move only horizontally
+        Vector3 targetPosition = startPosition + awayDirection;
 
-        while (elapsed < duration)
+        // Verify target position is on ground
+        RaycastHit2D groundCheck = Physics2D.Raycast(targetPosition, Vector2.zero, Mathf.Infinity, groundLayer);
+        if (groundCheck.collider != null)
         {
-            transform.parent.position = Vector3.Lerp(startingPosition, targetPosition, elapsed / duration);
-            elapsed += Time.deltaTime; // 경과 시간 업데이트
-            yield return null; // 다음 프레임까지 대기
-        }
+            float elapsed = 0f;
 
-        transform.parent.position = targetPosition; // 최종 위치 설정
+            while (elapsed < moveAwayDuration)
+            {
+                Vector3 newPos = Vector3.Lerp(startPosition, targetPosition, elapsed / moveAwayDuration);
+                // Ensure movement stays on ground
+                RaycastHit2D moveCheck = Physics2D.Raycast(newPos, Vector2.zero, Mathf.Infinity, groundLayer);
+                if (moveCheck.collider != null)
+                {
+                    transform.parent.position = newPos;
+                }
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.parent.position = targetPosition;
+        }
+    }
+
+    private IEnumerator ShowScaredReaction()
+    {
+        whiteImagePicky.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        whiteImagePicky.SetActive(false);
+    }
+
+    private IEnumerator ShowFriendlyReaction()
+    {
+        whiteImageFriendly.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        whiteImageFriendly.SetActive(false);
     }
 }
