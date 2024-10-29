@@ -68,7 +68,7 @@ public class PetInteraction : MonoBehaviour
                 text.text = "고양이가 엉덩이를 쓰다듬는 것을 싫어하며 도망갑니다.";
                 whiteImagePicky.SetActive(true);
                 // 전체 고양이를 Y축으로 1만큼 이동
-                Vector3 newPosition = transform.parent.position + new Vector3(0, 1, 0);
+                Vector3 newPosition = transform.parent.position + new Vector3(1, 1, 0);
                 StartCoroutine(MoveCat(newPosition));
             }
             ShowWhiteImage(); // 하얀색 이미지 활성화 및 2초 뒤에 비활성화
