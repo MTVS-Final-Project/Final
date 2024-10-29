@@ -1,9 +1,10 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TokenScript : MonoBehaviour
 {
-    public Text text;
+    public TextMeshProUGUI text;
 
     public int tokenCount = 0;
 
