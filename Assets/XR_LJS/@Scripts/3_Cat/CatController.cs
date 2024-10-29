@@ -45,7 +45,7 @@ public class CatController : MonoBehaviour
         headOriginalOffset = headCollider.offset;
         bodyOriginalOffset = bodyCollider.offset;
 
-        player = GameObject.Find("Avatar1").GetComponent<Transform>();
+        player = GameObject.Find("ChairDinningB").GetComponent<Transform>();
 
         // 돌아가기 버튼을 초기 비활성화
         backButton.SetActive(false);
