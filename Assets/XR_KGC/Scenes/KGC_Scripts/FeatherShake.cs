@@ -5,7 +5,7 @@ public class FeatherShake : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 {
     private RectTransform rectTransform;
     private float initialX; // 드래그 시작 시 X 좌표
-    private float rotationFactor = 0.1f; // 회전 민감도
+    private float rotationFactor = 0.3f; // 회전 민감도
     public float totalRotationZ = 0f; // 누적된 Z 축 회전 값의 절대값
     private float currentRotationZ = 0f; // 현재 Z 축 회전 값 (화면 상에서 적용되는 회전 값)
 
