@@ -1016,8 +1016,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.229, y: -0.03}
-  m_SizeDelta: {x: 2, y: 1}
+  m_AnchoredPosition: {x: -1.319, y: -0.1975}
+  m_SizeDelta: {x: 1.51, y: 0.665}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &569582569
 MonoBehaviour:
@@ -1089,14 +1089,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1143,8 +1143,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 707565540}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.24772698, y: 0.19726658, z: 0.68257445}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1617,9 +1617,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   head: {fileID: 873237350}
   body: {fileID: 1989122099}
-  text: {fileID: 0}
   whiteImageFriendly: {fileID: 0}
   whiteImagePicky: {fileID: 0}
+  backButton: {fileID: 0}
+  cam: {fileID: 0}
+  minZoom: 2
+  maxZoom: 5
+  approachDistance: 3
 --- !u!114 &873237355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1635,7 +1639,8 @@ MonoBehaviour:
   head: {fileID: 873237350}
   body: {fileID: 1989122099}
   text: {fileID: 0}
-  whiteImage: {fileID: 0}
+  whiteImageFriendly: {fileID: 0}
+  whiteImagePicky: {fileID: 0}
 --- !u!114 &873237356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1651,7 +1656,8 @@ MonoBehaviour:
   head: {fileID: 873237350}
   body: {fileID: 1989122099}
   text: {fileID: 0}
-  whiteImage: {fileID: 0}
+  whiteImageFriendly: {fileID: 0}
+  whiteImagePicky: {fileID: 0}
 --- !u!1 &973411724
 GameObject:
   m_ObjectHideFlags: 0
@@ -1915,8 +1921,6 @@ GameObject:
   - component: {fileID: 1169560997}
   - component: {fileID: 1169560998}
   - component: {fileID: 1169561001}
-  - component: {fileID: 1169561000}
-  - component: {fileID: 1169560999}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -1975,38 +1979,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.5745216, y: 1.1094927}
   m_Radius: 0.7393846
---- !u!114 &1169560999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1169560996}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70540a5befd697447ab9bea5009d75f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  head: {fileID: 1169560996}
-  body: {fileID: 1863606590}
-  text: {fileID: 199164663}
-  whiteImage: {fileID: 2015878285}
---- !u!114 &1169561000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1169560996}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eea012a114800694a8978ac868a0eaa5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  head: {fileID: 1169560996}
-  body: {fileID: 1863606590}
-  text: {fileID: 199164663}
-  whiteImage: {fileID: 2015878285}
 --- !u!114 &1169561001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2021,9 +1993,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   head: {fileID: 1169560996}
   body: {fileID: 1863606590}
-  text: {fileID: 199164663}
   whiteImageFriendly: {fileID: 2015878285}
   whiteImagePicky: {fileID: 1974436799}
+  backButton: {fileID: 569582567}
+  cam: {fileID: 69984128}
+  minZoom: 2
+  maxZoom: 5
+  approachDistance: 3
 --- !u!1 &1379763282
 GameObject:
   m_ObjectHideFlags: 0
@@ -2573,8 +2549,6 @@ GameObject:
   - component: {fileID: 1863606591}
   - component: {fileID: 1863606592}
   - component: {fileID: 1863606595}
-  - component: {fileID: 1863606594}
-  - component: {fileID: 1863606593}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -2591,7 +2565,7 @@ Transform:
   m_GameObject: {fileID: 1863606590}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.504, y: 1.02, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2631,7 +2605,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.28309774}
+  m_Offset: {x: 0.1417023, y: 0.5033908}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2641,40 +2615,8 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1.5661955}
+  m_Size: {x: 1.7792237, y: 0.70145607}
   m_EdgeRadius: 0
---- !u!114 &1863606593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1863606590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eea012a114800694a8978ac868a0eaa5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  head: {fileID: 1169560996}
-  body: {fileID: 1863606590}
-  text: {fileID: 199164663}
-  whiteImage: {fileID: 2015878285}
---- !u!114 &1863606594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1863606590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70540a5befd697447ab9bea5009d75f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  head: {fileID: 1169560996}
-  body: {fileID: 1863606590}
-  text: {fileID: 199164663}
-  whiteImage: {fileID: 2015878285}
 --- !u!114 &1863606595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2689,9 +2631,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   head: {fileID: 1169560996}
   body: {fileID: 1863606590}
-  text: {fileID: 199164663}
   whiteImageFriendly: {fileID: 2015878285}
   whiteImagePicky: {fileID: 1974436799}
+  backButton: {fileID: 569582567}
+  cam: {fileID: 69984128}
+  minZoom: 2
+  maxZoom: 5
+  approachDistance: 3
 --- !u!1 &1974436799
 GameObject:
   m_ObjectHideFlags: 0
@@ -3101,9 +3047,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   head: {fileID: 873237350}
   body: {fileID: 1989122099}
-  text: {fileID: 0}
   whiteImageFriendly: {fileID: 0}
   whiteImagePicky: {fileID: 0}
+  backButton: {fileID: 0}
+  cam: {fileID: 0}
+  minZoom: 2
+  maxZoom: 5
+  approachDistance: 3
 --- !u!114 &1989122104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3119,7 +3069,8 @@ MonoBehaviour:
   head: {fileID: 873237350}
   body: {fileID: 1989122099}
   text: {fileID: 0}
-  whiteImage: {fileID: 0}
+  whiteImageFriendly: {fileID: 0}
+  whiteImagePicky: {fileID: 0}
 --- !u!114 &1989122105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3135,7 +3086,8 @@ MonoBehaviour:
   head: {fileID: 873237350}
   body: {fileID: 1989122099}
   text: {fileID: 0}
-  whiteImage: {fileID: 0}
+  whiteImageFriendly: {fileID: 0}
+  whiteImagePicky: {fileID: 0}
 --- !u!1 &2015878285
 GameObject:
   m_ObjectHideFlags: 0

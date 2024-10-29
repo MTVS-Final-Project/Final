@@ -138,7 +138,7 @@ public class CatController : MonoBehaviour
         Vector3 startingPosition = transform.position;
         Vector3 direction = (targetPosition - startingPosition).normalized;
 
-        FlipSkeletonAnimation(direction.x > 0);
+       
 
         while (elapsed < duration)
         {
@@ -150,14 +150,5 @@ public class CatController : MonoBehaviour
         transform.position = targetPosition;
     }
 
-    private void FlipSkeletonAnimation(bool flipRight)
-    {
-        if (skeletonAnimation != null)
-        {
-            skeletonAnimation.skeleton.ScaleX = flipRight ? 1f : -1f;
-        }
-
-        headCollider.offset = flipRight ? new Vector2(headOriginalOffset.x, headOriginalOffset.y) : headOriginalOffset;
-        bodyCollider.offset = flipRight ? new Vector2(-bodyOriginalOffset.x, bodyOriginalOffset.y) : bodyOriginalOffset;
-    }
+    
 }
