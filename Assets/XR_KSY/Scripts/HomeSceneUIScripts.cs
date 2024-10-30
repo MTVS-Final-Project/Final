@@ -7,6 +7,9 @@ using UnityEngine.UIElements;
 
 public class HomeSceneUIScripts : MonoBehaviour
 {
+    public GameObject underImage;
+    public GameObject menuBtn;
+
     public GameObject shop;
     public GameObject town;
     public GameObject cash;
@@ -43,13 +46,27 @@ public class HomeSceneUIScripts : MonoBehaviour
     void Start()
     {
         shop.SetActive(false);
-        town.SetActive(false);
+        town.SetActive(true);
         set.SetActive(false);
         profile.SetActive(false);
         friend.SetActive(false);
         quest.SetActive(false);
         events.SetActive(false);
         commu.SetActive(false);
+        underImage.SetActive(false);
+        menuBtn.SetActive(false);
+    }
+
+    public void Btn_Menu()
+    {
+        underImage.SetActive(true);
+        menuBtn.SetActive(false);
+    }
+
+    public void Menu_CloseBtn()
+    {
+        underImage.SetActive(false);
+        menuBtn.SetActive(true);
     }
 
     public void Btn_profile()
@@ -82,10 +99,13 @@ public class HomeSceneUIScripts : MonoBehaviour
     public void Btn_town()
     {
         town.SetActive(true);
+        homePop.SetActive(false ) ;
     }
     public void Btn_townClose()
     {
         town.SetActive(false ) ;
+        underImage.SetActive(false) ;
+        menuBtn.SetActive(true) ;
     }
 
     public void Btn_event()
