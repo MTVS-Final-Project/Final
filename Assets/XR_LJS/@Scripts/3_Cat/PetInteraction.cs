@@ -23,11 +23,8 @@ public class PetInteraction : MonoBehaviour
     private Vector3 originalCameraPosition;
     private float originalZoom;
 
-    public float tapTimeWindow = 0.5f;
-    public int requiredTapCount = 2;
-
-    private int tapCount = 0;
-    private float lastTapTime = 0;
+    private int headClickCount = 0;      // 머리 클릭 횟수
+    private int bodyClickCount = 0;      // 몸통 클릭 횟수
 
     private void Start()
     {
@@ -43,69 +40,76 @@ public class PetInteraction : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             HandleClick();
-            HandleTouch();
-        }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            HandleRightClick();
         }
     }
 
-    private void HandleTouch()
-    {
-        Vector3 touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        touchPosition.z = 0f;
-        RaycastHit2D hit = Physics2D.Raycast(touchPosition, Vector2.zero);
-
-        if (hit.collider != null)
-        {
-            // Check object tags
-            if (hit.collider.CompareTag("Head"))
-            {
-                StartCoroutine(MoveCatAwayOnGround());
-                StartCoroutine(ShowScaredReaction());
-                ZoomOut();
-            }
-            else if (hit.collider.CompareTag("Butt"))
-            {
-                StartCoroutine(ShowFriendlyReaction());
-            }
-        }
-    }
+    
 
     private void HandleClick()
     {
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, Mathf.Infinity, groundLayer);
-
-        if (hit.collider != null)
+        if (cam.orthographicSize <= 3)
         {
-            if (hit.collider.gameObject == head || hit.collider.gameObject == body)
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
+            if (hit.collider != null)
             {
-                ZoomIn();
-                initialMousePosition = Input.mousePosition;
-            }
-            else if (hit.collider.CompareTag("Ground"))
-            {
-                StartCoroutine(ApproachCatOnGround(hit.point));
+                // 머리 클릭 감지
+                if (hit.collider.gameObject == head)
+                {
+                    headClickCount++;
+                    bodyClickCount = 0; // 다른 부분의 클릭 카운트 초기화
+
+                    if (headClickCount == 2)  // 머리 2회 클릭
+                    {
+                        ShowPinkyReaction();
+                        headClickCount = 0;
+                    }
+                    else
+                    {
+                        initialMousePosition = Input.mousePosition;  // 드래그 감지 초기 위치 설정
+                    }
+                }
+                // 몸통 클릭 감지
+                else if (hit.collider.gameObject == body)
+                {
+                    bodyClickCount++;
+                    headClickCount = 0; // 다른 부분의 클릭 카운트 초기화
+
+                    if (bodyClickCount == 2)  // 몸통 2회 클릭
+                    {
+                        ShowFriendlyReaction();
+                        bodyClickCount = 0;
+                    }
+                    else
+                    {
+                        initialMousePosition = Input.mousePosition;  // 드래그 감지 초기 위치 설정
+                    }
+                }
             }
         }
     }
 
-    private void HandleRightClick()
+    private void OnMouseDrag()
     {
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, Mathf.Infinity, groundLayer);
-
-        if (hit.collider != null)
+        if (cam.orthographicSize <= 3)
         {
-            if (hit.collider.gameObject == head)
+            Vector3 currentMousePosition = Input.mousePosition;
+            float dragDistance = Vector3.Distance(initialMousePosition, currentMousePosition);
+
+            if (dragDistance > 5.0f)  // 드래그 거리 기준
             {
-                ReactToPetting("head", true);
-            }
-            else if (hit.collider.gameObject == body)
-            {
-                ReactToPetting("body", false);
+                // 머리를 드래그한 경우
+                if (headClickCount > 0)
+                {
+                    ShowFriendlyReaction();
+                    headClickCount = 0;
+                }
+                // 몸통을 드래그한 경우
+                else if (bodyClickCount > 0)
+                {
+                    ShowPinkyReaction();
+                    bodyClickCount = 0;
+                }
             }
         }
     }
@@ -161,24 +165,7 @@ public class PetInteraction : MonoBehaviour
         backButton.SetActive(false);
     }
 
-    private void OnMouseDrag()
-    {
-        Vector3 currentMousePosition = Input.mousePosition;
-        float dragDistance = Vector3.Distance(initialMousePosition, currentMousePosition);
-
-        if (dragDistance < 4.0f)
-        {
-            if (gameObject == head)
-            {
-                ReactToPetting("head", true);
-            }
-            else if (gameObject == body)
-            {
-                ReactToPetting("body", false);
-            }
-            ShowWhiteImage();
-        }
-    }
+    
 
     private void ReactToPetting(string part, bool positiveReaction)
     {
@@ -198,19 +185,26 @@ public class PetInteraction : MonoBehaviour
                 ZoomOut();
             }
         }
-        ShowWhiteImage();
     }
 
-    private void ShowWhiteImage()
+    private void ShowPinkyReaction()
     {
-        StartCoroutine(HideImage());
-    }
-
-    private IEnumerator HideImage()
-    {
-        yield return new WaitForSeconds(2);
+        whiteImagePicky.SetActive(true);
         whiteImageFriendly.SetActive(false);
+        StartCoroutine(HideImage(whiteImagePicky));
+    }
+
+    private void ShowFriendlyReaction()
+    {
+        whiteImageFriendly.SetActive(true);
         whiteImagePicky.SetActive(false);
+        StartCoroutine(HideImage(whiteImageFriendly));
+    }
+
+    private IEnumerator HideImage(GameObject image)
+    {
+        yield return new WaitForSeconds(2);  // 2초간 이미지 표시
+        image.SetActive(false);
     }
 
     private IEnumerator MoveCatAwayOnGround()
@@ -242,17 +236,5 @@ public class PetInteraction : MonoBehaviour
         }
     }
 
-    private IEnumerator ShowScaredReaction()
-    {
-        whiteImagePicky.SetActive(true);
-        yield return new WaitForSeconds(1.5f);
-        whiteImagePicky.SetActive(false);
-    }
-
-    private IEnumerator ShowFriendlyReaction()
-    {
-        whiteImageFriendly.SetActive(true);
-        yield return new WaitForSeconds(1.5f);
-        whiteImageFriendly.SetActive(false);
-    }
+    
 }
