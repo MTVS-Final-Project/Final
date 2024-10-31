@@ -30,6 +30,7 @@ public class CatController : MonoBehaviour
     private bool isZoomedIn = false; // 현재 줌인 상태를 추적
 
     public GameObject backButton; // 돌아가기 버튼 오브젝트
+    public GameObject toyButton;
 
     private void Awake()
     {
@@ -49,6 +50,7 @@ public class CatController : MonoBehaviour
 
         // 돌아가기 버튼을 초기 비활성화
         backButton.SetActive(false);
+        toyButton.SetActive(false);
     }
 
     private void Start()
@@ -116,6 +118,7 @@ public class CatController : MonoBehaviour
         // 줌인 완료 후 버튼을 활성화 (줌인 애니메이션 후 버튼 활성화)
         yield return new WaitForSeconds(smoothTime);
         backButton.SetActive(true);
+        toyButton.SetActive(true);
     }
 
     public void ZoomOut()
@@ -128,7 +131,7 @@ public class CatController : MonoBehaviour
         targetZoom = maxZoom;
         isZoomedIn = false;
         backButton.SetActive(false); // 줌아웃 시 버튼 비활성화
-
+        toyButton.SetActive(false);
         yield return new WaitForSeconds(smoothTime);
     }
 

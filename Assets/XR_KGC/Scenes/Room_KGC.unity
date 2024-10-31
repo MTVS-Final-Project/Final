@@ -3290,6 +3290,7 @@ GameObject:
   - component: {fileID: 150457309}
   - component: {fileID: 150457308}
   - component: {fileID: 150457310}
+  - component: {fileID: 150457311}
   m_Layer: 3
   m_Name: "\uBB34\uC81C18_20241029104145"
   m_TagString: Ground
@@ -3413,6 +3414,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 10.8, y: 6.650039}
   m_EdgeRadius: 0
+--- !u!210 &150457311
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150457307}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: -3
+  m_SortAtRoot: 0
 --- !u!1 &163091792
 GameObject:
   m_ObjectHideFlags: 0
@@ -18106,6 +18119,7 @@ MonoBehaviour:
   clickRadius: 1
   moveSmoothTime: 0.3
   backButton: {fileID: 569582567}
+  toyButton: {fileID: 318951029}
 --- !u!114 &707565546
 MonoBehaviour:
   m_ObjectHideFlags: 0

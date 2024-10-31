@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class ObjectClick : MonoBehaviour
 {
+    private void Awake()
+    {
+        Screen.SetResolution(1080, 1920, false);
+    }
     void Update()
     {
         if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 버튼 클릭
