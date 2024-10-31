@@ -90,7 +90,10 @@ public class CatController : MonoBehaviour
 
                 if (hit.collider != null && hit.collider.CompareTag("Ground"))
                 {
-                    StartCoroutine(MoveTowards(hit.point));
+                    if (cam.orthographicSize > 4)
+                    {
+                        StartCoroutine(MoveTowards(hit.point));
+                    }
                 }
             }
             lastClickTime = Time.time;
