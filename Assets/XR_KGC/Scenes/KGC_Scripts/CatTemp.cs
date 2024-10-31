@@ -9,16 +9,26 @@ public class CatTemp : MonoBehaviour
     public GameObject badReaction;
     public QuestManager QM;
 
+    public CatBehavior CB;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        CB = GetComponent<CatBehavior>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (CB.catPersonality == CatBehavior.CatPersonality.Friendly)
+        {
+            hostile = false;
+        }
+        else if(CB.catPersonality == CatBehavior.CatPersonality.Picky)
+        {
+            hostile = true;
+        }
+
     }
 
     public void CatAction()
