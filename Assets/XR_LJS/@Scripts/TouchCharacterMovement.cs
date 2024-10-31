@@ -2,6 +2,8 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
 using TMPro;
+using Spine;
+using UnityEngine.SceneManagement;
 
 public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -13,7 +15,7 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
     Rigidbody2D rb;
     private SpriteRenderer[] spriteRenderers; // 캐릭터의 모든 SpriteRenderer들
     public TMP_Text playerNickname; // 플레이어 닉네임 담는 변수 선언.
-
+    public string restrictedSceneName = "FirstScene_LJS"; // 특정 씬 이름
     // 고양이 GameObject를 참조하는 변수 추가
     public GameObject cat; // 고양이가 존재하는지 확인할 변수
 
@@ -31,28 +33,25 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
         }
 
         //playerNickname.text = photonView.Owner.NickName;
-        cat = GameObject.Find("Cat").GetComponent<GameObject>(); //Cat
+        //cat = GameObject.Find("Cat").GetComponent<GameObject>(); //Cat
 
     }
 
     void Update()
     {
-        // 윈도우 테스트 용
-        if (photonView.IsMine)
-        {
-            movement.x = Input.GetAxis("Horizontal");
-            movement.y = Input.GetAxis("Vertical");
-            movement.Normalize();
-            rb.linearVelocity = movement * moveSpeed;
-        }
+        cat = GameObject.Find("Cat");
+        //// 윈도우 테스트 용
+        //if (photonView.IsMine)
+        //{
+        //    movement.x = Input.GetAxis("Horizontal");
+        //    movement.y = Input.GetAxis("Vertical");
+        //    movement.Normalize();
+        //    rb.linearVelocity = movement * moveSpeed;
+        //}
 
         if (!photonView.IsMine) return; // 자신의 캐릭터만 제어
 
-        // 활성화된 버튼의 개수를 확인
-        int activeButtonCount = CountActiveButtons();
-
-        // 화면에 보이는 버튼이 5개 이상이면 캐릭터 움직임을 막음
-        if (activeButtonCount >= 5)
+        if (SceneManager.GetActiveScene().name == restrictedSceneName)
         {
             return;
         }
