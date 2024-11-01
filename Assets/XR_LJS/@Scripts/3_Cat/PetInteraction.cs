@@ -26,6 +26,9 @@ public class PetInteraction : MonoBehaviour
     private int headClickCount = 0;      // 머리 클릭 횟수
     private int bodyClickCount = 0;      // 몸통 클릭 횟수
 
+    private void Awake()
+    {
+    }
     private void Start()
     {
         whiteImageFriendly.SetActive(false);
@@ -146,52 +149,53 @@ public class PetInteraction : MonoBehaviour
         }
     }
 
-    private void ZoomIn()
-    {
-        if (!isZoomedIn)
-        {
-            cam.orthographicSize = minZoom;
-            cam.transform.position = new Vector3(transform.position.x, transform.position.y, cam.transform.position.z);
-            isZoomedIn = true;
-            backButton.SetActive(true);
-        }
-    }
+    //private void ZoomIn()
+    //{
+    //    if (!isZoomedIn)
+    //    {
+    //        cam.orthographicSize = minZoom;
+    //        cam.transform.position = new Vector3(transform.position.x, transform.position.y, cam.transform.position.z);
+    //        isZoomedIn = true;
+    //        backButton.SetActive(true);
+    //    }
+    //}
 
-    public void ZoomOut()
-    {
-        cam.orthographicSize = originalZoom;
-        cam.transform.position = originalCameraPosition;
-        isZoomedIn = false;
-        backButton.SetActive(false);
-    }
+    //public void ZoomOut()
+    //{
+    //    cam.orthographicSize = originalZoom;
+    //    cam.transform.position = originalCameraPosition;
+    //    isZoomedIn = false;
+    //    backButton.SetActive(false);
+    //}
 
     
 
-    private void ReactToPetting(string part, bool positiveReaction)
-    {
-        whiteImageFriendly.SetActive(false);
-        whiteImagePicky.SetActive(false);
+    //private void ReactToPetting(string part, bool positiveReaction)
+    //{
+    //    whiteImageFriendly.SetActive(false);
+    //    whiteImagePicky.SetActive(false);
 
-        if (positiveReaction)
-        {
-            whiteImageFriendly.SetActive(true);
-        }
-        else
-        {
-            whiteImagePicky.SetActive(true);
-            if (part == "body" || part == "head")
-            {
-                StartCoroutine(MoveCatAwayOnGround());
-                ZoomOut();
-            }
-        }
-    }
+    //    if (positiveReaction)
+    //    {
+    //        whiteImageFriendly.SetActive(true);
+    //    }
+    //    else
+    //    {
+    //        whiteImagePicky.SetActive(true);
+    //        if (part == "body" || part == "head")
+    //        {
+    //            StartCoroutine(MoveCatAwayOnGround());
+    //            ZoomOut();
+    //        }
+    //    }
+    //}
 
     private void ShowPinkyReaction()
     {
         whiteImagePicky.SetActive(true);
         whiteImageFriendly.SetActive(false);
         StartCoroutine(HideImage(whiteImagePicky));
+        StartCoroutine(MoveCatAwayOnGround());
     }
 
     private void ShowFriendlyReaction()
@@ -210,7 +214,11 @@ public class PetInteraction : MonoBehaviour
     private IEnumerator MoveCatAwayOnGround()
     {
         Vector3 startPosition = transform.parent.position;
-        Vector3 awayDirection = new Vector3(moveAwayDistance, 0, 0); // Move only horizontally
+
+        // x축과 y축 방향으로 무작위 이동 값을 설정합니다.
+        float randomX = Random.Range(-moveAwayDistance, moveAwayDistance);
+        float randomY = Random.Range(-moveAwayDistance, moveAwayDistance);
+        Vector3 awayDirection = new Vector3(randomX, randomY, 0); // 랜덤 방향으로 이동
         Vector3 targetPosition = startPosition + awayDirection;
 
         // Verify target position is on ground
@@ -236,5 +244,6 @@ public class PetInteraction : MonoBehaviour
         }
     }
 
-    
+
+
 }

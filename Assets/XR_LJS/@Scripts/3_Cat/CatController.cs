@@ -7,7 +7,7 @@ public class CatController : MonoBehaviour
 {
     public Transform player;
     public float moveSpeed = 2.0f;
-    public float doubleClickTimeLimit = 1f;
+    public float doubleClickTimeLimit = 0.5f;
 
     private float lastClickTime = 0f;
     private Collider2D headCollider;
@@ -31,6 +31,9 @@ public class CatController : MonoBehaviour
 
     public GameObject backButton; // 돌아가기 버튼 오브젝트
     public GameObject toyButton;
+    public GameObject ToyExitButton;
+    public GameObject bar;
+    public GameObject feather;
 
     private void Awake()
     {
@@ -51,6 +54,9 @@ public class CatController : MonoBehaviour
         // 돌아가기 버튼을 초기 비활성화
         backButton.SetActive(false);
         toyButton.SetActive(false);
+        ToyExitButton.SetActive(false);
+        bar.SetActive(false);
+        feather.SetActive(false);
     }
 
     private void Start()
@@ -90,7 +96,10 @@ public class CatController : MonoBehaviour
 
                 if (hit.collider != null && hit.collider.CompareTag("Ground"))
                 {
-                    StartCoroutine(MoveTowards(hit.point));
+                    if (cam.orthographicSize > 4)
+                    {
+                        StartCoroutine(MoveTowards(hit.point));
+                    }
                 }
             }
             lastClickTime = Time.time;
@@ -132,6 +141,9 @@ public class CatController : MonoBehaviour
         isZoomedIn = false;
         backButton.SetActive(false); // 줌아웃 시 버튼 비활성화
         toyButton.SetActive(false);
+        ToyExitButton.SetActive(false);
+        bar.SetActive(false);
+        feather.SetActive(false);
         yield return new WaitForSeconds(smoothTime);
     }
 
