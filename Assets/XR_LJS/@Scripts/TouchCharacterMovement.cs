@@ -40,7 +40,7 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
     void Update()
     {
         cat = GameObject.Find("Cat");
-        //// 윈도우 테스트 용
+        // 윈도우 테스트 용
         //if (photonView.IsMine)
         //{
         //    movement.x = Input.GetAxis("Horizontal");
@@ -57,10 +57,10 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
         }
 
         // 고양이가 존재하면 이동 중지
-        if (cat != null && cat.activeInHierarchy)
-        {
-            return; // 고양이가 활성화된 경우 캐릭터의 이동을 멈춤
-        }
+        //if (cat != null && cat.activeInHierarchy)
+        //{
+        //    return; // 고양이가 활성화된 경우 캐릭터의 이동을 멈춤
+        //}
 
         if (Input.touchCount > 0)
         {

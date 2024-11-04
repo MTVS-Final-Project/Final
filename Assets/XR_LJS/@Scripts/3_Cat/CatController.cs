@@ -5,6 +5,8 @@ using Spine.Unity;
 
 public class CatController : MonoBehaviour
 {
+
+    public static CatController instance;
     public Transform player;
     public float moveSpeed = 2.0f;
     public float doubleClickTimeLimit = 0.5f;
@@ -19,7 +21,7 @@ public class CatController : MonoBehaviour
     public float zoomMultiplier = 2.0f;
     public float minZoom = 2f;
     public float maxZoom = 5f;
-    public float smoothTime = 0.3f;
+    private float smoothTime = 0.3f;
     public float clickRadius = 1.0f; // 클릭 인식 범위 반경
     public float moveSmoothTime = 0.3f; // 카메라 이동 부드럽기
 
@@ -37,6 +39,7 @@ public class CatController : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         if (skeletonAnimation != null)
         {
@@ -135,7 +138,7 @@ public class CatController : MonoBehaviour
         StartCoroutine(ZoomOutCoroutine());
     }
 
-    private IEnumerator ZoomOutCoroutine()
+    public IEnumerator ZoomOutCoroutine()
     {
         targetZoom = maxZoom;
         isZoomedIn = false;

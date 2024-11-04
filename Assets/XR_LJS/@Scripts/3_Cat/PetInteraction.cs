@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.XR.ARSubsystems;
 
 public class PetInteraction : MonoBehaviour
 {
@@ -25,7 +26,6 @@ public class PetInteraction : MonoBehaviour
 
     private int headClickCount = 0;      // 머리 클릭 횟수
     private int bodyClickCount = 0;      // 몸통 클릭 횟수
-
     private void Awake()
     {
     }
@@ -149,66 +149,56 @@ public class PetInteraction : MonoBehaviour
         }
     }
 
-    //private void ZoomIn()
-    //{
-    //    if (!isZoomedIn)
-    //    {
-    //        cam.orthographicSize = minZoom;
-    //        cam.transform.position = new Vector3(transform.position.x, transform.position.y, cam.transform.position.z);
-    //        isZoomedIn = true;
-    //        backButton.SetActive(true);
-    //    }
-    //}
-
-    //public void ZoomOut()
-    //{
-    //    cam.orthographicSize = originalZoom;
-    //    cam.transform.position = originalCameraPosition;
-    //    isZoomedIn = false;
-    //    backButton.SetActive(false);
-    //}
-
-    
-
-    //private void ReactToPetting(string part, bool positiveReaction)
-    //{
-    //    whiteImageFriendly.SetActive(false);
-    //    whiteImagePicky.SetActive(false);
-
-    //    if (positiveReaction)
-    //    {
-    //        whiteImageFriendly.SetActive(true);
-    //    }
-    //    else
-    //    {
-    //        whiteImagePicky.SetActive(true);
-    //        if (part == "body" || part == "head")
-    //        {
-    //            StartCoroutine(MoveCatAwayOnGround());
-    //            ZoomOut();
-    //        }
-    //    }
-    //}
 
     private void ShowPinkyReaction()
     {
         whiteImagePicky.SetActive(true);
         whiteImageFriendly.SetActive(false);
-        StartCoroutine(HideImage(whiteImagePicky));
+        // 코루틴들을 변수에 저장하여 추적
+        StartCoroutine(HideImageAndKeepButtonsHidden(whiteImagePicky));
         StartCoroutine(MoveCatAwayOnGround());
+        CatController.instance.ZoomOut();
+        DisableAllButtons();
+        
     }
 
     private void ShowFriendlyReaction()
     {
         whiteImageFriendly.SetActive(true);
         whiteImagePicky.SetActive(false);
-        StartCoroutine(HideImage(whiteImageFriendly));
+        StartCoroutine(HideImageAndKeepButtonsShown(whiteImageFriendly));
     }
 
-    private IEnumerator HideImage(GameObject image)
+    private IEnumerator HideImageAndKeepButtonsShown(GameObject image)
     {
-        yield return new WaitForSeconds(2);  // 2초간 이미지 표시
+        // 이미지를 숨기는 로직
+        yield return new WaitForSeconds(1f); // 예시 대기 시간
         image.SetActive(false);
+
+        // Friendly 반응에서는 버튼들이 보이도록 활성화
+        CatController.instance.backButton.SetActive(true);
+        CatController.instance.toyButton.SetActive(true);
+
+    }
+
+    private void DisableAllButtons()
+    {
+        CatController.instance.backButton.SetActive(false);
+        CatController.instance.toyButton.SetActive(false);
+        CatController.instance.ToyExitButton.SetActive(false);
+        CatController.instance.bar.SetActive(false);
+        CatController.instance.feather.SetActive(false);
+    }
+
+
+    private IEnumerator HideImageAndKeepButtonsHidden(GameObject image)
+    {
+        // 기존 HideImage 로직
+        yield return new WaitForSeconds(1f); // 예시 대기 시간
+        image.SetActive(false);
+
+        // 버튼들이 계속 비활성화 상태로 유지되도록 확인
+        DisableAllButtons();
     }
 
     private IEnumerator MoveCatAwayOnGround()
@@ -237,10 +227,12 @@ public class PetInteraction : MonoBehaviour
                     transform.parent.position = newPos;
                 }
                 elapsed += Time.deltaTime;
+                DisableAllButtons();
                 yield return null;
             }
 
             transform.parent.position = targetPosition;
+            
         }
     }
 
