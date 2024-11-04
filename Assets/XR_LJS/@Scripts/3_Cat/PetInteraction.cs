@@ -26,6 +26,8 @@ public class PetInteraction : MonoBehaviour
 
     private int headClickCount = 0;      // ¸Ó¸® Å¬¸¯ È½¼ö
     private int bodyClickCount = 0;      // ¸öÅë Å¬¸¯ È½¼ö
+
+
     private void Awake()
     {
     }

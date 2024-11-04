@@ -7,7 +7,7 @@ public class CatController : MonoBehaviour
 {
 
     public static CatController instance;
-    public Transform player;
+    //public Transform player;
     public float moveSpeed = 2.0f;
     public float doubleClickTimeLimit = 0.5f;
 
@@ -22,7 +22,7 @@ public class CatController : MonoBehaviour
     public float minZoom = 2f;
     public float maxZoom = 5f;
     private float smoothTime = 0.3f;
-    public float clickRadius = 1.0f; // 클릭 인식 범위 반경
+    public float clickRadius = 0.3f; // 클릭 인식 범위 반경
     public float moveSmoothTime = 0.3f; // 카메라 이동 부드럽기
 
     private Transform catTransform; // Cat 오브젝트의 Transform
@@ -36,6 +36,9 @@ public class CatController : MonoBehaviour
     public GameObject ToyExitButton;
     public GameObject bar;
     public GameObject feather;
+
+    public GameObject player; // Unity Inspector에서 플레이어 오브젝트 할당
+    private float interactionDistance = 1.3f; // 상호작용 가능 거리
 
     private void Awake()
     {
@@ -52,7 +55,7 @@ public class CatController : MonoBehaviour
         headOriginalOffset = headCollider.offset;
         bodyOriginalOffset = bodyCollider.offset;
 
-        player = GameObject.Find("ChairDinningB").GetComponent<Transform>();
+        //player = GameObject.Find("ChairDinningB").GetComponent<Transform>();
 
         // 돌아가기 버튼을 초기 비활성화
         backButton.SetActive(false);
@@ -64,6 +67,16 @@ public class CatController : MonoBehaviour
 
     private void Start()
     {
+        // Scene의 모든 GameObject를 가져와서 이름에 "Player"가 포함된 것 찾기 (이전 코드 유지)
+        foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>())
+        {
+            if (obj.name.Contains("Player"))
+            {
+                player = obj;
+                break;
+            }
+        }
+
         GameObject catObject = GameObject.FindGameObjectWithTag("Cat");
         if (catObject != null)
         {
@@ -108,7 +121,7 @@ public class CatController : MonoBehaviour
             lastClickTime = Time.time;
         }
 
-        if (Input.GetMouseButtonDown(0) && catTransform != null)
+        if (Input.GetMouseButtonDown(0) && catTransform != null && IsPlayerInRange())
         {
             Vector3 mouseWorldPosition = cam.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPosition.z = 0f;
@@ -120,6 +133,13 @@ public class CatController : MonoBehaviour
                 StartCoroutine(ZoomIn());
             }
         }
+    }
+
+    private bool IsPlayerInRange()
+    {
+        if (player == null) return false;
+        float distance = Vector2.Distance(transform.position, player.transform.position);
+        return distance <= interactionDistance;
     }
 
     private IEnumerator ZoomIn()
@@ -157,7 +177,7 @@ public class CatController : MonoBehaviour
         Vector3 startingPosition = transform.position;
         Vector3 direction = (targetPosition - startingPosition).normalized;
 
-       
+
 
         while (elapsed < duration)
         {
@@ -169,5 +189,5 @@ public class CatController : MonoBehaviour
         transform.position = targetPosition;
     }
 
-    
+
 }

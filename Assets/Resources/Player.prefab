@@ -1068,7 +1068,6 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 0}
   - {fileID: -2692293942470495615}
   - {fileID: 2625617611899400327}
   - {fileID: -1232331130051543231}

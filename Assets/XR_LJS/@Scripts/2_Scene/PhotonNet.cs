@@ -18,7 +18,10 @@ public class PhotonNet : MonoBehaviourPunCallbacks
         Debug.Log("Spawn Position: " + spawnPosition);
 
         // 객체 생성
-        PhotonNetwork.Instantiate("Player", spawnPosition, Quaternion.identity);
+        GameObject playerInstance =  PhotonNetwork.Instantiate("Player", spawnPosition, Quaternion.identity);
+
+        // CatController의 player 변수에 자동 할당
+        CatController.instance.player = playerInstance;
     }
 
     // 고양이 위치 근처의 랜덤 위치를 반환하는 메서드

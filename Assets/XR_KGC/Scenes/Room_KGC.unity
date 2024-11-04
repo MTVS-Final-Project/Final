@@ -18108,14 +18108,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7ec4d762be9b5478671bd9255c9e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1109591950}
   moveSpeed: 2
   doubleClickTimeLimit: 1
   cam: {fileID: 425682443}
   zoomMultiplier: 2
   minZoom: 2
   maxZoom: 5
-  smoothTime: 0.3
   clickRadius: 1
   moveSmoothTime: 0.3
   backButton: {fileID: 569582567}
@@ -18123,6 +18121,7 @@ MonoBehaviour:
   ToyExitButton: {fileID: 1503934223}
   bar: {fileID: 1502580254}
   feather: {fileID: 587160226}
+  player: {fileID: 0}
 --- !u!114 &707565546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27575,12 +27574,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1106608554}
   m_CullTransparentMesh: 1
---- !u!4 &1109591950 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8897361454555195408, guid: c17851160e84c094380e93ac07b799ab,
-    type: 3}
-  m_PrefabInstance: {fileID: 1702934123}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1118154170
 GameObject:
   m_ObjectHideFlags: 0
@@ -28627,6 +28620,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  player: {fileID: 0}
+  interactionDistance: 1
 --- !u!1 &1178273953
 GameObject:
   m_ObjectHideFlags: 0
@@ -42275,7 +42270,7 @@ PrefabInstance:
     - target: {fileID: 8084550355086717610, guid: c17851160e84c094380e93ac07b799ab,
         type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 8897361454555195408, guid: c17851160e84c094380e93ac07b799ab,
         type: 3}
@@ -46474,6 +46469,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  player: {fileID: 0}
+  interactionDistance: 1
 --- !u!1 &1864566374
 GameObject:
   m_ObjectHideFlags: 0
