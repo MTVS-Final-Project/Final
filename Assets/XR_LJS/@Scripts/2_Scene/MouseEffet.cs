@@ -15,7 +15,6 @@ public class MouseEffet : MonoBehaviour
             spawnsTime = 0;
         }
         spawnsTime += Time.deltaTime;
-        Destroy(starPrefab);
     }
 
     void StarCreat()

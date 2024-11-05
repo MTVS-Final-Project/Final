@@ -57,10 +57,10 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
         }
 
         // 고양이가 존재하면 이동 중지
-        //if (cat != null && cat.activeInHierarchy)
-        //{
-        //    return; // 고양이가 활성화된 경우 캐릭터의 이동을 멈춤
-        //}
+        if (cat.activeInHierarchy)
+        {
+            return; // 고양이가 활성화된 경우 캐릭터의 이동을 멈춤
+        }
 
         if (Input.touchCount > 0)
         {
