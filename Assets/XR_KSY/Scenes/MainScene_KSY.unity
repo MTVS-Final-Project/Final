@@ -1330,7 +1330,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &26822613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21841,6 +21841,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d5db3bd3c211dd4484e589bad770226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  underImage: {fileID: 0}
+  menuBtn: {fileID: 0}
   shop: {fileID: 780007583}
   town: {fileID: 549611748}
   cash: {fileID: 1454588102}
@@ -30596,7 +30598,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &826324614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32938,7 +32940,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &877881349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55471,7 +55473,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0.00047535417, y: 100}
-  m_SizeDelta: {x: 0, y: 200}
+  m_SizeDelta: {x: 450, y: 200}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1439477333
 MonoBehaviour:
@@ -73912,7 +73914,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 420}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1913068394
 MonoBehaviour:
