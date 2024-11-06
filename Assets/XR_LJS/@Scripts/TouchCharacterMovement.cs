@@ -31,18 +31,20 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
         }
 
         //playerNickname.text = photonView.Owner.NickName;
+        cat = GameObject.Find("Cat").GetComponent<GameObject>(); //Cat
+
     }
 
     void Update()
     {
-        // 윈도우 테스트 용
-        if (photonView.IsMine)
-        {
-            movement.x = Input.GetAxis("Horizontal");
-            movement.y = Input.GetAxis("Vertical");
-            movement.Normalize();
-            rb.linearVelocity = movement * moveSpeed;
-        }
+        //// 윈도우 테스트 용
+        //if (photonView.IsMine)
+        //{
+        //    movement.x = Input.GetAxis("Horizontal");
+        //    movement.y = Input.GetAxis("Vertical");
+        //    movement.Normalize();
+        //    rb.linearVelocity = movement * moveSpeed;
+        //}
 
         if (!photonView.IsMine) return; // 자신의 캐릭터만 제어
 
