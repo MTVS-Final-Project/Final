@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
 {
+    private Vector3 offset;
     public float moveSpeed = 5f;
     public Vector2 movement = new Vector2();
     private Vector3 targetPosition;
@@ -48,28 +49,30 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
         //    movement.Normalize();
         //    rb.linearVelocity = movement * moveSpeed;
         //}
-
-        if (!photonView.IsMine) return; // 자신의 캐릭터만 제어
-
         if (SceneManager.GetActiveScene().name == restrictedSceneName)
         {
             return;
         }
 
         // 고양이가 존재하면 이동 중지
-        if (cat.activeInHierarchy)
+        
+        if (photonView.IsMine)
         {
-            return; // 고양이가 활성화된 경우 캐릭터의 이동을 멈춤
-        }
-
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
+            if (Input.touchCount > 0)
             {
-                targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 10f));
-                targetPosition.z = transform.position.z;
-                isMoving = true;
+                Touch touch = Input.GetTouch(0);
+                if (touch.phase == TouchPhase.Began)
+                {
+                    targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 10f));
+                    targetPosition.z = transform.position.z;
+                    isMoving = true;
+                }
+            }
+            else if (cat.activeInHierarchy)
+            {
+
+                return; // 고양이가 활성화된 경우 캐릭터의 이동을 멈춤
+
             }
         }
 

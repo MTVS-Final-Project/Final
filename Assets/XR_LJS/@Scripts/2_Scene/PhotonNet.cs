@@ -4,24 +4,34 @@ using Photon.Pun;
 public class PhotonNet : MonoBehaviourPunCallbacks
 {
     public Transform catTransform; // 에디터에서 고양이 객체의 Transform을 연결합니다.
-
+    public Transform circleTransform;
     void Start()
     {
         // RPC 보내는 빈도 설정
         PhotonNetwork.SendRate = 60;
         PhotonNetwork.SerializationRate = 60;
 
-        // 고양이 위치 근처의 위치 계산
-        Vector3 spawnPosition = GetRandomPositionNearCat();
+        if (catTransform != null)
+        {
+            // 고양이 위치 근처의 위치 계산
+            Vector3 spawnPosition = GetRandomPositionNearCat();
 
-        // 스폰 위치 확인 로그
-        Debug.Log("Spawn Position: " + spawnPosition);
+            // 스폰 위치 확인 로그
+            Debug.Log("Spawn Position: " + spawnPosition);
 
-        // 객체 생성
-        GameObject playerInstance =  PhotonNetwork.Instantiate("Player", spawnPosition, Quaternion.identity);
+            // 객체 생성
+            GameObject playerInstance = PhotonNetwork.Instantiate("Player", spawnPosition, Quaternion.identity);
 
-        // CatController의 player 변수에 자동 할당
-        CatController.instance.player = playerInstance;
+            // CatController의 player 변수에 자동 할당
+            CatController.instance.player = playerInstance;
+        }
+        else if (circleTransform != null)
+        {
+            Vector3 spawnPos = GetRandomPositionNearCircle();
+            Debug.Log("spawn pos : " + spawnPos);
+            GameObject playerInstance = PhotonNetwork.Instantiate("Player", spawnPos, Quaternion.identity);
+            Debug.Log("player : " + playerInstance);
+        }
     }
 
     // 고양이 위치 근처의 랜덤 위치를 반환하는 메서드
@@ -40,6 +50,23 @@ public class PhotonNet : MonoBehaviourPunCallbacks
         else
         {
             Debug.LogError("catTransform is not assigned!");
+            return Vector3.zero;
+        }
+    }
+
+    Vector3 GetRandomPositionNearCircle()
+    {
+        float offX = Random.Range(-0.1f, 0.1f);
+        float offY = Random.Range(-0.1f, 0.1f);
+        float offZ = 0;
+
+        if (circleTransform != null)
+        {
+            return circleTransform.position + new Vector3(offX, offY, offZ);
+        }
+        else
+        {
+            Debug.LogError("circleTransform is not assigned!");
             return Vector3.zero;
         }
     }

@@ -4,8 +4,9 @@ using UnityEngine.SceneManagement;
 using System.Xml.Serialization;
 using TMPro;
 using UnityEngine.UIElements;
+using Photon.Pun;
 
-public class HomeSceneUIScripts : MonoBehaviour
+public class HomeSceneUIScripts : MonoBehaviourPunCallbacks
 {
     public GameObject underImage;
     public GameObject menuBtn;
@@ -183,7 +184,8 @@ public class HomeSceneUIScripts : MonoBehaviour
 
     public void Btn_gwangjang()
     {
-        gwangjang.SetActive(true);
+        //gwangjang.SetActive(true);
+        PhotonNetwork.LoadLevel("Gangzang_LJS");
     }
     public void Btn_gwangjangClose()
     {
