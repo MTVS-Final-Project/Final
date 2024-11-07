@@ -1,19 +1,13 @@
 using UnityEngine;
 
-public class GaguCheck : MonoBehaviour
+public class SubGaguCheck : MonoBehaviour
 {
-    public bool onGagu;
-    public bool onGround;
 
-    public Vector3 snapPos;
-
-   // public DragObject dragObject;
-    
-
+    public GaguCheck gaguCheck;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-       // dragObject = transform.parent.GetComponent<DragObject>();
+        gaguCheck = transform.parent.GetChild(0).GetComponent<GaguCheck>();
     }
 
     // Update is called once per frame
@@ -21,31 +15,26 @@ public class GaguCheck : MonoBehaviour
     {
         
     }
+
     private void OnTriggerStay(Collider other)
     {
         if ((other.CompareTag("Set")))
         {
-                onGagu = true;
+            gaguCheck.onGagu = true;
         }
-        
-        if (other.CompareTag("Ground"))
-        {
-            onGround = true;
-            snapPos = other.gameObject.transform.position;
 
-        }
+        
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Set"))
         {
-            onGagu = false;
+            gaguCheck.onGagu = false;
         }
         if (other.CompareTag("Ground"))
         {
-            onGround = false;
+            gaguCheck.onGround = false;
             //dragObject.isDragging = false;
         }
     }
-
 }

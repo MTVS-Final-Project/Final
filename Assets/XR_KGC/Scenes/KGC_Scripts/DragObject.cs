@@ -3,7 +3,7 @@ using UnityEngine;
 public class DragObject : MonoBehaviour
 {
     private Camera mainCamera;
-    private bool isDragging = false;
+    public bool isDragging = false;
     private Vector3 offset;
 
     void Start()
@@ -23,13 +23,13 @@ public class DragObject : MonoBehaviour
         {
             HandleInput(Input.mousePosition);
         }
+        else if (Input.GetMouseButtonUp(0)||!isDragging)
+        {
+            isDragging = false;
+        }
         else if (Input.GetMouseButton(0) && isDragging)
         {
             DragObjectTo(Input.mousePosition);
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            isDragging = false;
         }
 #else
         // 터치 입력 처리 (모바일 용)
@@ -63,6 +63,10 @@ public class DragObject : MonoBehaviour
             {
                 isDragging = true;
                 offset = hit.point - transform.position;
+            }
+            else
+            {
+                isDragging = false;
             }
         }
     }
