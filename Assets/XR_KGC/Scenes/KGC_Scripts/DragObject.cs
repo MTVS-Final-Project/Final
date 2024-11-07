@@ -70,13 +70,13 @@ public class DragObject : MonoBehaviour
     private void DragObjectTo(Vector3 inputPosition)
     {
         Ray ray = mainCamera.ScreenPointToRay(inputPosition);
-        Plane dragPlane = new Plane(Vector3.up, Vector3.zero);
+        Plane dragPlane = new Plane(Vector3.forward, transform.position); // Z축으로 고정된 평면
         float distance;
 
         if (dragPlane.Raycast(ray, out distance))
         {
             Vector3 targetPoint = ray.GetPoint(distance) - offset;
-            transform.position = new Vector3(targetPoint.x, transform.position.y, targetPoint.z);
+            transform.position = new Vector3(targetPoint.x, targetPoint.y, transform.position.z); // Z축 고정
         }
     }
 }
