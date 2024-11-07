@@ -23,6 +23,7 @@ public class FloorScript : MonoBehaviour
           if (other.CompareTag("Set"))
         {
             occupied = true;
+            other.gameObject.transform.parent.transform.position = transform.position;
         }
     }
 

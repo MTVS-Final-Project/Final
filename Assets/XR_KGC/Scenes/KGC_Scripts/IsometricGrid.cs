@@ -8,10 +8,17 @@ public class IsometricGridWithLines : MonoBehaviour
     public float tileHeight = 0.5f;    // 타일의 높이
     public Material lineMaterial;      // 라인 렌더러에 사용할 머티리얼
     private float yOffset = -0.25f;    // y축 보정값
-    private float zOffset = -0.02f;     // z축 보정값
+    private float zOffset = -0.01f;    // z축 보정값
+
+    private Transform tileParent;      // 타일 오브젝트의 부모
+    private Transform lineParent;      // 라인 오브젝트의 부모
 
     void Start()
     {
+        // 타일과 라인의 부모 오브젝트 생성
+        tileParent = new GameObject("TileParent").transform;
+        lineParent = new GameObject("LineParent").transform;
+
         CreateIsometricGrid();
         DrawGridLines();
     }
@@ -26,7 +33,8 @@ public class IsometricGridWithLines : MonoBehaviour
                 float posY = (x + y) * tileHeight / 2;
 
                 Vector3 tilePosition = new Vector3(posX, posY, 0);
-                Instantiate(tilePrefab, tilePosition, Quaternion.identity, transform);
+                // tileParent를 부모로 설정
+                Instantiate(tilePrefab, tilePosition, Quaternion.identity, tileParent);
             }
         }
     }
@@ -72,5 +80,8 @@ public class IsometricGridWithLines : MonoBehaviour
 
         lineRenderer.startWidth = 0.02f;
         lineRenderer.endWidth = 0.02f;
+
+        // lineParent를 부모로 설정
+        lineObj.transform.parent = lineParent;
     }
 }
