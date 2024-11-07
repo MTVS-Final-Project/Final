@@ -2,9 +2,12 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
 using TMPro;
+using Spine;
+using UnityEngine.SceneManagement;
 
 public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
 {
+    private Vector3 offset;
     public float moveSpeed = 5f;
     public Vector2 movement = new Vector2();
     private Vector3 targetPosition;
@@ -13,7 +16,7 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
     Rigidbody2D rb;
     private SpriteRenderer[] spriteRenderers; // 캐릭터의 모든 SpriteRenderer들
     public TMP_Text playerNickname; // 플레이어 닉네임 담는 변수 선언.
-
+    public string restrictedSceneName = "FirstScene_LJS"; // 특정 씬 이름
     // 고양이 GameObject를 참조하는 변수 추가
     public GameObject cat; // 고양이가 존재하는지 확인할 변수
 
@@ -31,13 +34,14 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
         }
 
         //playerNickname.text = photonView.Owner.NickName;
-        cat = GameObject.Find("Cat").GetComponent<GameObject>(); //Cat
+        //cat = GameObject.Find("Cat").GetComponent<GameObject>(); //Cat
 
     }
 
     void Update()
     {
-        //// 윈도우 테스트 용
+        cat = GameObject.Find("Cat");
+        // 윈도우 테스트 용
         //if (photonView.IsMine)
         //{
         //    movement.x = Input.GetAxis("Horizontal");
@@ -45,32 +49,30 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
         //    movement.Normalize();
         //    rb.linearVelocity = movement * moveSpeed;
         //}
-
-        if (!photonView.IsMine) return; // 자신의 캐릭터만 제어
-
-        // 활성화된 버튼의 개수를 확인
-        int activeButtonCount = CountActiveButtons();
-
-        // 화면에 보이는 버튼이 5개 이상이면 캐릭터 움직임을 막음
-        if (activeButtonCount >= 5)
+        if (SceneManager.GetActiveScene().name == restrictedSceneName)
         {
             return;
         }
 
         // 고양이가 존재하면 이동 중지
-        if (cat != null && cat.activeInHierarchy)
+        
+        if (photonView.IsMine)
         {
-            return; // 고양이가 활성화된 경우 캐릭터의 이동을 멈춤
-        }
-
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
+            if (Input.touchCount > 0)
             {
-                targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 10f));
-                targetPosition.z = transform.position.z;
-                isMoving = true;
+                Touch touch = Input.GetTouch(0);
+                if (touch.phase == TouchPhase.Began)
+                {
+                    targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 10f));
+                    targetPosition.z = transform.position.z;
+                    isMoving = true;
+                }
+            }
+            else if (cat.activeInHierarchy)
+            {
+
+                return; // 고양이가 활성화된 경우 캐릭터의 이동을 멈춤
+
             }
         }
 

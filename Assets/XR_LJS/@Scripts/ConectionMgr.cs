@@ -2,83 +2,138 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
-public class ConectionMgr : MonoBehaviourPunCallbacks
-{
-    [SerializeField] Text loadingText;
-    [SerializeField] Button joinButton; // 새로 추가한 버튼
+using System.Reflection;
 
-    
+public class ConnectionManager : MonoBehaviourPunCallbacks
+{
+    [SerializeField] Button joinButton;    // Gangzang_LJS로 이동하는 버튼
+    [SerializeField] Button roomButton;    // residential_LJS로 이동하는 버튼
+
     void Start()
     {
-        PhotonNetwork.ConnectUsingSettings();
-        if (loadingText != null)
-            loadingText.text = "마스터 서버 접속중...";
+        SetupPhotonNetwork();
 
-        // 버튼 이벤트 리스너 추가
         if (joinButton != null)
-            joinButton.onClick.AddListener(JoinOrCreateRoom);
+        {
+            joinButton.onClick.AddListener(ConnectToFirstRoom);
+        }
+
+        if (roomButton != null)
+        {
+            roomButton.onClick.AddListener(ConnectToSecondRoom);
+        }
+    }
+
+    // Gangzang_LJS로 이동하는 첫 번째 룸 연결
+    public void ConnectToFirstRoom()
+    {
         
+        JoinOrCreateRoom("room1", "Gangzang_LJS");
+    }
+
+    // residential_LJS로 이동하는 두 번째 룸 연결
+    public void ConnectToSecondRoom()
+    {
+        JoinOrCreateRoom("room2", "residential_LJS");
+    }
+
+    // PhotonNetwork 기본 설정
+    private void SetupPhotonNetwork()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.NickName = "";
+        PhotonNetwork.GameVersion = "1.0.0";
+        PhotonNetwork.SendRate = 30;
+        PhotonNetwork.SerializationRate = 30;
+        PhotonNetwork.ConnectUsingSettings();
     }
 
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
-        loadingText.text = "마스터 서버에 연결됨...";
-        JoinLobby();
+        print(MethodInfo.GetCurrentMethod().Name);
+        PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
 
-    public void JoinLobby()
+    public override void OnConnected()
     {
-        PhotonNetwork.NickName = "11"; // You might want to set this dynamically
-        PhotonNetwork.JoinLobby();
+        base.OnConnected();
+
+        print(MethodInfo.GetCurrentMethod().Name);
     }
 
     public override void OnJoinedLobby()
     {
         base.OnJoinedLobby();
-        loadingText.text = "결정 버튼을 눌러 방에 참가하세요.";
-        joinButton.gameObject.SetActive(true); // 버튼 활성화
+        print(MethodInfo.GetCurrentMethod().Name);
     }
 
-    public void JoinOrCreateRoom()
+    private void JoinOrCreateRoom(string roomName, string sceneToLoad)
     {
-        loadingText.text = "방 생성 중...";
-        RoomOptions roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers = 12;
-        PhotonNetwork.JoinOrCreateRoom("name", roomOptions, TypedLobby.Default);
+        print("방 생성 중...");
+        RoomOptions roomOptions = new RoomOptions
+        {
+            MaxPlayers = 12,
+            IsVisible = true,
+            IsOpen = true,
+            
+        };
+
+        var customProperties = new ExitGames.Client.Photon.Hashtable
+        {
+            { "SceneToLoad", sceneToLoad }
+        };
+        roomOptions.CustomRoomProperties = customProperties;
+
+        PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
     }
 
     public override void OnCreatedRoom()
     {
         base.OnCreatedRoom();
-        loadingText.text = "방 생성 완료. 방에 접속합니다...";
+        print("방 생성 완료. 방에 접속합니다...");
+        
     }
 
     public override void OnJoinedRoom()
     {
-        loadingText.text = "방 접속 완료. \n다른 플레이어를 기다리는 중";
+        print("방 접속 완료. \n다른 플레이어를 기다리는 중");
         if (!PhotonNetwork.InRoom)
         {
             Debug.LogError("클라이언트가 같은 룸에 연결되지 않았습니다.");
         }
         base.OnJoinedRoom();
-        LoadSecondScene();
-    }
 
-    public void LoadSecondScene()
-    {
-        // Only load the second scene if we are in a room
-        if (PhotonNetwork.InRoom)
-        {
-            PhotonNetwork.LoadLevel("Room_KGC");
-
-        }
-        
+        string sceneToLoad = (string)PhotonNetwork.CurrentRoom.CustomProperties["SceneToLoad"];
+        print(sceneToLoad);
+        PhotonNetwork.LoadLevel(sceneToLoad);
     }
-    
 
     public void LoadFirstScene()
     {
-        PhotonNetwork.LoadLevel("FirstScene_LJS");
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+    }
+
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        PhotonNetwork.LoadLevel("Room_KGC");
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+
+        print($"{newPlayer.NickName} 님이 입장하셨습니다.");
+    }
+
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        base.OnPlayerLeftRoom(otherPlayer);
+        print($"{otherPlayer.NickName} 님이 방을 떠났습니다.");
     }
 }

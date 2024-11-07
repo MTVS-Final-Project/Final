@@ -12,8 +12,6 @@ public class PlayerData : MonoBehaviour
             Destroy(gameObject);  // 중복된 인스턴스 제거
             return;
         }
-
-        DontDestroyOnLoad(gameObject);
         Instance = this;
         data = new Data();
     }

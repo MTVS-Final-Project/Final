@@ -8,9 +8,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/XR_KSY/Scenes/MainScene_KSY.unity
     guid: 3e20e6cb72883f6449a92f944c77acf2
-  - enabled: 0
-    path: Assets/XR_LJS/@Scenes/LobbyScene_LJS.unity
-    guid: c0f70f3543b263841ac578810da7a93c
   - enabled: 1
     path: Assets/XR_KGC/Scenes/OSM_KGC.unity
     guid: 74a2b3ef9b6727f4ab230cdc08063003
@@ -24,14 +21,14 @@ EditorBuildSettings:
     path: Assets/XR_LJS/@Scenes/FirstScene_LJS.unity
     guid: fbfc7753d83b76f4c8488bec8dccb687
   - enabled: 1
-    path: Assets/XR_LJS/@Scenes/SecondScene_LJS.unity
-    guid: 4a0dde2d0865b8940b34e68a906b6af2
-  - enabled: 0
-    path: Assets/XR_LJS/@Scenes/CharacterCustomization.unity
-    guid: 929d5cec971e7524b8a81b51eb8f89d6
-  - enabled: 1
     path: Assets/XR_KGC/Scenes/Room_KGC.unity
     guid: f695295c9e83d0345a852602e7aa91a7
+  - enabled: 1
+    path: Assets/XR_LJS/@Scenes/Gangzang_LJS.unity
+    guid: d58167856fea9ca4abc4c50d3497ebc6
+  - enabled: 1
+    path: Assets/XR_LJS/@Scenes/residential_LJS.unity
+    guid: 027c79855e7beb14095ddff54669e065
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6ee72d15cf39dd748a13eac57397b9af,
       type: 2}
