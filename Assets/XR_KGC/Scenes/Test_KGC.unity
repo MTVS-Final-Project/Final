@@ -382,7 +382,7 @@ GameObject:
   - component: {fileID: 492463521}
   - component: {fileID: 492463520}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: GaguCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -833,7 +833,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &763088146
 Transform:
   m_ObjectHideFlags: 0
@@ -2527,6 +2527,27 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 871320799013210107, guid: 10415d1381d6e974aa76b8266c556b12,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 871320799013210107, guid: 10415d1381d6e974aa76b8266c556b12,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 871320799013210107, guid: 10415d1381d6e974aa76b8266c556b12,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2717048316568951266, guid: 10415d1381d6e974aa76b8266c556b12,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 18d5ca7de3b056c44bb866ea65b8feb3,
+        type: 3}
     - target: {fileID: 2756695692210854498, guid: 10415d1381d6e974aa76b8266c556b12,
         type: 3}
       propertyPath: m_Center.z
@@ -2597,6 +2618,16 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Set
       objectReference: {fileID: 0}
+    - target: {fileID: 7219530830841079883, guid: 10415d1381d6e974aa76b8266c556b12,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7317907986441713587, guid: 10415d1381d6e974aa76b8266c556b12,
+        type: 3}
+      propertyPath: currentMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2610,10 +2641,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1128538409495463237, guid: 17ff07928cfe64141ac0a3f2f056b715,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 2737927105828935900, guid: 17ff07928cfe64141ac0a3f2f056b715,
         type: 3}
       propertyPath: m_Center.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2741063926562249564, guid: 17ff07928cfe64141ac0a3f2f056b715,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9270ddb370ad4d54da81ef035897122e,
+        type: 3}
+    - target: {fileID: 3044078729638514957, guid: 17ff07928cfe64141ac0a3f2f056b715,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.0627451
       objectReference: {fileID: 0}
     - target: {fileID: 4996983221102943255, guid: 17ff07928cfe64141ac0a3f2f056b715,
         type: 3}
@@ -2623,7 +2670,7 @@ PrefabInstance:
     - target: {fileID: 6066558071972036446, guid: 17ff07928cfe64141ac0a3f2f056b715,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.347
+      value: -1.641
       objectReference: {fileID: 0}
     - target: {fileID: 6066558071972036446, guid: 17ff07928cfe64141ac0a3f2f056b715,
         type: 3}
@@ -2683,10 +2730,10 @@ SceneRoots:
   - {fileID: 824921832}
   - {fileID: 1062017717}
   - {fileID: 1929768384}
-  - {fileID: 8071232530613433737}
-  - {fileID: 4089514814982381791}
-  - {fileID: 763088146}
   - {fileID: 8638729}
   - {fileID: 725345292}
   - {fileID: 492463523}
   - {fileID: 939740143}
+  - {fileID: 8071232530613433737}
+  - {fileID: 4089514814982381791}
+  - {fileID: 763088146}

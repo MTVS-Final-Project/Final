@@ -22488,8 +22488,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc0af7347baf2fa4d9cb1666b27bff6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gagu:
-  - {fileID: 9013143634610663739, guid: 37378c235e83a5a4ba0ba518ceecfc5a, type: 3}
+  gagu: {fileID: 0}
+  itemName: []
+  sprites: []
 --- !u!114 &909485151
 MonoBehaviour:
   m_ObjectHideFlags: 0
