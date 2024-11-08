@@ -1,97 +1,103 @@
 using UnityEngine;
 using Photon.Pun;
-using UnityEngine.UI;
-using TMPro;
-using Spine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
 {
-    private Vector3 offset;
     public float moveSpeed = 5f;
-    public Vector2 movement = new Vector2();
     private Vector3 targetPosition;
     private bool isMoving = false;
-    private PhotonView pv;
-    Rigidbody2D rb;
+    private Rigidbody2D rb;
     private SpriteRenderer[] spriteRenderers; // 캐릭터의 모든 SpriteRenderer들
     public TMP_Text playerNickname; // 플레이어 닉네임 담는 변수 선언.
     public string restrictedSceneName = "FirstScene_LJS"; // 특정 씬 이름
-    // 고양이 GameObject를 참조하는 변수 추가
     public GameObject cat; // 고양이가 존재하는지 확인할 변수
+    public GameObject circle; // circle 오브젝트 참조하는 변수
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
 
-        // 캐릭터의 모든 SpriteRenderer를 찾음 (하위 오브젝트 포함)
-        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
-
-        if (photonView.InstantiationData != null && photonView.InstantiationData.Length > 0)
+        if (cat == null)
         {
-            string jsonData = (string)photonView.InstantiationData[0];
-            CharacterCustomizationData customData = CharacterCustomizationData.FromJson(jsonData);
+            cat = GameObject.Find("Cat");
+        }
+        if (circle == null)
+        {
+            circle = GameObject.Find("Circle");
         }
 
-        //playerNickname.text = photonView.Owner.NickName;
-        //cat = GameObject.Find("Cat").GetComponent<GameObject>(); //Cat
+        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
 
+        if (photonView.IsMine)
+        {
+            Debug.Log("플레이어 캐릭터 스크립트가 시작되었습니다.");
+        }
     }
 
     void Update()
     {
-        cat = GameObject.Find("Cat");
-        // 윈도우 테스트 용
-        //if (photonView.IsMine)
-        //{
-        //    movement.x = Input.GetAxis("Horizontal");
-        //    movement.y = Input.GetAxis("Vertical");
-        //    movement.Normalize();
-        //    rb.linearVelocity = movement * moveSpeed;
-        //}
+        if (!photonView.IsMine) return;
+
         if (SceneManager.GetActiveScene().name == restrictedSceneName)
         {
+            Debug.Log("이 씬에서는 캐릭터 이동이 제한됩니다.");
             return;
         }
 
-        // 고양이가 존재하면 이동 중지
-        
-        if (photonView.IsMine)
+        // Circle 오브젝트가 활성화된 상태에서 마우스 클릭 감지
+        if (circle.activeInHierarchy)
         {
-            if (Input.touchCount > 0)
+            if (Input.GetMouseButtonDown(0))
             {
-                Touch touch = Input.GetTouch(0);
-                if (touch.phase == TouchPhase.Began)
+                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+
+                if (hit.collider != null && hit.collider.CompareTag("Ground"))
                 {
-                    targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 10f));
+                    targetPosition = hit.point;
                     targetPosition.z = transform.position.z;
                     isMoving = true;
+
+                    Debug.Log("Ground를 클릭했습니다. 목표 위치가 설정되었습니다: " + targetPosition);
+                }
+                else
+                {
+                    Debug.Log("Ground 콜라이더 외부를 클릭했습니다.");
                 }
             }
-            else if (cat.activeInHierarchy)
-            {
-
-                return; // 고양이가 활성화된 경우 캐릭터의 이동을 멈춤
-
-            }
+        }
+        else if (cat.activeInHierarchy)
+        {
+            Debug.Log("고양이가 활성화되어 있어 이동이 중지되었습니다.");
+            return;
         }
 
         if (isMoving)
         {
-            // 이동 방향에 따라 캐릭터의 모든 SpriteRenderer에 반대 flipX를 적용
+            Debug.Log("목표 위치로 이동 중: " + targetPosition);
+
+            // 이동 방향에 따라 캐릭터의 모든 SpriteRenderer에 flipX 적용
             if (targetPosition.x > transform.position.x)
             {
-                SetCharacterFlip(true); // 오른쪽으로 이동할 때 flipX를 true로 설정
+                SetCharacterFlip(true);
             }
             else if (targetPosition.x < transform.position.x)
             {
-                SetCharacterFlip(false); // 왼쪽으로 이동할 때 flipX를 false로 설정
+                SetCharacterFlip(false);
             }
 
+            // 캐릭터 이동
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
-            if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
+            float remainingDistance = Vector3.Distance(transform.position, targetPosition);
+            Debug.Log("남은 거리: " + remainingDistance);
+
+            // 목적지에 도착했을 경우 이동 중지
+            if (remainingDistance < 0.1f)
             {
+                Debug.Log("목표 위치에 도착했습니다.");
                 isMoving = false;
             }
         }
@@ -104,23 +110,7 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
         {
             renderer.flipX = flip;
         }
-    }
-
-    // 활성화된 버튼의 개수를 계산하는 함수
-    int CountActiveButtons()
-    {
-        Button[] buttons = FindObjectsOfType<Button>(); // 화면에 있는 모든 버튼을 가져옴
-        int activeButtonCount = 0;
-
-        foreach (Button button in buttons)
-        {
-            if (button.gameObject.activeInHierarchy) // 활성화된 버튼만 카운트
-            {
-                activeButtonCount++;
-            }
-        }
-
-        return activeButtonCount;
+        Debug.Log("캐릭터 방향이 설정되었습니다: " + (flip ? "오른쪽" : "왼쪽"));
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

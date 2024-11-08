@@ -63,7 +63,7 @@ MonoBehaviour:
   rightarmPart: {fileID: 0}
   rightarmOption:
   - {fileID: 21300000, guid: 6ab8b999069118c47b58fa3f7a377a7d, type: 3}
-  - {fileID: 21300000, guid: 6ab8b999069118c47b58fa3f7a377a7d, type: 3}
+  - {fileID: 21300000, guid: 4264cb34454e530468ea70f7a7b1f18c, type: 3}
   pantPart: {fileID: 0}
   pantOption:
   - {fileID: 21300000, guid: 86a6ee9b4b957e2469d6293dc51a489d, type: 3}

@@ -126,7 +126,7 @@ public class PhotonNet : MonoBehaviourPunCallbacks
     //}
     void ddddd(GameObject player)
     {
-        // Update 로직 추가 dddd
+        // dddd
 
         print(PhotonNetwork.LocalPlayer.CustomProperties["BodyUI"]);
         print(PhotonNetwork.LocalPlayer.CustomProperties["EyesUI"]);
