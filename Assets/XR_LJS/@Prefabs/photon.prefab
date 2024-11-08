@@ -44,4 +44,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beb03c9e5dab2354892d6447e8a1d1b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bodyPart: {fileID: 0}
+  bodyOption:
+  - {fileID: 21300000, guid: 3da90c91a3a93eb4580fac0f62bc8683, type: 3}
+  - {fileID: 21300000, guid: adf35b0c573a1a744a2ee5b607f74299, type: 3}
+  eyePart: {fileID: 0}
+  eyeOption:
+  - {fileID: 21300000, guid: 70287438def6a7248b6931cab5335cc0, type: 3}
+  - {fileID: 21300000, guid: eec54aa3cfadd6542a9809f00e5eac7c, type: 3}
+  mouthPart: {fileID: 0}
+  mouthOption:
+  - {fileID: 21300000, guid: f170c9e2943c7eb438fb768128d4a257, type: 3}
+  - {fileID: 21300000, guid: 6079520ecd7a6cb46a2d3cfc156fa4b1, type: 3}
+  leftarmPart: {fileID: 0}
+  leftarmOption:
+  - {fileID: 21300000, guid: 32627c5d5d61b0d498dc1c56557de46c, type: 3}
+  - {fileID: 21300000, guid: bcce923a39edd184ba3dd3cf2b769dfb, type: 3}
+  rightarmPart: {fileID: 0}
+  rightarmOption:
+  - {fileID: 21300000, guid: 6ab8b999069118c47b58fa3f7a377a7d, type: 3}
+  - {fileID: 21300000, guid: 6ab8b999069118c47b58fa3f7a377a7d, type: 3}
+  pantPart: {fileID: 0}
+  pantOption:
+  - {fileID: 21300000, guid: 86a6ee9b4b957e2469d6293dc51a489d, type: 3}
+  - {fileID: 21300000, guid: cafb9dceb1a934f479ca650c8538aa06, type: 3}
+  hairPart: {fileID: 0}
+  hairOption:
+  - {fileID: 21300000, guid: 96ec4df8a0aeb2b4090e72525091f1ce, type: 3}
+  - {fileID: 21300000, guid: 6faf253c6a952de46bfc6b2f71244393, type: 3}
+  leftshoesPart: {fileID: 0}
+  leftshoesOption:
+  - {fileID: 21300000, guid: 60aeb662820c056429de222bed2623ee, type: 3}
+  - {fileID: 21300000, guid: 7a9be0af638e49e44ae2c0d78f92d52c, type: 3}
+  rightshoesPart: {fileID: 0}
+  rightshoesOption:
+  - {fileID: 21300000, guid: b0c2bb8eef06bc145a91a649acf59f9f, type: 3}
+  - {fileID: 21300000, guid: f68ff7053be4f7c4faa5a9f0dafb3ad8, type: 3}
+  leftlegPart: {fileID: 0}
+  leftlegOption:
+  - {fileID: 21300000, guid: a2de3174460401842beac370bb6ce089, type: 3}
+  - {fileID: 21300000, guid: 6e5b98b02b378d5418ed6c25c2e8e6c6, type: 3}
+  rightlegPart: {fileID: 0}
+  rightlegOption:
+  - {fileID: 21300000, guid: c8cb57e1140b1ee4d8464fb9cd3a4f8f, type: 3}
+  - {fileID: 21300000, guid: 38b68bee2c325544fae413912ecbcf63, type: 3}
   catTransform: {fileID: 0}
+  circleTransform: {fileID: 0}
