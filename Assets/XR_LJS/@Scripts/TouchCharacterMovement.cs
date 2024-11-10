@@ -14,7 +14,7 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
     public string restrictedSceneName = "FirstScene_LJS"; // 특정 씬 이름
     public GameObject cat; // 고양이가 존재하는지 확인할 변수
     public GameObject circle; // circle 오브젝트 참조하는 변수
-
+    private bool isFlipped = false; // 캐릭터의 flipX 상태를 나타내는 변수
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -106,6 +106,7 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
     // 캐릭터의 모든 SpriteRenderer에 flipX 적용하는 함수
     void SetCharacterFlip(bool flip)
     {
+        isFlipped = flip;
         foreach (SpriteRenderer renderer in spriteRenderers)
         {
             renderer.flipX = flip;
@@ -120,12 +121,17 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
             stream.SendNext(transform.position);
             stream.SendNext(isMoving);
             stream.SendNext(targetPosition);
+            stream.SendNext(isFlipped);
         }
-        else
+        else if(stream.IsReading)
         {
             transform.position = (Vector3)stream.ReceiveNext();
             isMoving = (bool)stream.ReceiveNext();
             targetPosition = (Vector3)stream.ReceiveNext();
+            isFlipped = (bool)stream.ReceiveNext(); // Receive flipX state
+
+            // Apply received flipX state
+            SetCharacterFlip(isFlipped);
         }
     }
 }
