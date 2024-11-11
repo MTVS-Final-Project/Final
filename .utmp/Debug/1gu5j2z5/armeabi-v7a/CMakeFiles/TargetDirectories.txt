@@ -1,0 +1,5 @@
+C:/Unity/Unity/.utmp/Debug/1gu5j2z5/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Unity/Unity/.utmp/Debug/1gu5j2z5/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+C:/Unity/Unity/.utmp/Debug/1gu5j2z5/armeabi-v7a/GameActivity/CMakeFiles/game.dir
+C:/Unity/Unity/.utmp/Debug/1gu5j2z5/armeabi-v7a/GameActivity/CMakeFiles/edit_cache.dir
+C:/Unity/Unity/.utmp/Debug/1gu5j2z5/armeabi-v7a/GameActivity/CMakeFiles/rebuild_cache.dir

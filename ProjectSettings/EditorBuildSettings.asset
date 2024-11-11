@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/XR_KSY/Scenes/MainScene_KSY.unity
     guid: 3e20e6cb72883f6449a92f944c77acf2
   - enabled: 1
+    path: Assets/XR_KGC/Scenes/AR_KGC.unity
+    guid: 8a1b1fc3a69ae1c4d8b4d7712c450d80
+  - enabled: 1
     path: Assets/XR_KGC/Scenes/OSM_KGC.unity
     guid: 74a2b3ef9b6727f4ab230cdc08063003
   - enabled: 1
