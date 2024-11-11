@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8126104741022165538}
   - component: {fileID: 1904656333551883802}
   - component: {fileID: 5323195042226230732}
+  - component: {fileID: 8474201714187148177}
   m_Layer: 0
   m_Name: eyebrow
   m_TagString: Untagged
@@ -100,6 +101,28 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &8474201714187148177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368136452684822790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &538830177012687251
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,6 +134,7 @@ GameObject:
   - component: {fileID: 1218814084868349055}
   - component: {fileID: 721925566007895312}
   - component: {fileID: 8377204270117623285}
+  - component: {fileID: 7120897862404220971}
   m_Layer: 0
   m_Name: leftshoesblack
   m_TagString: Untagged
@@ -200,6 +224,28 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_SortAtRoot: 0
+--- !u!114 &7120897862404220971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538830177012687251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &915378743904471353
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,6 +257,7 @@ GameObject:
   - component: {fileID: 26224995084993983}
   - component: {fileID: 5836659400558622378}
   - component: {fileID: 7805419474164445536}
+  - component: {fileID: 9096633415142210693}
   m_Layer: 0
   m_Name: blackPant
   m_TagString: Untagged
@@ -300,6 +347,28 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_SortAtRoot: 0
+--- !u!114 &9096633415142210693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915378743904471353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1554938307459705480
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,6 +380,7 @@ GameObject:
   - component: {fileID: 4678491724923029259}
   - component: {fileID: 1370984111642907147}
   - component: {fileID: 959952466035141904}
+  - component: {fileID: 327431721461572510}
   m_Layer: 0
   m_Name: leftArm1
   m_TagString: Untagged
@@ -400,6 +470,28 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: -22
   m_SortAtRoot: 0
+--- !u!114 &327431721461572510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554938307459705480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1678812363855214063
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,6 +503,7 @@ GameObject:
   - component: {fileID: 4202832572276826102}
   - component: {fileID: 904790228156488024}
   - component: {fileID: 1215468638406587467}
+  - component: {fileID: 2414016345437181042}
   m_Layer: 0
   m_Name: rightshoesblack
   m_TagString: Untagged
@@ -500,6 +593,28 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_SortAtRoot: 0
+--- !u!114 &2414016345437181042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678812363855214063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1685513982899642030
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,6 +626,7 @@ GameObject:
   - component: {fileID: 8157968619730948945}
   - component: {fileID: 1529813534586178538}
   - component: {fileID: 3134862032560867346}
+  - component: {fileID: 2615716579192464852}
   m_Layer: 0
   m_Name: mouth
   m_TagString: Untagged
@@ -600,6 +716,28 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_SortAtRoot: 0
+--- !u!114 &2615716579192464852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1685513982899642030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1862255839606152429
 GameObject:
   m_ObjectHideFlags: 0
@@ -748,6 +886,7 @@ GameObject:
   - component: {fileID: 6890363880405316798}
   - component: {fileID: 6730686104655921586}
   - component: {fileID: 6844380045826414662}
+  - component: {fileID: 1958708336935296208}
   m_Layer: 0
   m_Name: hairblack
   m_TagString: Untagged
@@ -837,6 +976,28 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_SortAtRoot: 0
+--- !u!114 &1958708336935296208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2067502143148075532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2276485975873680035
 GameObject:
   m_ObjectHideFlags: 0
@@ -848,6 +1009,7 @@ GameObject:
   - component: {fileID: 6115480398833835346}
   - component: {fileID: 2409441320342486650}
   - component: {fileID: 6250823792664941783}
+  - component: {fileID: 1155141333469136609}
   m_Layer: 0
   m_Name: eye
   m_TagString: Untagged
@@ -937,6 +1099,28 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_SortAtRoot: 0
+--- !u!114 &1155141333469136609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2276485975873680035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2484705269223523036
 GameObject:
   m_ObjectHideFlags: 0
@@ -948,6 +1132,7 @@ GameObject:
   - component: {fileID: 3645168754758646530}
   - component: {fileID: 2066400954958753555}
   - component: {fileID: 6962632811019747163}
+  - component: {fileID: 3467364651980897846}
   m_Layer: 0
   m_Name: face
   m_TagString: Untagged
@@ -1037,6 +1222,28 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &3467364651980897846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2484705269223523036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &3269246429653582756
 GameObject:
   m_ObjectHideFlags: 0
@@ -1048,6 +1255,7 @@ GameObject:
   - component: {fileID: 7207584881544146366}
   - component: {fileID: 8141987160452821495}
   - component: {fileID: 7469070184781263189}
+  - component: {fileID: 5988004911755382364}
   m_Layer: 0
   m_Name: rightArmWhite
   m_TagString: Untagged
@@ -1137,6 +1345,28 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &5988004911755382364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3269246429653582756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &3400931067881581973
 GameObject:
   m_ObjectHideFlags: 0
@@ -1155,7 +1385,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6114456204230100770
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1252,7 +1482,6 @@ GameObject:
   - component: {fileID: -658240951671457957}
   - component: {fileID: -2692293942470495615}
   - component: {fileID: 2625617611899400327}
-  - component: {fileID: -1232331130051543231}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1310,7 +1539,6 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: -2692293942470495615}
   - {fileID: 2625617611899400327}
-  - {fileID: -1232331130051543231}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1354,10 +1582,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  movement: {x: 0, y: 0}
   playerNickname: {fileID: 3266007972974496838}
   restrictedSceneName: FirstScene_LJS
   cat: {fileID: 0}
+  circle: {fileID: 0}
 --- !u!114 &2625617611899400327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1370,29 +1598,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 1
+  m_SynchronizeVelocity: 0
+  m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &-1232331130051543231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5715024331121306500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12f949b02501e0c46863b0b6fc283b7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hairStyle: 0
-  eyeStyle: 0
-  mouthStyle: 0
-  bodyStyle: 0
-  pantStyle: 0
-  leftArmStyle: 0
-  rightArmStyle: 0
 --- !u!1 &7435265467231564490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1404,6 +1613,7 @@ GameObject:
   - component: {fileID: 5127908429395598919}
   - component: {fileID: 3142946490425920565}
   - component: {fileID: 6712789623286766172}
+  - component: {fileID: 1561345619945488284}
   m_Layer: 0
   m_Name: leftlegblack
   m_TagString: Untagged
@@ -1493,6 +1703,28 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &1561345619945488284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7435265467231564490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8187564140332372098
 GameObject:
   m_ObjectHideFlags: 0
@@ -1504,6 +1736,7 @@ GameObject:
   - component: {fileID: 1205361405581028774}
   - component: {fileID: 1504187516729792586}
   - component: {fileID: 8131090767180193305}
+  - component: {fileID: 369879749335295424}
   m_Layer: 0
   m_Name: Body1
   m_TagString: Untagged
@@ -1593,6 +1826,28 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_SortAtRoot: 0
+--- !u!114 &369879749335295424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8187564140332372098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8637751813877041960
 GameObject:
   m_ObjectHideFlags: 0
@@ -1604,6 +1859,7 @@ GameObject:
   - component: {fileID: 1577694089520303600}
   - component: {fileID: 6226314814576781435}
   - component: {fileID: 7134437977947251927}
+  - component: {fileID: 5071326007096956258}
   m_Layer: 0
   m_Name: rightlegblack
   m_TagString: Untagged
@@ -1693,3 +1949,25 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &5071326007096956258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8637751813877041960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

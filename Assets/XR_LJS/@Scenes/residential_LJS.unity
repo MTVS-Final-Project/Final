@@ -5001,6 +5001,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2329116353955568441, guid: e896c0d09c628044f8da587a1713f165,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3479735394951672487, guid: e896c0d09c628044f8da587a1713f165,
         type: 3}
       propertyPath: m_Name
@@ -18137,8 +18142,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc0af7347baf2fa4d9cb1666b27bff6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gagu:
-  - {fileID: 9013143634610663739, guid: 37378c235e83a5a4ba0ba518ceecfc5a, type: 3}
+  gagu: {fileID: 0}
+  itemName: []
+  sprites: []
 --- !u!114 &909485151
 MonoBehaviour:
   m_ObjectHideFlags: 0

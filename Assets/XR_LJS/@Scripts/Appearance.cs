@@ -1,6 +1,7 @@
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Appearance : MonoBehaviourPunCallbacks
 {
@@ -9,6 +10,10 @@ public class Appearance : MonoBehaviourPunCallbacks
     private int _index;
 
     private PhotonView _photonView;
+
+    // HashTable을 읽어온다
+    // HashTable에서 데이터를 읽어온다
+    //
 
     private void Awake()
     {
@@ -45,6 +50,7 @@ public class Appearance : MonoBehaviourPunCallbacks
         }
     }
 
+    // 번호에 맞춰서 이미지 변경
     private void UpdateSprite()
     {
         if (part != null && Index >= 0 && Index < option.Length)
@@ -62,10 +68,15 @@ public class Appearance : MonoBehaviourPunCallbacks
         {
             ExitGames.Client.Photon.Hashtable properties = new ExitGames.Client.Photon.Hashtable
             {
-                { "AppearanceIndex", Index }
+                { gameObject.name, Index }
             };
+
             PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
+
+            Debug.Log("Custom properties Set: " + gameObject.name + ", " + Index);
+            //PhotonNetwork.LocalPlayer.CustomProperties[gameObject.name];
         }
+
     }
 
     public void SwapLocalAndSync()
@@ -83,7 +94,7 @@ public class Appearance : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
-        if (_photonView != null && !_photonView.IsMine && targetPlayer == _photonView.Owner && changedProps.TryGetValue("AppearanceIndex", out object newIndex))
+        if (_photonView != null && !_photonView.IsMine && targetPlayer == _photonView.Owner && changedProps.TryGetValue(gameObject.name, out object newIndex))
         {
             Index = (int)newIndex;
         }

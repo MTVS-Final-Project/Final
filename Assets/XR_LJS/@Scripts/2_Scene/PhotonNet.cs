@@ -1,16 +1,59 @@
 using UnityEngine;
 using Photon.Pun;
-
-public class PhotonNet : MonoBehaviourPunCallbacks
+using Photon.Realtime;
+public class PhotonNet : MonoBehaviourPunCallbacks, IPunObservable
 {
+    // 몸 부분
+    public SpriteRenderer bodyPart;
+    public Sprite[] bodyOption;
+
+    // 눈
+    public SpriteRenderer eyePart;
+    public Sprite[] eyeOption;
+    // 입
+    public SpriteRenderer mouthPart;
+    public Sprite[] mouthOption;
+    // 왼쪽 팔
+    public SpriteRenderer leftarmPart;
+    public Sprite[] leftarmOption;
+    
+    //오른쪽 팔
+    public SpriteRenderer rightarmPart;
+    public Sprite[] rightarmOption;
+
+    // 팬츠
+    public SpriteRenderer pantPart;
+    public Sprite[] pantOption;
+
+    // 헤어
+    public SpriteRenderer hairPart;
+    public Sprite[] hairOption;
+
+    //왼쪽 신발
+    public SpriteRenderer leftshoesPart;
+    public Sprite[] leftshoesOption;
+
+    // 오른쪽 신발
+    public SpriteRenderer rightshoesPart;
+    public Sprite[] rightshoesOption;
+
+    // 왼쪽 다리
+    public SpriteRenderer leftlegPart;
+    public Sprite[] leftlegOption;
+
+    // 오른쪽 다리
+    public SpriteRenderer rightlegPart;
+    public Sprite[] rightlegOption;
+
+
     public Transform catTransform; // 에디터에서 고양이 객체의 Transform을 연결합니다.
     public Transform circleTransform;
     void Start()
     {
+
         // RPC 보내는 빈도 설정
         PhotonNetwork.SendRate = 60;
         PhotonNetwork.SerializationRate = 60;
-
         if (catTransform != null)
         {
             // 고양이 위치 근처의 위치 계산
@@ -22,14 +65,17 @@ public class PhotonNet : MonoBehaviourPunCallbacks
             // 객체 생성
             GameObject playerInstance = PhotonNetwork.Instantiate("Player", spawnPosition, Quaternion.identity);
 
+            CustomMizeGive(playerInstance);
             // CatController의 player 변수에 자동 할당
             CatController.instance.player = playerInstance;
+
         }
         else if (circleTransform != null)
         {
             Vector3 spawnPos = GetRandomPositionNearCircle();
             Debug.Log("spawn pos : " + spawnPos);
             GameObject playerInstance = PhotonNetwork.Instantiate("Player", spawnPos, Quaternion.identity);
+            CustomMizeGive(playerInstance);
             Debug.Log("player : " + playerInstance);
         }
     }
@@ -70,9 +116,84 @@ public class PhotonNet : MonoBehaviourPunCallbacks
             return Vector3.zero;
         }
     }
-
-    void Update()
+    //private void UpdateSprite()
+    //{
+    //    if (part != null && Index >= 0 && Index < option.Length)
+    //    {
+    //        part.sprite = option[Index];
+    //    }
+    //}
+    void CustomMizeGive(GameObject player)
     {
-        // Update 로직 추가 가능
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("BodyUI", out object bodyIndex))
+            player.transform.Find("Body1").GetComponent<SpriteRenderer>().sprite = bodyOption[(int)bodyIndex];
+
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("EyesUI", out object eyeIndex))
+            player.transform.Find("eye").GetComponent<SpriteRenderer>().sprite = eyeOption[(int)eyeIndex];
+
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("MouthUI", out object mouthIndex))
+            player.transform.Find("mouth").GetComponent<SpriteRenderer>().sprite = mouthOption[(int)mouthIndex];
+
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("LeftArmUI", out object leftArmIndex))
+            player.transform.Find("leftArm1").GetComponent<SpriteRenderer>().sprite = leftarmOption[(int)leftArmIndex];
+
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("rightArmUI", out object rightArmIndex))
+            player.transform.Find("rightArmWhite").GetComponent<SpriteRenderer>().sprite = rightarmOption[(int)rightArmIndex];
+
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("leftLegUI", out object leftLegIndex))
+            player.transform.Find("leftlegblack").GetComponent<SpriteRenderer>().sprite = leftlegOption[(int)leftLegIndex];
+
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("rightLegUI", out object rightLegIndex))
+            player.transform.Find("rightlegblack").GetComponent<SpriteRenderer>().sprite = rightlegOption[(int)rightLegIndex];
+
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("PantsUI", out object pantIndex))
+            player.transform.Find("blackPant").GetComponent<SpriteRenderer>().sprite = pantOption[(int)pantIndex];
+
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("HairUI", out object hairIndex))
+            player.transform.Find("hairblack").GetComponent<SpriteRenderer>().sprite = hairOption[(int)hairIndex];
+
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("leftShoesUI", out object leftShoesIndex))
+            player.transform.Find("leftshoesblack").GetComponent<SpriteRenderer>().sprite = leftshoesOption[(int)leftShoesIndex];
+
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("rightShoesUI", out object rightShoesIndex))
+            player.transform.Find("rightshoesblack").GetComponent<SpriteRenderer>().sprite = rightshoesOption[(int)rightShoesIndex];
+    }
+
+    // Synchronize customization properties over the network
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            // Send customization properties to other players
+            stream.SendNext((int)PhotonNetwork.LocalPlayer.CustomProperties["BodyUI"]);
+            stream.SendNext((int)PhotonNetwork.LocalPlayer.CustomProperties["EyesUI"]);
+            stream.SendNext((int)PhotonNetwork.LocalPlayer.CustomProperties["MouthUI"]);
+            stream.SendNext((int)PhotonNetwork.LocalPlayer.CustomProperties["LeftArmUI"]);
+            stream.SendNext((int)PhotonNetwork.LocalPlayer.CustomProperties["rightArmUI"]);
+            stream.SendNext((int)PhotonNetwork.LocalPlayer.CustomProperties["leftLegUI"]);
+            stream.SendNext((int)PhotonNetwork.LocalPlayer.CustomProperties["rightLegUI"]);
+            stream.SendNext((int)PhotonNetwork.LocalPlayer.CustomProperties["PantsUI"]);
+            stream.SendNext((int)PhotonNetwork.LocalPlayer.CustomProperties["HairUI"]);
+            stream.SendNext((int)PhotonNetwork.LocalPlayer.CustomProperties["leftShoesUI"]);
+            stream.SendNext((int)PhotonNetwork.LocalPlayer.CustomProperties["rightShoesUI"]);
+        }
+        else if(stream.IsReading)
+        {
+            // Receive customization properties from other players
+            PhotonNetwork.LocalPlayer.CustomProperties["BodyUI"] = (int)stream.ReceiveNext();
+            PhotonNetwork.LocalPlayer.CustomProperties["EyesUI"] = (int)stream.ReceiveNext();
+            PhotonNetwork.LocalPlayer.CustomProperties["MouthUI"] = (int)stream.ReceiveNext();
+            PhotonNetwork.LocalPlayer.CustomProperties["LeftArmUI"] = (int)stream.ReceiveNext();
+            PhotonNetwork.LocalPlayer.CustomProperties["rightArmUI"] = (int)stream.ReceiveNext();
+            PhotonNetwork.LocalPlayer.CustomProperties["leftLegUI"] = (int)stream.ReceiveNext();
+            PhotonNetwork.LocalPlayer.CustomProperties["rightLegUI"] = (int)stream.ReceiveNext();
+            PhotonNetwork.LocalPlayer.CustomProperties["PantsUI"] = (int)stream.ReceiveNext();
+            PhotonNetwork.LocalPlayer.CustomProperties["HairUI"] = (int)stream.ReceiveNext();
+            PhotonNetwork.LocalPlayer.CustomProperties["leftShoesUI"] = (int)stream.ReceiveNext();
+            PhotonNetwork.LocalPlayer.CustomProperties["rightShoesUI"] = (int)stream.ReceiveNext();
+
+            // Apply received customization to update the player's appearance
+            CustomMizeGive(this.gameObject);
+        }
     }
 }
