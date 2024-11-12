@@ -232,6 +232,7 @@ MonoBehaviour:
   - {fileID: 3855130604896923171, guid: c4f26cf11b9e91d48a09b8039069b6bc, type: 3}
   - {fileID: 5212707843459981826, guid: 93252112c6816b34b9fceebe7b89ae79, type: 3}
   - {fileID: 2586470194919943843, guid: eb0116174617c254cad9e24c8d9a1a65, type: 3}
+  - {fileID: 3486036213129543608, guid: 0460775159d369948b8177cb54401a24, type: 3}
   gaguSize: 0
   gaguImage: {fileID: 0}
   PlaceButtonScript: {fileID: 0}

@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class ModifySetup : MonoBehaviour
 {
+    public ParentManager pm;
 
     public bool lineOn;
+
+    public bool buttonOff;
 
     public GameObject RoomModify;//클릭하면 drag object를 활성화해서 가구이동을 가능하게 하는 스크립트
     public GameObject lines; //격자무늬
@@ -13,6 +16,7 @@ public class ModifySetup : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        pm = GameObject.Find("PopupCanvas").GetComponent<ParentManager>();
         RoomModify = GameObject.Find("RoomModify");
         GaguCanvas = GameObject.Find("GaguCanvas");
         PlaceCanvas = GameObject.Find("PlaceCanvas");
@@ -24,6 +28,16 @@ public class ModifySetup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+         if (!pm.allDeactivated || buttonOff)
+        {
+            transform.GetChild(0).gameObject.SetActive(false);
+        }
+         else if(!buttonOff&&pm.allDeactivated)
+        {
+            transform.GetChild(0).gameObject.SetActive(true);
+
+        }
+
         if (lines == null)
         {
             if (GameObject.Find("LineParent") != null)
@@ -56,9 +70,10 @@ public class ModifySetup : MonoBehaviour
             dragObject.enabled = false;
         }
 
-
-
         transform.GetChild(0).gameObject.SetActive(true);
     }
-
+    public void ButtonSwitch()
+    {
+        buttonOff = !buttonOff;
+    }
 }
