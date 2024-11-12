@@ -406,6 +406,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 714663244}
+  - component: {fileID: 714663245}
   m_Layer: 0
   m_Name: Quest
   m_TagString: Untagged
@@ -428,6 +429,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &714663245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714663243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6539f3180635a4e45a563953ed08736a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questPop: {fileID: 3098871133655123508}
+  userQuestPop: {fileID: 7221487242856015844}
+  suju: {fileID: 5816589115974311442}
 --- !u!1 &720033350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1438,13 +1454,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 714663245}
+        m_TargetAssemblyTypeName: Quest, Assembly-CSharp
+        m_MethodName: QuestOpen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2137,9 +2153,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: HomeSceneUIScripts, Assembly-CSharp
-        m_MethodName: GetQuest
+      - m_Target: {fileID: 714663245}
+        m_TargetAssemblyTypeName: Quest, Assembly-CSharp
+        m_MethodName: QuestSuju
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2399,8 +2415,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: HomeSceneUIScripts, Assembly-CSharp
+      - m_Target: {fileID: 714663245}
+        m_TargetAssemblyTypeName: Quest, Assembly-CSharp
         m_MethodName: QuestClose
         m_Mode: 1
         m_Arguments:
@@ -2515,9 +2531,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: HomeSceneUIScripts, Assembly-CSharp
-        m_MethodName: LetsQuest
+      - m_Target: {fileID: 714663245}
+        m_TargetAssemblyTypeName: Quest, Assembly-CSharp
+        m_MethodName: QuestSujuClose
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3348,7 +3364,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uAC70\uC808"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 86724ceb0460aee4bb1f2fe7b381bcdb, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -3414,7 +3430,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!224 &5395862787656270855
@@ -3935,9 +3951,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: HomeSceneUIScripts, Assembly-CSharp
-        m_MethodName: NopeQuest
+      - m_Target: {fileID: 714663245}
+        m_TargetAssemblyTypeName: Quest, Assembly-CSharp
+        m_MethodName: QuestSujuClose
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4127,7 +4143,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC218\uB77D"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 86724ceb0460aee4bb1f2fe7b381bcdb, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -4193,7 +4209,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &8220964897447919358
