@@ -1,0 +1,49 @@
+cat.png
+size:999,138
+filter:Linear,Linear
+pma:true
+Gray/레이어 12
+bounds:708,4,132,43
+offsets:1,1,134,46
+rotate:90
+Gray/레이어 22
+bounds:922,72,39,64
+offsets:1,1,41,67
+Gray/레이어 32
+bounds:880,70,40,66
+offsets:1,1,42,68
+Gray/레이어 42
+bounds:354,19,175,117
+offsets:1,1,177,119
+Gray/레이어 52
+bounds:798,63,37,73
+offsets:1,1,39,75
+Gray/레이어 62
+bounds:837,70,41,66
+offsets:1,1,43,68
+Gray/레이어 72
+bounds:2,2,174,134
+offsets:2,1,177,137
+White/레이어 1
+bounds:753,4,132,43
+offsets:1,1,134,46
+rotate:90
+White/레이어 2
+bounds:958,6,39,64
+offsets:1,1,41,67
+White/레이어 3
+bounds:916,2,40,66
+offsets:1,1,42,68
+White/레이어 4
+bounds:531,19,175,117
+offsets:1,1,177,119
+White/레이어 5
+bounds:798,24,37,73
+offsets:1,1,39,75
+rotate:90
+White/레이어 6
+bounds:873,2,41,66
+offsets:1,1,43,68
+White/레이어 7
+bounds:178,2,174,134
+offsets:2,1,177,137
