@@ -11,17 +11,23 @@ public class ItemScript : MonoBehaviour
 
     public GameObject gagu;
 
-    public List<string> itemName = new List<string>();
-    public List<Sprite> sprites = new List<Sprite>();
+    public List<int> size = new List<int>(); //가구크기, 0은 1칸 1은 2칸짜리임.
+    public List<string> itemName = new List<string>(); //가구이름
+    public List<Sprite> sprites = new List<Sprite>(); //가구 스프라이트
 
+   // public SelectItem si;
     void Start()
     {
+        
         for (int i = 0; i < itemName.Count; i++)
         {
             GameObject go = Instantiate(gagu, transform);
 
+            go.gameObject.GetComponent<SelectItem>().gaguSize = size[i];
             go.transform.GetChild(0).GetComponent<Text>().text = itemName[i];
             go.transform.GetChild(1).GetComponent<Image>().sprite = sprites[i];
+            go.gameObject.GetComponent<SelectItem>().gaguImage = sprites[i];
+            
 
 
             int index = i;

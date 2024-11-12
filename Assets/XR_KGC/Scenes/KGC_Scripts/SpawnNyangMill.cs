@@ -21,7 +21,7 @@ public class SpawnNyangMill : MonoBehaviour
 
     public IEnumerator Respawn()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(8);
         Vector3 randomPosition = GetRandomPositionInCircleRelativeToSelf(radius, yOffset);
         Debug.Log("Random Position: " + randomPosition);
 
