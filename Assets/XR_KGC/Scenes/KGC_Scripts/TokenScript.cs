@@ -6,7 +6,7 @@ public class TokenScript : MonoBehaviour
 {
     public TextMeshProUGUI text;
 
-    public int tokenCount = 0;
+    public int tokenCount = 100;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

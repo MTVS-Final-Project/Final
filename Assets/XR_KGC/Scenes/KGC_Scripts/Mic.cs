@@ -23,8 +23,14 @@ public class Mic : MonoBehaviour
     // 서버 URL
     public string uploadURL = "https://6862-59-13-225-125.ngrok-free.app/chatbot/json"; // 실제 서버의 URL로 변경하세요.
 
+    public CatController cc;
+
     private void Update()
     {
+        if (cc == null)
+        {
+            cc = GameObject.Find("Cat").GetComponent<CatController>();
+        }
         //if (Input.GetKeyDown(KeyCode.O))
         //{
         //    recodingText.SetActive(true);
@@ -36,6 +42,11 @@ public class Mic : MonoBehaviour
         //    recodingText.SetActive(false);
         //    StopRecordingAndSave();
         //}
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            cc.CallCat();
+        }
     }
 
     public void RecordStart()
@@ -54,7 +65,22 @@ public class Mic : MonoBehaviour
 
     void Start()
     {
-        // 첫 번째 마이크 장치 선택
+        //MicCheck();
+
+        //첫 번째 마이크 장치 선택
+        if (Microphone.devices.Length > 0)
+        {
+            _microphone = Microphone.devices[0];
+        }
+        else
+        {
+            Debug.LogError("마이크 장치가 없습니다.");
+        }
+    }
+
+    public IEnumerator MicCheck()
+    {
+        yield return new WaitForSeconds(5);
         if (Microphone.devices.Length > 0)
         {
             _microphone = Microphone.devices[0];
@@ -69,9 +95,14 @@ public class Mic : MonoBehaviour
     {
         if (_microphone != null)
         {
-            recodingText.SetActive(true);
+           // recodingText.SetActive(true);
             _audioClip = Microphone.Start(_microphone, true, 10, 44100);
             Debug.Log("녹음 시작");
+        }
+
+        else
+        {
+            Debug.LogError("마이크 장치가 없습니다.");
         }
     }
 
@@ -79,7 +110,7 @@ public class Mic : MonoBehaviour
     {
         if (_microphone != null && Microphone.IsRecording(_microphone))
         {
-            recodingText.SetActive(false);
+           // recodingText.SetActive(false);
             Microphone.End(_microphone);
             SaveRecording(_audioClip);
             Debug.Log("녹음 종료 및 저장");
@@ -95,11 +126,18 @@ public class Mic : MonoBehaviour
 
         // JSON 파싱
         var response = JsonUtility.FromJson<ServerResponse>(responseText);
-
+        if (response.is_same_voice)
+        {
+            cc.CallCat();
+        }
+        else
+        {
+            Debug.Log("반응하지 않음");
+        }
         // 두 값 출력
-        result_text.text = $"Similarity: {response.Similarity}\nis_same_voice: {response.is_same_voice}";
+       // result_text.text = $"Similarity: {response.Similarity}\nis_same_voice: {response.is_same_voice}";
 
-        //if(response.is_same_voice)
+        
     }
 
     private void SaveRecording(AudioClip clip)

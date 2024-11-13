@@ -26,6 +26,11 @@ PrefabInstance:
         type: 0}
     - target: {fileID: 5070099657109323255, guid: 17ff07928cfe64141ac0a3f2f056b715,
         type: 3}
+      propertyPath: m_Name
+      value: CatPosition
+      objectReference: {fileID: 0}
+    - target: {fileID: 5070099657109323255, guid: 17ff07928cfe64141ac0a3f2f056b715,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}

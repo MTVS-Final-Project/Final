@@ -89,7 +89,7 @@ public class CatController : MonoBehaviour
 
     void Update()
     {
-         
+
         if (!modifying)
         {
         HandleClick();
@@ -106,8 +106,19 @@ public class CatController : MonoBehaviour
             Vector3 targetPosition = new Vector3(catTransform.position.x, catTransform.position.y, cam.transform.position.z);
             cam.transform.position = Vector3.SmoothDamp(cam.transform.position, targetPosition, ref cameraVelocity, moveSmoothTime);
         }
+
+
     }
 
+    public void CallCat()
+        {
+            StartCoroutine(MoveTowards(player.transform.position- new Vector3(0.5f,0.5f,0)));
+        }
+   public void CatMoveTo(Transform tf)
+    {
+        StartCoroutine(MoveTowards(tf.position));
+    }
+    
     private void HandleClick()
     {
         if (Input.GetMouseButtonDown(0))
