@@ -8,6 +8,7 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] Button joinButton;    // Gangzang_LJS로 이동하는 버튼
     [SerializeField] Button roomButton;    // residential_LJS로 이동하는 버튼
+    [SerializeField] Button room2Button;
 
     void Start()
     {
@@ -22,6 +23,11 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
         {
             roomButton.onClick.AddListener(ConnectToSecondRoom);
         }
+        if(room2Button != null)
+        {
+            room2Button.onClick.AddListener(ConnectToFirstRoom2);
+        }
+
     }
 
     // Gangzang_LJS로 이동하는 첫 번째 룸 연결
@@ -35,6 +41,11 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
     public void ConnectToSecondRoom()
     {
         JoinOrCreateRoom("room2", "residential_LJS");
+    }
+
+    public void ConnectToFirstRoom2()
+    {
+        JoinOrCreateRoom("room2", "residential_L");
     }
 
     // PhotonNetwork 기본 설정
