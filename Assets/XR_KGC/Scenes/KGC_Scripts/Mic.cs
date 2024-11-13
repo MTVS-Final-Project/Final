@@ -18,6 +18,8 @@ public class Mic : MonoBehaviour
 
     public bool clicked = false;
 
+    public bool samevoice;
+
     // 서버 URL
     public string uploadURL = "https://6862-59-13-225-125.ngrok-free.app/chatbot/json"; // 실제 서버의 URL로 변경하세요.
 
@@ -96,6 +98,8 @@ public class Mic : MonoBehaviour
 
         // 두 값 출력
         result_text.text = $"Similarity: {response.Similarity}\nis_same_voice: {response.is_same_voice}";
+
+        //if(response.is_same_voice)
     }
 
     private void SaveRecording(AudioClip clip)

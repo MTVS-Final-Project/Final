@@ -552,7 +552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -1683,8 +1683,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc0af7347baf2fa4d9cb1666b27bff6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gagu:
-  - {fileID: 9013143634610663739, guid: 37378c235e83a5a4ba0ba518ceecfc5a, type: 3}
+  gagu: {fileID: 0}
+  size: 
+  itemName: []
+  sprites: []
 --- !u!224 &999967823 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1458932174117126987, guid: 8f21c2a4652561047b0f5b0f3130c598,
@@ -1918,7 +1920,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1533654529}
   m_HandleRect: {fileID: 1533654528}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

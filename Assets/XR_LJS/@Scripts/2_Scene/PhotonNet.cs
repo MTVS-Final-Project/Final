@@ -85,8 +85,8 @@ public class PhotonNet : MonoBehaviourPunCallbacks, IPunObservable
     {
 
         // 고양이의 스케일을 고려하여 오프셋 범위 조정
-        float offsetX = Random.Range(-0.5f, 0.5f); // X축 오프셋 범위 축소
-        float offsetY = Random.Range(-0.5f, 0.5f); // Y축 오프셋 범위 축소
+        float offsetX = Random.Range(-0.1f, 0.1f); // X축 오프셋 범위 축소
+        float offsetY = Random.Range(-0.1f, 0.1f); // Y축 오프셋 범위 축소
         float offsetZ = 0; // 2D일 경우 Z축은 0으로 유지
 
         if (catTransform != null)

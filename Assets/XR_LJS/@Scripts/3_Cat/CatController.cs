@@ -40,6 +40,7 @@ public class CatController : MonoBehaviour
     public GameObject player; // Unity Inspector에서 플레이어 오브젝트 할당
     private float interactionDistance = 1.3f; // 상호작용 가능 거리
 
+    public bool modifying;
     private void Awake()
     {
         instance = this;
@@ -88,8 +89,15 @@ public class CatController : MonoBehaviour
 
     void Update()
     {
+         
+        if (!modifying)
+        {
         HandleClick();
 
+        }
+         
+       
+        
         // 카메라의 줌 부드럽게 전환
         cam.orthographicSize = Mathf.SmoothDamp(cam.orthographicSize, targetZoom, ref zoomVelocity, smoothTime);
 
