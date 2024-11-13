@@ -1,8 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/XR_KGC/Scenes/Materials/Invisible.mat.meta
+guid: 854b53c753f325f4393fc107f82366d7
+========
 guid: d47046bb54a016a4eb5a5313b23e10b2
+>>>>>>>> alpha:Assets/UnityStandaloneFileBrowser-master/ProjectSettings/AudioManager.asset.meta
 NativeFormatImporter:
   externalObjects: {}
-  mainObjectFileID: 0
+  mainObjectFileID: 2100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

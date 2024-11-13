@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/XR_KGC/Scenes/OSM_KGC.unity
     guid: 74a2b3ef9b6727f4ab230cdc08063003
   - enabled: 1
+    path: Assets/XR_KGC/Scenes/AR_KGC.unity
+    guid: 8a1b1fc3a69ae1c4d8b4d7712c450d80
+  - enabled: 1
     path: Assets/XR_KGC/Scenes/Street_KGC.unity
     guid: de089d9685a0e3346b3fff2dcdf730f1
   - enabled: 1

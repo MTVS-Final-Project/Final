@@ -6,6 +6,7 @@ public class KeepOnGround : MonoBehaviour
     public bool inGround;
 
     public GaguCheck check;
+    public DragObject dragObject;
 
     public Vector3 nowPos;
     public Vector3 lastPos;
@@ -19,6 +20,7 @@ public class KeepOnGround : MonoBehaviour
         check = transform.GetChild(0).GetComponent<GaguCheck>();
         nowPos = transform.position;
         nowRot = transform.rotation;
+        dragObject = transform.GetComponent<DragObject>();
         
     }
 
@@ -30,6 +32,10 @@ public class KeepOnGround : MonoBehaviour
         //    transform.position = check.snapPos;
 
         //}
+        //드레그 끝났을때만 체크
+        if (!dragObject.isDragging)
+        {
+
         if (check.onGround)
         {
             lastPos = nowPos;
@@ -42,6 +48,7 @@ public class KeepOnGround : MonoBehaviour
         {
             transform.position = check.snapPos;
             transform.rotation = lastRot;
+        }
         }
     }
 }

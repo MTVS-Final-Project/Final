@@ -20,7 +20,7 @@ public class FloorScript : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-          if (other.CompareTag("Set"))
+          if (other.CompareTag("Set")&&other.gameObject.name!= "Expand")
         {
             occupied = true;
             other.gameObject.transform.parent.transform.position = transform.position;
