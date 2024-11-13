@@ -114,10 +114,7 @@ public class CatController : MonoBehaviour
         {
             StartCoroutine(MoveTowards(player.transform.position- new Vector3(0.5f,0.5f,0)));
         }
-   public void CatMoveTo(Transform tf)
-    {
-        StartCoroutine(MoveTowards(tf.position));
-    }
+   
     
     private void HandleClick()
     {
@@ -189,7 +186,11 @@ public class CatController : MonoBehaviour
         yield return new WaitForSeconds(smoothTime);
     }
 
-    private IEnumerator MoveTowards(Vector3 targetPosition)
+    public void CatGo(Transform t)
+    {
+        StartCoroutine(MoveTowards(t.position));
+    }
+    public IEnumerator MoveTowards(Vector3 targetPosition)
     {
         float duration = 1.0f;
         float elapsed = 0f;
