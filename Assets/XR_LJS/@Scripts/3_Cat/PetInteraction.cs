@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.XR.ARSubsystems;
+using Spine.Unity;
 
 public class PetInteraction : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class PetInteraction : MonoBehaviour
     private int headClickCount = 0;      // 머리 클릭 횟수
     private int bodyClickCount = 0;      // 몸통 클릭 횟수
 
+    public SkeletonAnimation sk;
 
     private void Awake()
     {
@@ -42,6 +44,11 @@ public class PetInteraction : MonoBehaviour
 
     private void Update()
     {
+        if (sk == null)
+        {
+            sk = GameObject.Find("Cat").GetComponent<SkeletonAnimation>();
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             HandleClick();
@@ -106,6 +113,8 @@ public class PetInteraction : MonoBehaviour
                 // 머리를 드래그한 경우
                 if (headClickCount > 0)
                 {
+
+                    //sk.AnimationName = "Love";
                     ShowFriendlyReaction();
                     headClickCount = 0;
                 }
@@ -166,6 +175,8 @@ public class PetInteraction : MonoBehaviour
 
     private void ShowFriendlyReaction()
     {
+        sk.AnimationName = "Love";
+
         whiteImageFriendly.SetActive(true);
         whiteImagePicky.SetActive(false);
         StartCoroutine(HideImageAndKeepButtonsShown(whiteImageFriendly));
