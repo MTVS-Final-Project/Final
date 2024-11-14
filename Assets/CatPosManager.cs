@@ -1,4 +1,5 @@
 using Spine.Unity;
+using System.Collections;
 using UnityEngine;
 
 public class CatPosManager : MonoBehaviour
@@ -45,21 +46,41 @@ public class CatPosManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
+            StartCoroutine(StartGara1());
             cc.CatGo(dish);
-            sa.AnimationName = "Food";
+           // sa.AnimationName = "Food";
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
+            StartCoroutine (StartGara2());
             cc.CatGo(tower);
-            sa.AnimationName = "Sit";
+           // sa.AnimationName = "Sit";
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
+            StartCoroutine(StartGara2());
+
             cc.CatGo(bed);
-            sa.AnimationName = "Sit";
+           // sa.AnimationName = "Sit";
 
         }
-
-
+    }
+    public IEnumerator StartGara1()
+    {
+        sa.AnimationName = "Walking";
+        yield return new WaitForSeconds(1);
+        sa.AnimationName = "Food";
+    }
+    public IEnumerator StartGara2()
+    {
+        sa.AnimationName = "Walking";
+        yield return new WaitForSeconds(1);
+        sa.AnimationName = "Sit";
+    }
+    public IEnumerator StartGara3()
+    {
+        sa.AnimationName = "Walking";
+        yield return new WaitForSeconds(1);
+        sa.AnimationName = "Food";
     }
 }

@@ -5,9 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/XR_KSY/Scenes/MainScene_KSY.unity
-    guid: 3e20e6cb72883f6449a92f944c77acf2
+  - enabled: 1
+    path: Assets/XR_KGC/Scenes/TempLogin.unity
+    guid: d4f6a6530df915a43b6f84c30d2bfa49
   - enabled: 1
     path: Assets/XR_KGC/Scenes/OSM_KGC.unity
     guid: 74a2b3ef9b6727f4ab230cdc08063003
@@ -35,6 +35,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/XR_LJS/@Scenes/residential_L.unity
     guid: 0da5e496b5ff7584bb61752e479794dc
+  - enabled: 1
+    path: Assets/XR_KSY/Scenes/MainScene_KSY.unity
+    guid: 3e20e6cb72883f6449a92f944c77acf2
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6ee72d15cf39dd748a13eac57397b9af,
       type: 2}

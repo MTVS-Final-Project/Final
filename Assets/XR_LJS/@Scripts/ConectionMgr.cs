@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Reflection;
+using UnityEngine.SceneManagement;
 
 public class ConnectionManager : MonoBehaviourPunCallbacks
 {
@@ -12,20 +13,25 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        SetupPhotonNetwork();
+       // SetupPhotonNetwork();
 
         if (joinButton != null)
         {
             joinButton.onClick.AddListener(ConnectToFirstRoom);
+           
         }
 
         if (roomButton != null)
         {
             roomButton.onClick.AddListener(ConnectToSecondRoom);
+            
+
         }
-        if(room2Button != null)
+        if (room2Button != null)
         {
             room2Button.onClick.AddListener(ConnectToFirstRoom2);
+            
+
         }
 
     }
@@ -33,21 +39,27 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
     // Gangzang_LJS로 이동하는 첫 번째 룸 연결
     public void ConnectToFirstRoom()
     {
-        
-        JoinOrCreateRoom("room1", "Gangzang_LJS");
+
+        //JoinOrCreateRoom("room1", "Gangzang_LJS");
+        SceneManager.LoadScene("Gangzang_LJS");
     }
 
     // residential_LJS로 이동하는 두 번째 룸 연결
     public void ConnectToSecondRoom()
     {
-        JoinOrCreateRoom("room2", "residential_LJS");
+        //JoinOrCreateRoom("room2", "residential_LJS");
+        SceneManager.LoadScene("residential_LJS");
     }
 
     public void ConnectToFirstRoom2()
     {
-        JoinOrCreateRoom("room2", "residential_L");
+        //JoinOrCreateRoom("room2", "residential_L");
+        SceneManager.LoadScene("residential_L");
     }
-
+    public void ConnetToRoom()
+    {
+        SceneManager.LoadScene(2);
+    }
     // PhotonNetwork 기본 설정
     private void SetupPhotonNetwork()
     {

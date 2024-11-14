@@ -16,7 +16,7 @@ public class CatController : MonoBehaviour
     private Collider2D bodyCollider;
     private Vector3 headOriginalOffset;
     private Vector3 bodyOriginalOffset;
-    private SkeletonAnimation skeletonAnimation; // SkeletonAnimation 컴포넌트 참조
+    //private SkeletonAnimation skeletonAnimation; // SkeletonAnimation 컴포넌트 참조
     [SerializeField] private Camera cam; // 카메라 참조
     public float zoomMultiplier = 2.0f;
     public float minZoom = 2f;
@@ -44,11 +44,11 @@ public class CatController : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        skeletonAnimation = GetComponent<SkeletonAnimation>();
-        if (skeletonAnimation != null)
-        {
-            skeletonAnimation.skeleton.ScaleX = -1f;
-        }
+        //skeletonAnimation = GetComponent<SkeletonAnimation>();
+        //if (skeletonAnimation != null)
+        //{
+        //    skeletonAnimation.skeleton.ScaleX = -1f;
+        //}
 
         headCollider = transform.Find("Head").GetComponent<Collider2D>();
         bodyCollider = transform.Find("Body").GetComponent<Collider2D>();

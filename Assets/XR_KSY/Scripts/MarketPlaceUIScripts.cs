@@ -8,7 +8,7 @@ using System.IO;
 using Newtonsoft.Json;
 using SFB;
 using UnityEngine.SceneManagement;
-using Unity.Android.Gradle.Manifest;
+//using Unity.Android.Gradle.Manifest;
 using UnityEngine.InputSystem;
 
 public class MarketplaceUI : MonoBehaviour

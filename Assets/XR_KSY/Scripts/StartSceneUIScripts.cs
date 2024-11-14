@@ -90,6 +90,7 @@ public class StartSceneUIScripts : MonoBehaviour
         // login_PW.text
         // 만약 inputField의 ID 와 PW가 서버에 존재한다면, 로그인한다.
         // 그렇지 않다면, loginPop을 활성화한다.
+        SceneManager.LoadScene("OSM_KGC");
     }
 
     public void Four_CreateName()

@@ -175,7 +175,8 @@ public class HomeSceneUIScripts : MonoBehaviourPunCallbacks
 
     public void Btn_market()
     {
-        market.SetActive(true);
+        // market.SetActive(true);
+        SceneManager.LoadScene(6);
     }
     public void Btn_marketClose()
     {
@@ -185,7 +186,8 @@ public class HomeSceneUIScripts : MonoBehaviourPunCallbacks
     public void Btn_gwangjang()
     {
         //gwangjang.SetActive(true);
-        PhotonNetwork.LoadLevel("Gangzang_LJS");
+        //  PhotonNetwork.LoadLevel("Gangzang_LJS");
+        SceneManager.LoadScene("Gangzang_LJS");
     }
     public void Btn_gwangjangClose()
     {
