@@ -58,7 +58,8 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
     }
     public void ConnetToRoom()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("Room_KGC");
+        // SceneManager.LoadScene(2);
     }
     // PhotonNetwork 기본 설정
     private void SetupPhotonNetwork()

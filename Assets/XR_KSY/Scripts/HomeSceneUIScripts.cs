@@ -176,7 +176,7 @@ public class HomeSceneUIScripts : MonoBehaviourPunCallbacks
     public void Btn_market()
     {
         // market.SetActive(true);
-        SceneManager.LoadScene(6);
+        SceneManager.LoadScene(7);
     }
     public void Btn_marketClose()
     {
