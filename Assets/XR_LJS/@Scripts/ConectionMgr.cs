@@ -13,7 +13,7 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-       // SetupPhotonNetwork();
+       SetupPhotonNetwork();
 
         if (joinButton != null)
         {
@@ -40,25 +40,26 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
     public void ConnectToFirstRoom()
     {
 
-        //JoinOrCreateRoom("room1", "Gangzang_LJS");
-        SceneManager.LoadScene("Gangzang_LJS");
+        JoinOrCreateRoom("room1", "Gangzang_LJS");
+        //SceneManager.LoadScene("Gangzang_LJS");
     }
 
     // residential_LJS로 이동하는 두 번째 룸 연결
     public void ConnectToSecondRoom()
     {
-        //JoinOrCreateRoom("room2", "residential_LJS");
-        SceneManager.LoadScene("residential_LJS");
+        JoinOrCreateRoom("room2", "residential_LJS");
+        //SceneManager.LoadScene("residential_LJS");
     }
 
     public void ConnectToFirstRoom2()
     {
-        //JoinOrCreateRoom("room2", "residential_L");
-        SceneManager.LoadScene("residential_L");
+        JoinOrCreateRoom("room2", "residential_L");
+        //SceneManager.LoadScene("residential_L");
     }
     public void ConnetToRoom()
     {
-        SceneManager.LoadScene("Room_KGC");
+        PhotonNetwork.LoadLevel("Room_KGC");
+        //SceneManager.LoadScene("Room_KGC");
         // SceneManager.LoadScene(2);
     }
     // PhotonNetwork 기본 설정
@@ -150,7 +151,11 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
-
+        // 새로운 플레이어가 입장했을 때 커스터마이징을 동기화
+        if (photonView.IsMine)
+        {
+            photonView.RPC("UpdateCustomization", RpcTarget.AllBuffered);
+        }
         print($"{newPlayer.NickName} 님이 입장하셨습니다.");
     }
 

@@ -126,7 +126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inRange: 0
   player: {fileID: 0}
-  SceneNumber: 3
+  SceneNumber: 2
 --- !u!54 &8667841854337732877
 Rigidbody:
   m_ObjectHideFlags: 0

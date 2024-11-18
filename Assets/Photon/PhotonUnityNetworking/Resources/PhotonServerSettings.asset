@@ -41,6 +41,7 @@ MonoBehaviour:
   - RespawnSpaceship
   - Swap
   - SyncCharacterAppearance
+  - UpdateCustomization
   - UpdateSpriteForAllPlayers
   DisableAutoOpenWizard: 1
   ShowSettings: 1

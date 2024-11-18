@@ -10,6 +10,7 @@ using SFB;
 using UnityEngine.SceneManagement;
 //using Unity.Android.Gradle.Manifest;
 using UnityEngine.InputSystem;
+using Photon.Pun;
 
 public class MarketplaceUI : MonoBehaviour
 {
@@ -115,7 +116,8 @@ public class MarketplaceUI : MonoBehaviour
     {
         if(menuBtn.activeSelf)
         {
-            SceneManager.LoadScene(5);
+            //SceneManager.LoadScene(5);
+            PhotonNetwork.LoadLevel("Room_KGC");
         }
         else
         {
