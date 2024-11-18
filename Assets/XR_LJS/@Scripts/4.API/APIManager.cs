@@ -6,26 +6,28 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text;
+using UnityEditor;
 
 public class APIManager : MonoBehaviour
 {
     public static APIManager Instance;
-    private string baseUrl = "https://13.124.6.53:8080/api/swagger-ui/index.html"; // Swagger UI 주소가 아닌 실제 API 기본 주소
+    private string baseUrl = "http://13.124.6.53:8080/api/v1"; // API 버전을 포함한 기본 주소
 
     [Serializable]
     public class CustomizationData
     {
-        public int skin;
-        public int hair;
-        public int eye;
-        public int mouth;
-        public int leftArm;
-        public int rightArm;
-        public int pants;
-        public int leftLeg;
-        public int rightLeg;
-        public int leftShoe;
-        public int rightShoe;
+        // API 문서에 맞게 필드명 수정
+        public int skin = 0;
+        public int hair = 0;
+        public int eye = 0;
+        public int mouth = 0;
+        public int leftArm = 0;
+        public int rightArm = 0;
+        public int pants = 0;
+        public int leftLeg = 0;
+        public int rightLeg = 0;
+        public int leftShoe = 0;
+        public int rightShoe = 0;
     }
 
     [Serializable]
@@ -52,11 +54,8 @@ public class APIManager : MonoBehaviour
 
     private void SetupSecuritySettings()
     {
-#if DEVELOPMENT_BUILD || UNITY_EDITOR
-        ServicePointManager.ServerCertificateValidationCallback =
-            (sender, certificate, chain, sslPolicyErrors) => true;
-        Debug.LogWarning("개발 환경: SSL 인증서 검증이 비활성화되었습니다.");
-#endif
+        PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
+        Debug.LogWarning("개발 환경: HTTP 통신이 허용되었습니다.");
     }
 
     // Photon CustomProperties에서 커스터마이징 데이터 추출
@@ -94,6 +93,7 @@ public class APIManager : MonoBehaviour
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");
+            request.certificateHandler = new BypassCertificate();
 
             yield return request.SendWebRequest();
 
@@ -127,6 +127,8 @@ public class APIManager : MonoBehaviour
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
             request.SetRequestHeader("Content-Type", "application/json");
+            request.certificateHandler = new BypassCertificate();
+
             yield return request.SendWebRequest();
 
             if (request.result == UnityWebRequest.Result.Success)
@@ -148,5 +150,13 @@ public class APIManager : MonoBehaviour
                 Debug.LogError($"상세 에러: {request.downloadHandler?.text}");
             }
         }
+    }
+}
+
+public class BypassCertificate : CertificateHandler
+{
+    protected override bool ValidateCertificate(byte[] certificateData)
+    {
+        return true;
     }
 }
