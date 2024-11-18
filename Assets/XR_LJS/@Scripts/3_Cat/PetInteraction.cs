@@ -163,11 +163,14 @@ public class PetInteraction : MonoBehaviour
 
     private void ShowPinkyReaction()
     {
+        sk.AnimationName = "Walking";
         whiteImagePicky.SetActive(true);
         whiteImageFriendly.SetActive(false);
         // 코루틴들을 변수에 저장하여 추적
         StartCoroutine(HideImageAndKeepButtonsHidden(whiteImagePicky));
         StartCoroutine(MoveCatAwayOnGround());
+        // 스파인 애니메이션 멈추기
+        StartCoroutine(StopAnimationAfterReaction());
         CatController.instance.ZoomOut();
         DisableAllButtons();
         
@@ -180,6 +183,8 @@ public class PetInteraction : MonoBehaviour
         whiteImageFriendly.SetActive(true);
         whiteImagePicky.SetActive(false);
         StartCoroutine(HideImageAndKeepButtonsShown(whiteImageFriendly));
+        // 반응이 끝난 후 애니메이션 멈추기
+        StartCoroutine(StopAnimationAfterReaction());
     }
 
     private IEnumerator HideImageAndKeepButtonsShown(GameObject image)
@@ -213,7 +218,12 @@ public class PetInteraction : MonoBehaviour
         // 버튼들이 계속 비활성화 상태로 유지되도록 확인
         DisableAllButtons();
     }
-
+    private IEnumerator StopAnimationAfterReaction()
+    {
+        // 반응이 끝난 후 일정 시간 뒤에 애니메이션 멈추기
+        yield return new WaitForSeconds(1f); // 예시로 1초 기다림
+        sk.state.ClearTrack(0); // 트랙 0에서 애니메이션을 멈춤
+    }
     private IEnumerator MoveCatAwayOnGround()
     {
         Vector3 startPosition = transform.parent.position;

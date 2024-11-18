@@ -15869,6 +15869,7 @@ GameObject:
   - component: {fileID: 707565547}
   - component: {fileID: 707565548}
   - component: {fileID: 707565549}
+  - component: {fileID: 707565550}
   m_Layer: 0
   m_Name: Cat
   m_TagString: Cat
@@ -16059,6 +16060,24 @@ MonoBehaviour:
   _animationName: 
   loop: 0
   timeScale: 1
+--- !u!114 &707565550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707565540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f616446ffef00074a888ad38e137b0d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cc: {fileID: 707565545}
+  sa: {fileID: 707565549}
+  toilet: {fileID: 0}
+  dish: {fileID: 0}
+  tower: {fileID: 0}
+  bed: {fileID: 0}
 --- !u!1 &725345289
 GameObject:
   m_ObjectHideFlags: 0
