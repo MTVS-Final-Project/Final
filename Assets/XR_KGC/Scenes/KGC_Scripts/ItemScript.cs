@@ -11,7 +11,7 @@ public class ItemScript : MonoBehaviour
 
     public GameObject gagu;
 
-    public List<int> size = new List<int>(); //가구크기, 0은 1칸 1은 2칸짜리임.
+    public List<int> size = new List<int>(); //가구구분 0 = 1칸짜리 장식, 1 = 침대, 2 = 캣타워 ,3 = 고양이 변기, 4 = 고양이 밥그릇
     public List<string> itemName = new List<string>(); //가구이름
     public List<Sprite> sprites = new List<Sprite>(); //가구 스프라이트
 

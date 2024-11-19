@@ -34,6 +34,11 @@ public class GaguCheck : MonoBehaviour
         }
 
         buttonScript.gaguOnGagu = onGagu;
+        if (sr == null)
+        {
+            sr = transform.parent.GetChild(1).GetComponent<SpriteRenderer>();
+
+        }
 
         if (onGagu)
         {
