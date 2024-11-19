@@ -35,7 +35,7 @@ public class SpawnNyangMill : MonoBehaviour
     {
         // 원 범위 내에서 랜덤한 각도와 거리 생성
         float angle = Random.Range(0f, Mathf.PI * 2);
-        float distance = Random.Range(0f, radius);
+        float distance = Random.Range(5f, radius);
 
         // XZ 평면에 좌표 계산
         float x = Mathf.Cos(angle) * distance;

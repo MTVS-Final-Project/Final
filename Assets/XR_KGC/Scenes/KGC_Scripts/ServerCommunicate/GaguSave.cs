@@ -14,7 +14,12 @@ public class GaguSave : MonoBehaviour
     // 가구 외형 정하는 스프라이트
     public List<string> itemName = new List<string>(); // 가구이름 저장 불러오기만 하면 이건 필요없는거같음.
     public List<Sprite> sprites = new List<Sprite>();
-    public List<GaguData> gaguDataList = new List<GaguData>();
+   // public List<GaguData> gaguDataList = new List<GaguData>();
+
+    // GaguDataList는 TempManager에서 관리합니다.
+    public List<GaguData> gaguDataList => TempManager.Instance.gaguDataList;
+
+
 
     [System.Serializable]
     public class GaguData
@@ -49,6 +54,10 @@ public class GaguSave : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (gaguDataList!=null&& gaguParent.transform.childCount == 0)
+        {
+           StartCoroutine(LoadGagu());
+        }
     }
 
     // Update is called once per frame
@@ -85,6 +94,7 @@ public class GaguSave : MonoBehaviour
             GameObject go = Instantiate(gagu[data.size], new Vector3(data.xpos, data.ypos, 0), Quaternion.Euler(0, data.rotY, 0));
 
             go.GetComponent<KeepOnGround>().enabled = false;
+            go.GetComponent<DragObject>().enabled = false;
             go.transform.SetParent(gaguParent.transform, false);
             go.transform.position = new Vector3(data.xpos, data.ypos, 0);
 
