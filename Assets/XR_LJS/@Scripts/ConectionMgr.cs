@@ -13,11 +13,14 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-       SetupPhotonNetwork();
+
+        SetupPhotonNetwork();
+
 
         if (joinButton != null)
         {
             joinButton.onClick.AddListener(ConnectToFirstRoom);
+
            
         }
 
@@ -132,6 +135,7 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
         string sceneToLoad = (string)PhotonNetwork.CurrentRoom.CustomProperties["SceneToLoad"];
         print(sceneToLoad);
         PhotonNetwork.LoadLevel(sceneToLoad);
+
     }
 
     public void LoadFirstScene()
@@ -146,6 +150,7 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
     {
         base.OnLeftRoom();
         PhotonNetwork.LoadLevel("Room_KGC");
+        SetupPhotonNetwork();
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)

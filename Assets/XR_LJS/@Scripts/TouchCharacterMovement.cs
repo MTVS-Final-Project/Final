@@ -2,6 +2,8 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Collections;
+using SceneManager = UnityEngine.SceneManagement.SceneManager;
 
 public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -9,129 +11,301 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
     private Vector3 targetPosition;
     private bool isMoving = false;
     private Rigidbody2D rb;
-    private SpriteRenderer[] spriteRenderers; // Ä³¸¯ÅÍÀÇ ¸ğµç SpriteRendererµé
-    public TMP_Text playerNickname; // ÇÃ·¹ÀÌ¾î ´Ğ³×ÀÓ ´ã´Â º¯¼ö ¼±¾ğ.
-    public string restrictedSceneName = "FirstScene_LJS"; // Æ¯Á¤ ¾À ÀÌ¸§
-    public GameObject cat; // °í¾çÀÌ°¡ Á¸ÀçÇÏ´ÂÁö È®ÀÎÇÒ º¯¼ö
-    public GameObject circle; // circle ¿ÀºêÁ§Æ® ÂüÁ¶ÇÏ´Â º¯¼ö
-    private bool isFlipped = false; // Ä³¸¯ÅÍÀÇ flipX »óÅÂ¸¦ ³ªÅ¸³»´Â º¯¼ö
+    private SpriteRenderer[] spriteRenderers;
+    public TMP_Text playerNickname;
+    public string restrictedSceneName = "FirstScene_LJS";
+    public GameObject cat;
+    public GameObject circle;
+    private bool isFlipped = false;
+
+    // ï¿½ï¿½Æ®ï¿½ï¿½Å© ï¿½ï¿½ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private Vector3 networkPosition;
+    private Vector3 networkTargetPosition;
+    private Vector3 previousPosition;
+    private float networkLag = 10f;
+    private float lastPositionSyncTime;
+    private float syncInterval = 0.1f;
+    private float lastSyncTime = 0f;
+    private bool isNetworkMoving = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
 
-        if (cat == null)
-        {
-            cat = GameObject.Find("Cat");
-        }
-        if (circle == null)
-        {
-            circle = GameObject.Find("Circle");
-        }
+        if (cat == null) cat = GameObject.Find("Cat");
+        if (circle == null) circle = GameObject.Find("Circle");
 
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
 
+        // í˜„ì¬ ì”¬ ì´ë¦„ ê°€ì ¸ì˜¤ê¸°
+        string currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+
+        if (currentSceneName == "FirstScene_LJS")
+        {
+            // FirstScene_LJS ì”¬ì—ì„œëŠ” ê°•ì œë¡œ (0,0,0) ìœ„ì¹˜ ì§€ì •
+            transform.position = Vector3.zero;
+            networkPosition = Vector3.zero;
+            networkTargetPosition = Vector3.zero;
+            targetPosition = Vector3.zero;
+            previousPosition = Vector3.zero;
+        }
+        else
+        {
+            networkPosition = transform.position;
+            networkTargetPosition = transform.position;
+            targetPosition = transform.position;
+            previousPosition = transform.position;
+        }
+
+        lastPositionSyncTime = Time.time;
         if (photonView.IsMine)
         {
-            Debug.Log("ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ½ºÅ©¸³Æ®°¡ ½ÃÀÛµÇ¾ú½À´Ï´Ù.");
+            ApplyCustomization();
+            StartCoroutine(LoadPositionAfterSceneLoad());
+            Debug.Log("ë¡œì»¬ í”Œë ˆì´ì–´ ì´ˆê¸°í™” ì™„ë£Œ");
+        }
+    }
+    IEnumerator LoadPositionAfterSceneLoad()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        if (currentSceneName != "FirstScene_LJS")
+        {
+            //// FirstScene_LJSê°€ ì•„ë‹Œ ê²½ìš°ì—ë§Œ ë§ˆì§€ë§‰ ì €ì¥ ìœ„ì¹˜ ë¡œë“œ
+            //LoadLastPosition();
+        }
+
+        if (PhotonNetwork.IsConnected)
+        {
+            photonView.RPC("SyncPosition", RpcTarget.All, transform.position, transform.position, false);
+        }
+    }
+    void LoadLastPosition()
+    {
+        if (PlayerPrefs.HasKey("LastPositionX") && PlayerPrefs.HasKey("LastPositionY"))
+        {
+            float x = PlayerPrefs.GetFloat("LastPositionX");
+            float y = PlayerPrefs.GetFloat("LastPositionY");
+            Vector3 lastPos = new Vector3(x, y, transform.position.z);
+
+            transform.position = lastPos;
+            targetPosition = lastPos;
+            photonView.RPC("SyncPosition", RpcTarget.All, lastPos, lastPos, false);
+        }
+    }
+
+    void SaveCurrentPosition()
+    {
+        if (photonView.IsMine)
+        {
+            PlayerPrefs.SetFloat("LastPositionX", transform.position.x);
+            PlayerPrefs.SetFloat("LastPositionY", transform.position.y);
+            PlayerPrefs.Save();
+        }
+    }
+
+    void ApplyCustomization()
+    {
+        if (!photonView.IsMine) return;
+
+        var customProperties = PhotonNetwork.LocalPlayer.CustomProperties;
+        PhotonNet photonNet = FindObjectOfType<PhotonNet>();
+
+        if (photonNet != null)
+        {
+            photonNet.CustomMizeGive(gameObject);
+            Debug.Log("ì»¤ìŠ¤í„°ë§ˆì´ì§• ì ìš© ì™„ë£Œ");
+        }
+        else
+        {
+            Debug.LogError("PhotonNetì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
     }
 
     void Update()
     {
-        if (!photonView.IsMine) return;
+        if (photonView.IsMine)
+        {
+            HandleLocalPlayerMovement();
 
+            // ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½È­
+            if (Time.time - lastSyncTime > syncInterval)
+            {
+                if (Vector3.Distance(transform.position, previousPosition) > 0.001f)
+                {
+                    photonView.RPC("SyncPosition", RpcTarget.All, transform.position, targetPosition, isMoving);
+                    previousPosition = transform.position;
+                }
+                lastSyncTime = Time.time;
+            }
+
+            if (Time.time - lastPositionSyncTime > 5f)
+            {
+                SaveCurrentPosition();
+                lastPositionSyncTime = Time.time;
+            }
+        }
+        else
+        {
+            HandleRemotePlayerMovement();
+        }
+    }
+
+    void HandleLocalPlayerMovement()
+    {
         if (SceneManager.GetActiveScene().name == restrictedSceneName)
         {
-            Debug.Log("ÀÌ ¾À¿¡¼­´Â Ä³¸¯ÅÍ ÀÌµ¿ÀÌ Á¦ÇÑµË´Ï´Ù.");
+            Debug.Log("ì´ ì”¬ì—ì„œëŠ” ìºë¦­í„° ì´ë™ì´ ì œí•œë©ë‹ˆë‹¤.");
             return;
         }
 
-        // Circle ¿ÀºêÁ§Æ®°¡ È°¼ºÈ­µÈ »óÅÂ¿¡¼­ ¸¶¿ì½º Å¬¸¯ °¨Áö
-        if (circle.activeInHierarchy)
+        if (circle != null && circle.activeInHierarchy)
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-
-                if (hit.collider != null && hit.collider.CompareTag("Ground"))
-                {
-                    targetPosition = hit.point;
-                    targetPosition.z = transform.position.z;
-                    isMoving = true;
-
-                    Debug.Log("Ground¸¦ Å¬¸¯Çß½À´Ï´Ù. ¸ñÇ¥ À§Ä¡°¡ ¼³Á¤µÇ¾ú½À´Ï´Ù: " + targetPosition);
-                }
-                else
-                {
-                    Debug.Log("Ground Äİ¶óÀÌ´õ ¿ÜºÎ¸¦ Å¬¸¯Çß½À´Ï´Ù.");
-                }
-            }
+            HandleMouseInput();
         }
-        else if (cat.activeInHierarchy)
+        else if (cat != null && cat.activeInHierarchy)
         {
-            Debug.Log("°í¾çÀÌ°¡ È°¼ºÈ­µÇ¾î ÀÖ¾î ÀÌµ¿ÀÌ ÁßÁöµÇ¾ú½À´Ï´Ù.");
+            Debug.Log("ê³ ì–‘ì´ê°€ í™œì„±í™”ë˜ì–´ ìˆì–´ ì´ë™ì´ ì¤‘ì§€ë˜ì—ˆìŠµë‹ˆë‹¤.");
             return;
         }
 
         if (isMoving)
         {
-            Debug.Log("¸ñÇ¥ À§Ä¡·Î ÀÌµ¿ Áß: " + targetPosition);
+            MoveToTarget();
+        }
+    }
 
-            // ÀÌµ¿ ¹æÇâ¿¡ µû¶ó Ä³¸¯ÅÍÀÇ ¸ğµç SpriteRenderer¿¡ flipX Àû¿ë
-            if (targetPosition.x > transform.position.x)
+    void HandleMouseInput()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+
+            if (hit.collider != null && hit.collider.CompareTag("Ground"))
             {
-                SetCharacterFlip(true);
-            }
-            else if (targetPosition.x < transform.position.x)
-            {
-                SetCharacterFlip(false);
-            }
+                targetPosition = hit.point;
+                targetPosition.z = transform.position.z;
+                isMoving = true;
 
-            // Ä³¸¯ÅÍ ÀÌµ¿
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-
-            float remainingDistance = Vector3.Distance(transform.position, targetPosition);
-            Debug.Log("³²Àº °Å¸®: " + remainingDistance);
-
-            // ¸ñÀûÁö¿¡ µµÂøÇßÀ» °æ¿ì ÀÌµ¿ ÁßÁö
-            if (remainingDistance < 0.1f)
-            {
-                Debug.Log("¸ñÇ¥ À§Ä¡¿¡ µµÂøÇß½À´Ï´Ù.");
-                isMoving = false;
+                photonView.RPC("UpdateTargetPosition", RpcTarget.All, targetPosition);
             }
         }
     }
 
-    // Ä³¸¯ÅÍÀÇ ¸ğµç SpriteRenderer¿¡ flipX Àû¿ëÇÏ´Â ÇÔ¼ö
+    void HandleRemotePlayerMovement()
+    {
+        if (isNetworkMoving)
+        {
+            Vector3 moveDirection = (networkTargetPosition - transform.position).normalized;
+            Vector3 targetVelocity = moveDirection * moveSpeed;
+
+            Vector3 smoothPosition = Vector3.Lerp(transform.position, networkPosition, Time.deltaTime * networkLag);
+            transform.position = Vector3.Lerp(smoothPosition, smoothPosition + targetVelocity * Time.deltaTime, 0.5f);
+
+            bool shouldFlip = moveDirection.x > 0;
+            SetCharacterFlip(shouldFlip);
+
+            if (Vector3.Distance(transform.position, networkTargetPosition) < 0.1f)
+            {
+                isNetworkMoving = false;
+                transform.position = networkTargetPosition;
+            }
+        }
+        else
+        {
+            transform.position = Vector3.Lerp(transform.position, networkPosition, Time.deltaTime * networkLag);
+        }
+    }
+
+    void MoveToTarget()
+    {
+        bool shouldFlip = targetPosition.x > transform.position.x;
+        SetCharacterFlip(shouldFlip);
+
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+
+        if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
+        {
+            isMoving = false;
+            SaveCurrentPosition();
+            photonView.RPC("SyncPosition", RpcTarget.All, transform.position, targetPosition, false);
+        }
+    }
+
+    [PunRPC]
+    void UpdateTargetPosition(Vector3 newPosition)
+    {
+        targetPosition = newPosition;
+        networkTargetPosition = newPosition;
+        isMoving = true;
+        isNetworkMoving = true;
+    }
+
+    [PunRPC]
+    void SyncPosition(Vector3 position, Vector3 targetPos, bool moving)
+    {
+        networkPosition = position;
+        networkTargetPosition = targetPos;
+        isNetworkMoving = moving;
+
+        if (!photonView.IsMine)
+        {
+            if (Vector3.Distance(transform.position, position) > 3f)
+            {
+                transform.position = position;
+            }
+        }
+    }
+
     void SetCharacterFlip(bool flip)
+    {
+        if (isFlipped != flip)
+        {
+            isFlipped = flip;
+            photonView.RPC("SyncFlip", RpcTarget.All, flip);
+        }
+    }
+
+    [PunRPC]
+    void SyncFlip(bool flip)
     {
         isFlipped = flip;
         foreach (SpriteRenderer renderer in spriteRenderers)
         {
             renderer.flipX = flip;
         }
-        Debug.Log("Ä³¸¯ÅÍ ¹æÇâÀÌ ¼³Á¤µÇ¾ú½À´Ï´Ù: " + (flip ? "¿À¸¥ÂÊ" : "¿ŞÂÊ"));
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(transform.position);
+            stream.SendNext(rb.position);
             stream.SendNext(isMoving);
             stream.SendNext(targetPosition);
             stream.SendNext(isFlipped);
+            stream.SendNext(networkTargetPosition);
         }
-        else if(stream.IsReading)
+        else
         {
-            transform.position = (Vector3)stream.ReceiveNext();
-            isMoving = (bool)stream.ReceiveNext();
-            targetPosition = (Vector3)stream.ReceiveNext();
-            isFlipped = (bool)stream.ReceiveNext(); // Receive flipX state
+            networkPosition = (Vector3)stream.ReceiveNext();
+            isNetworkMoving = (bool)stream.ReceiveNext();
+            networkTargetPosition = (Vector3)stream.ReceiveNext();
+            bool newFlip = (bool)stream.ReceiveNext();
+            Vector3 receivedTargetPos = (Vector3)stream.ReceiveNext();
 
-            // Apply received flipX state
-            SetCharacterFlip(isFlipped);
+            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+            networkPosition += new Vector3(rb.linearVelocity.x * lag, rb.linearVelocity.y * lag, 0);
+
+            if (isFlipped != newFlip)
+            {
+                SetCharacterFlip(newFlip);
+            }
         }
     }
+
+    
 }

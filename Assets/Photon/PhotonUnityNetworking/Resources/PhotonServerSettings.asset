@@ -41,8 +41,11 @@ MonoBehaviour:
   - RespawnSpaceship
   - Swap
   - SyncCharacterAppearance
+  - SyncFlip
   - UpdateCustomization
   - UpdateSpriteForAllPlayers
+  - UpdateTargetPosition
+  - SyncPosition
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

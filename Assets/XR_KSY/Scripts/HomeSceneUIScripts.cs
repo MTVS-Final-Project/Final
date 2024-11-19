@@ -5,6 +5,7 @@ using System.Xml.Serialization;
 using TMPro;
 using UnityEngine.UIElements;
 using Photon.Pun;
+using SceneManager = UnityEngine.SceneManagement.SceneManager;
 
 public class HomeSceneUIScripts : MonoBehaviourPunCallbacks
 {
@@ -176,7 +177,7 @@ public class HomeSceneUIScripts : MonoBehaviourPunCallbacks
     public void Btn_market()
     {
         // market.SetActive(true);
-        SceneManager.LoadScene(7);
+        SceneManager.LoadScene(6);
     }
     public void Btn_marketClose()
     {
@@ -186,8 +187,8 @@ public class HomeSceneUIScripts : MonoBehaviourPunCallbacks
     public void Btn_gwangjang()
     {
         //gwangjang.SetActive(true);
-        //  PhotonNetwork.LoadLevel("Gangzang_LJS");
-        SceneManager.LoadScene("Gangzang_LJS");
+        PhotonNetwork.LoadLevel("Gangzang_LJS");
+        //SceneManager.LoadScene("Gangzang_LJS");
     }
     public void Btn_gwangjangClose()
     {

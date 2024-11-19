@@ -163,24 +163,24 @@ public class PhotonNet : MonoBehaviourPunCallbacks
                                 int leftShoesIndex, int rightShoesIndex)
     {
         var properties = new ExitGames.Client.Photon.Hashtable()
-        {
-            { "BodyUI", bodyIndex },
-            { "EyesUI", eyeIndex },
-            { "MouthUI", mouthIndex },
-            { "LeftArmUI", leftArmIndex },
-            { "rightArmUI", rightArmIndex },
-            { "leftLegUI", leftLegIndex },
-            { "rightLegUI", rightLegIndex },
-            { "PantsUI", pantIndex },
-            { "HairUI", hairIndex },
-            { "leftShoesUI", leftShoesIndex },
-            { "rightShoesUI", rightShoesIndex }
-        };
+    {
+        { "BodyUI", bodyIndex },
+        { "EyesUI", eyeIndex },
+        { "MouthUI", mouthIndex },
+        { "LeftArmUI", leftArmIndex },
+        { "rightArmUI", rightArmIndex },
+        { "leftLegUI", leftLegIndex },
+        { "rightLegUI", rightLegIndex },
+        { "PantsUI", pantIndex },
+        { "HairUI", hairIndex },
+        { "leftShoesUI", leftShoesIndex },
+        { "rightShoesUI", rightShoesIndex }
+    };
 
-        // 로컬 플레이어의 커스텀 프로퍼티 업데이트
+        // Custom Properties 업데이트
         PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
 
-        // 커스터마이제이션 데이터를 API로 저장
+        // 커스터마이징을 모든 클라이언트에 동기화
         if (photonView.IsMine)
         {
             var customizationData = new APIManager.CustomizationData
@@ -201,6 +201,9 @@ public class PhotonNet : MonoBehaviourPunCallbacks
             int userId = GetUserId();
             StartCoroutine(APIManager.Instance.UpdateCharacterData(userId, customizationData));
         }
+
+        // 동기화 후 모든 클라이언트에 반영
+        CustomMizeGive(gameObject);
     }
 
 }
