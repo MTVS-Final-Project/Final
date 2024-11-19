@@ -58,29 +58,32 @@ public class PhotonNet : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        // RPC 보내는 빈도 설정
         PhotonNetwork.SendRate = 60;
         PhotonNetwork.SerializationRate = 60;
 
-        // 플레이어 객체를 스폰
         if (catTransform != null)
         {
             Vector3 spawnPosition = GetRandomPositionNearCat();
             GameObject playerInstance = PhotonNetwork.Instantiate("Player", spawnPosition, Quaternion.identity);
-            LoadCharacterData();
-            CustomMizeGive(playerInstance);
+            if (playerInstance.GetComponent<PhotonView>().IsMine)
+            {
+                LoadCharacterData();
+                CustomMizeGive(playerInstance);
+            }
             CatController.instance.player = playerInstance;
         }
         else if (circleTransform != null)
         {
             Vector3 spawnPos = GetRandomPositionNearCircle();
             GameObject playerInstance = PhotonNetwork.Instantiate("Player", spawnPos, Quaternion.identity);
-            LoadCharacterData();
-            CustomMizeGive(playerInstance);
+            if (playerInstance.GetComponent<PhotonView>().IsMine)
+            {
+                LoadCharacterData();
+                CustomMizeGive(playerInstance);
+            }
         }
     }
-
-    Vector3 GetRandomPositionNearCat()
+        Vector3 GetRandomPositionNearCat()
     {
         float offsetX = Random.Range(-0.1f, 0.1f);
         float offsetY = Random.Range(-0.1f, 0.1f);
@@ -130,18 +133,28 @@ public class PhotonNet : MonoBehaviourPunCallbacks
             player.transform.Find("rightShoe").GetComponent<SpriteRenderer>().sprite = rightshoesOption[(int)rightShoesIndex];
     }
 
-    private string GetUserId()
+    private int GetUserId()
     {
-        return PhotonNetwork.LocalPlayer.UserId;
-    }
-
-    public void LoadCharacterData()
-    {
-        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        // PhotonNetwork.LocalPlayer.UserId는 string이므로 비교합니다.
+        // UserId가 "1"이면 1을 반환, 그렇지 않으면 2를 반환
+        // 첫 번째 플레이어는 ActorNumber가 1, 두 번째는 ActorNumber가 2로 설정
+        if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
         {
-            string userId = PhotonNetwork.LocalPlayer.UserId;
-            StartCoroutine(APIManager.Instance.GetCharacterData(userId));
+            return 1; // 첫 번째 플레이어는 1
         }
+        else if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+        {
+            return 2; // 두 번째 플레이어는 2
+        }
+        // 기본적으로 2를 반환하거나 에러 처리 로직을 추가할 수 있습니다.
+        return 2;
+    }
+    private void LoadCharacterData()
+    {
+        int userId = GetUserId();
+        var customProperties = PhotonNetwork.LocalPlayer.CustomProperties;
+        var customizationData = APIManager.Instance.ExtractCustomizationFromPhoton(customProperties);
+        StartCoroutine(APIManager.Instance.UpdateCharacterData(userId, customizationData));
     }
 
     [PunRPC]
@@ -149,7 +162,6 @@ public class PhotonNet : MonoBehaviourPunCallbacks
                                 int leftLegIndex, int rightLegIndex, int pantIndex, int hairIndex,
                                 int leftShoesIndex, int rightShoesIndex)
     {
-        // 커스터마이징 데이터를 받아서 업데이트
         var properties = new ExitGames.Client.Photon.Hashtable()
         {
             { "BodyUI", bodyIndex },
@@ -165,12 +177,30 @@ public class PhotonNet : MonoBehaviourPunCallbacks
             { "rightShoesUI", rightShoesIndex }
         };
 
+        // 로컬 플레이어의 커스텀 프로퍼티 업데이트
         PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
 
+        // 커스터마이제이션 데이터를 API로 저장
         if (photonView.IsMine)
         {
-            photonView.RPC("UpdateCustomization", RpcTarget.AllBuffered, bodyIndex, eyeIndex, mouthIndex, leftArmIndex,
-                          rightArmIndex, leftLegIndex, rightLegIndex, pantIndex, hairIndex, leftShoesIndex, rightShoesIndex);
+            var customizationData = new APIManager.CustomizationData
+            {
+                skin = bodyIndex,
+                eye = eyeIndex,
+                mouth = mouthIndex,
+                leftArm = leftArmIndex,
+                rightArm = rightArmIndex,
+                leftLeg = leftLegIndex,
+                rightLeg = rightLegIndex,
+                pants = pantIndex,
+                hair = hairIndex,
+                leftShoe = leftShoesIndex,
+                rightShoe = rightShoesIndex
+            };
+
+            int userId = GetUserId();
+            StartCoroutine(APIManager.Instance.UpdateCharacterData(userId, customizationData));
         }
     }
+
 }

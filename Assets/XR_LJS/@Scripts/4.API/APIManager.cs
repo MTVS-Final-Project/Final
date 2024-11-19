@@ -44,7 +44,7 @@ public class APIManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            SetupSecuritySettings();
+            //SetupSecuritySettings();
         }
         else if (Instance != this)
         {
@@ -52,11 +52,11 @@ public class APIManager : MonoBehaviour
         }
     }
 
-    private void SetupSecuritySettings()
-    {
-        PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
-        Debug.LogWarning("개발 환경: HTTP 통신이 허용되었습니다.");
-    }
+    //private void SetupSecuritySettings()
+    //{
+    //    PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
+    //    Debug.LogWarning("개발 환경: HTTP 통신이 허용되었습니다.");
+    //}
 
     // Photon CustomProperties에서 커스터마이징 데이터 추출
     public CustomizationData ExtractCustomizationFromPhoton(ExitGames.Client.Photon.Hashtable properties)
@@ -79,7 +79,7 @@ public class APIManager : MonoBehaviour
     }
 
     // 캐릭터 데이터 업데이트
-    public IEnumerator UpdateCharacterData(string userId, CustomizationData customization)
+    public IEnumerator UpdateCharacterData(int userId, CustomizationData customization)
     {
         string jsonData = JsonUtility.ToJson(customization);
         Debug.Log($"전송할 데이터: {jsonData}");
@@ -99,7 +99,7 @@ public class APIManager : MonoBehaviour
 
             if (request.result == UnityWebRequest.Result.Success)
             {
-                Debug.Log($"API 응답: {request.downloadHandler.text}");
+                Debug.Log($"API 응답:  +{userId}+ {request.downloadHandler.text}");
                 var response = JsonUtility.FromJson<ApiResponse<CustomizationData>>(request.downloadHandler.text);
                 if (response.success)
                 {
@@ -119,38 +119,38 @@ public class APIManager : MonoBehaviour
     }
 
     // GET: 캐릭터 데이터 조회
-    public IEnumerator GetCharacterData(string userId)
-    {
-        string url = $"{baseUrl}/character/{userId}";
-        Debug.Log($"요청 URL: {url}");
+    //public IEnumerator GetCharacterData(string userId)
+    //{
+    //    string url = $"{baseUrl}/character/1";
+    //    Debug.Log($"요청 URL: {url}");
 
-        using (UnityWebRequest request = UnityWebRequest.Get(url))
-        {
-            request.SetRequestHeader("Content-Type", "application/json");
-            request.certificateHandler = new BypassCertificate();
+    //    using (UnityWebRequest request = UnityWebRequest.Get(url))
+    //    {
+    //        request.SetRequestHeader("Content-Type", "application/json");
+    //        request.certificateHandler = new BypassCertificate();
 
-            yield return request.SendWebRequest();
+    //        yield return request.SendWebRequest();
 
-            if (request.result == UnityWebRequest.Result.Success)
-            {
-                Debug.Log($"API 응답: {request.downloadHandler.text}");
-                var response = JsonUtility.FromJson<ApiResponse<CustomizationData>>(request.downloadHandler.text);
-                if (response.success)
-                {
-                    Debug.Log($"캐릭터 데이터 조회 성공: {JsonUtility.ToJson(response.data)}");
-                }
-                else
-                {
-                    Debug.LogError($"API 오류: {response.message}");
-                }
-            }
-            else
-            {
-                Debug.LogError($"캐릭터 데이터 조회 실패: {request.error}");
-                Debug.LogError($"상세 에러: {request.downloadHandler?.text}");
-            }
-        }
-    }
+    //        if (request.result == UnityWebRequest.Result.Success)
+    //        {
+    //            Debug.Log($"API 응답: {request.downloadHandler.text}");
+    //            var response = JsonUtility.FromJson<ApiResponse<CustomizationData>>(request.downloadHandler.text);
+    //            if (response.success)
+    //            {
+    //                Debug.Log($"캐릭터 데이터 조회 성공: {JsonUtility.ToJson(response.data)}");
+    //            }
+    //            else
+    //            {
+    //                Debug.LogError($"API 오류: {response.message}");
+    //            }
+    //        }
+    //        else
+    //        {
+    //            Debug.LogError($"캐릭터 데이터 조회 실패: {request.error}");
+    //            Debug.LogError($"상세 에러: {request.downloadHandler?.text}");
+    //        }
+    //    }
+    //}
 }
 
 public class BypassCertificate : CertificateHandler
