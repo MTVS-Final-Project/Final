@@ -21,7 +21,7 @@ public class KeepOnGround : MonoBehaviour
         nowPos = transform.position;
         nowRot = transform.rotation;
         dragObject = transform.GetComponent<DragObject>();
-        
+
     }
 
     // Update is called once per frame
@@ -36,19 +36,19 @@ public class KeepOnGround : MonoBehaviour
         if (!dragObject.isDragging)
         {
 
-        if (check.onGround)
-        {
-            lastPos = nowPos;
-            nowPos = transform.position;
+            if (check.onGround)
+            {
+                lastPos = nowPos;
+                nowPos = transform.position;
 
-            lastRot = nowRot;
-            nowRot = transform.rotation;
-        }
-        else if (!check.onGround)
-        {
-            transform.position = check.snapPos;
-            transform.rotation = lastRot;
-        }
+                lastRot = nowRot;
+                nowRot = transform.rotation;
+            }
+            else if (!check.onGround)
+            {
+                transform.position = check.snapPos;
+                transform.rotation = lastRot;
+            }
         }
     }
 }

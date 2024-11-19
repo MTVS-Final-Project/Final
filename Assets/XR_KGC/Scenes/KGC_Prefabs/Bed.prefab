@@ -26,7 +26,7 @@ PrefabInstance:
     - target: {fileID: 4996983221102943255, guid: 17ff07928cfe64141ac0a3f2f056b715,
         type: 3}
       propertyPath: m_Name
-      value: Square2x1_Bed
+      value: Bed
       objectReference: {fileID: 0}
     - target: {fileID: 5070099657109323255, guid: 17ff07928cfe64141ac0a3f2f056b715,
         type: 3}
@@ -42,6 +42,11 @@ PrefabInstance:
     - target: {fileID: 5070099657109323255, guid: 17ff07928cfe64141ac0a3f2f056b715,
         type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285609300314299642, guid: 17ff07928cfe64141ac0a3f2f056b715,
+        type: 3}
+      propertyPath: currentMode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6066558071972036446, guid: 17ff07928cfe64141ac0a3f2f056b715,
