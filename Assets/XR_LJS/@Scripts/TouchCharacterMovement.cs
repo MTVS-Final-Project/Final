@@ -167,7 +167,7 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
         }
         else if (cat != null && cat.activeInHierarchy)
         {
-            Debug.Log("고양이가 활성화되어 있어 이동이 중지되었습니다.");
+            
             return;
         }
 
