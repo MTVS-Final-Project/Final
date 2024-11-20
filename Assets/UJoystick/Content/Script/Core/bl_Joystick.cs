@@ -18,6 +18,8 @@ public class bl_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField]private RectTransform StickRect;//The middle joystick UI
     [SerializeField] private RectTransform CenterReference;
 
+    //public Text logText;
+
     //Privates
     private Vector3 DeathArea;
     private Vector3 currentVelocity;
@@ -119,21 +121,29 @@ public class bl_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     /// <param name="data"></param>
     public void OnDrag(PointerEventData data)
     {
+       
         //If this touch id is the first touch in the event
         if (data.pointerId == lastId)
         {
+            
             isFree = false;
             //Get Position of current touch
-            Vector3 position = bl_JoystickUtils.TouchPosition(m_Canvas,GetTouchID);
+            //Vector3 position = bl_JoystickUtils.TouchPosition(m_Canvas,GetTouchID);
+            Vector3 position = Input.GetTouch(0).position;
+            
 
             //Rotate into the area circumferential of joystick
             if (Vector2.Distance(DeathArea, position) < radio)
             {
                 StickRect.position = position;
+                //logText.text = "33333333333333333333333333333333333333";
             }
             else
             {
                 StickRect.position = DeathArea + (position - DeathArea).normalized * radio;
+                //logText.text = $"Position = ({position.x}, {position.y}, {position.z})\tCenter = ({DeathArea.x}, {DeathArea.y}, {DeathArea.z})\nDist: {Vector3.Distance(position, DeathArea)}";
+
+
             }
         }
     }
