@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 using System.Net;
 using ExitGames.Client.Photon;
 
-public class PhotonNet : MonoBehaviourPunCallbacks
+public class PhotonNet : MonoBehaviourPunCallbacks, IPunObservable
 {
     // 몸 부분
     public SpriteRenderer bodyPart;
@@ -57,6 +57,18 @@ public class PhotonNet : MonoBehaviourPunCallbacks
     public Transform circleTransform;
     private Dictionary<string, int> customizationData;
 
+    // 현재 커스터마이징 값을 저장할 변수들
+    private int currentBodyIndex;
+    private int currentEyeIndex;
+    private int currentMouthIndex;
+    private int currentLeftArmIndex;
+    private int currentRightArmIndex;
+    private int currentLeftLegIndex;
+    private int currentRightLegIndex;
+    private int currentPantIndex;
+    private int currentHairIndex;
+    private int currentLeftShoesIndex;
+    private int currentRightShoesIndex;
     void Start()
     {
         PhotonNetwork.SendRate = 60;
@@ -173,21 +185,34 @@ public class PhotonNet : MonoBehaviourPunCallbacks
                                 int leftLegIndex, int rightLegIndex, int pantIndex, int hairIndex,
                                 int leftShoesIndex, int rightShoesIndex)
     {
+        // 현재 값 업데이트
+        currentBodyIndex = bodyIndex;
+        currentEyeIndex = eyeIndex;
+        currentMouthIndex = mouthIndex;
+        currentLeftArmIndex = leftArmIndex;
+        currentRightArmIndex = rightArmIndex;
+        currentLeftLegIndex = leftLegIndex;
+        currentRightLegIndex = rightLegIndex;
+        currentPantIndex = pantIndex;
+        currentHairIndex = hairIndex;
+        currentLeftShoesIndex = leftShoesIndex;
+        currentRightShoesIndex = rightShoesIndex;
+
         // 커스터마이징 데이터를 로컬 플레이어에 저장
         var properties = new ExitGames.Client.Photon.Hashtable()
-    {
-        { "BodyUI", bodyIndex },
-        { "EyesUI", eyeIndex },
-        { "MouthUI", mouthIndex },
-        { "LeftArmUI", leftArmIndex },
-        { "rightArmUI", rightArmIndex },
-        { "leftLegUI", leftLegIndex },
-        { "rightLegUI", rightLegIndex },
-        { "PantsUI", pantIndex },
-        { "HairUI", hairIndex },
-        { "leftShoesUI", leftShoesIndex },
-        { "rightShoesUI", rightShoesIndex }
-    };
+        {
+            { "BodyUI", bodyIndex },
+            { "EyesUI", eyeIndex },
+            { "MouthUI", mouthIndex },
+            { "LeftArmUI", leftArmIndex },
+            { "rightArmUI", rightArmIndex },
+            { "leftLegUI", leftLegIndex },
+            { "rightLegUI", rightLegIndex },
+            { "PantsUI", pantIndex },
+            { "HairUI", hairIndex },
+            { "leftShoesUI", leftShoesIndex },
+            { "rightShoesUI", rightShoesIndex }
+        };
 
         // CustomProperties 업데이트
         PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
@@ -203,24 +228,24 @@ public class PhotonNet : MonoBehaviourPunCallbacks
 
     [PunRPC]
     public void ApplyCustomization(int bodyIndex, int eyeIndex, int mouthIndex, int leftArmIndex, int rightArmIndex,
-                               int leftLegIndex, int rightLegIndex, int pantIndex, int hairIndex,
-                               int leftShoesIndex, int rightShoesIndex)
+                              int leftLegIndex, int rightLegIndex, int pantIndex, int hairIndex,
+                              int leftShoesIndex, int rightShoesIndex)
     {
         // 전달받은 데이터로 커스터마이징 적용
         var properties = new ExitGames.Client.Photon.Hashtable()
-    {
-        { "BodyUI", bodyIndex },
-        { "EyesUI", eyeIndex },
-        { "MouthUI", mouthIndex },
-        { "LeftArmUI", leftArmIndex },
-        { "rightArmUI", rightArmIndex },
-        { "leftLegUI", leftLegIndex },
-        { "rightLegUI", rightLegIndex },
-        { "PantsUI", pantIndex },
-        { "HairUI", hairIndex },
-        { "leftShoesUI", leftShoesIndex },
-        { "rightShoesUI", rightShoesIndex }
-    };
+        {
+            { "BodyUI", bodyIndex },
+            { "EyesUI", eyeIndex },
+            { "MouthUI", mouthIndex },
+            { "LeftArmUI", leftArmIndex },
+            { "rightArmUI", rightArmIndex },
+            { "leftLegUI", leftLegIndex },
+            { "rightLegUI", rightLegIndex },
+            { "PantsUI", pantIndex },
+            { "HairUI", hairIndex },
+            { "leftShoesUI", leftShoesIndex },
+            { "rightShoesUI", rightShoesIndex }
+        };
 
         // CustomProperties 업데이트
         PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
@@ -228,6 +253,48 @@ public class PhotonNet : MonoBehaviourPunCallbacks
         // 캐릭터 반영
         CustomMizeGive(gameObject);
     }
+
+    // IPunObservable 구현
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            // 데이터 전송
+            stream.SendNext(currentBodyIndex);
+            stream.SendNext(currentEyeIndex);
+            stream.SendNext(currentMouthIndex);
+            stream.SendNext(currentLeftArmIndex);
+            stream.SendNext(currentRightArmIndex);
+            stream.SendNext(currentLeftLegIndex);
+            stream.SendNext(currentRightLegIndex);
+            stream.SendNext(currentPantIndex);
+            stream.SendNext(currentHairIndex);
+            stream.SendNext(currentLeftShoesIndex);
+            stream.SendNext(currentRightShoesIndex);
+        }
+        else
+        {
+            // 데이터 수신
+            currentBodyIndex = (int)stream.ReceiveNext();
+            currentEyeIndex = (int)stream.ReceiveNext();
+            currentMouthIndex = (int)stream.ReceiveNext();
+            currentLeftArmIndex = (int)stream.ReceiveNext();
+            currentRightArmIndex = (int)stream.ReceiveNext();
+            currentLeftLegIndex = (int)stream.ReceiveNext();
+            currentRightLegIndex = (int)stream.ReceiveNext();
+            currentPantIndex = (int)stream.ReceiveNext();
+            currentHairIndex = (int)stream.ReceiveNext();
+            currentLeftShoesIndex = (int)stream.ReceiveNext();
+            currentRightShoesIndex = (int)stream.ReceiveNext();
+
+            // 받은 데이터로 커스터마이징 업데이트
+            UpdateCustomization(currentBodyIndex, currentEyeIndex, currentMouthIndex,
+                              currentLeftArmIndex, currentRightArmIndex, currentLeftLegIndex,
+                              currentRightLegIndex, currentPantIndex, currentHairIndex,
+                              currentLeftShoesIndex, currentRightShoesIndex);
+        }
+    }
+
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
@@ -249,22 +316,98 @@ public class PhotonNet : MonoBehaviourPunCallbacks
 
     private void ApplyCustomizationFromProperties(GameObject playerObject, ExitGames.Client.Photon.Hashtable props)
     {
-        foreach (string key in props.Keys)
+        PhotonView photonView = playerObject.GetComponent<PhotonView>();
+        if (photonView == null) return;
+
+        GameObject playerInstance = GameObject.Find($"Player(Clone)");
+        if (playerInstance == null) return;
+
+        // Body (몸통)
+        if (props.TryGetValue("BodyUI", out object bodyIndex))
         {
-            if (props.TryGetValue(key, out object value))
-            {
-                // key와 value를 사용해 커스터마이징 적용
-                // 예: playerObject.transform.Find(key).GetComponent<SpriteRenderer>().sprite = ...
-            }
+            SpriteRenderer bodyRenderer = playerInstance.transform.Find("Body1")?.GetComponent<SpriteRenderer>();
+            if (bodyRenderer != null) bodyRenderer.sprite = bodyOption[(int)bodyIndex];
+        }
+
+        // Eyes (눈)
+        if (props.TryGetValue("EyesUI", out object eyeIndex))
+        {
+            SpriteRenderer eyeRenderer = playerInstance.transform.Find("eye")?.GetComponent<SpriteRenderer>();
+            if (eyeRenderer != null) eyeRenderer.sprite = eyeOption[(int)eyeIndex];
+        }
+
+        // Mouth (입)
+        if (props.TryGetValue("MouthUI", out object mouthIndex))
+        {
+            SpriteRenderer mouthRenderer = playerInstance.transform.Find("mouth")?.GetComponent<SpriteRenderer>();
+            if (mouthRenderer != null) mouthRenderer.sprite = mouthOption[(int)mouthIndex];
+        }
+
+        // Left Arm (왼쪽 팔)
+        if (props.TryGetValue("LeftArmUI", out object leftArmIndex))
+        {
+            SpriteRenderer leftArmRenderer = playerInstance.transform.Find("leftArm")?.GetComponent<SpriteRenderer>();
+            if (leftArmRenderer != null) leftArmRenderer.sprite = leftarmOption[(int)leftArmIndex];
+        }
+
+        // Right Arm (오른쪽 팔)
+        if (props.TryGetValue("rightArmUI", out object rightArmIndex))
+        {
+            SpriteRenderer rightArmRenderer = playerInstance.transform.Find("rightArm")?.GetComponent<SpriteRenderer>();
+            if (rightArmRenderer != null) rightArmRenderer.sprite = rightarmOption[(int)rightArmIndex];
+        }
+
+        // Left Leg (왼쪽 다리)
+        if (props.TryGetValue("leftLegUI", out object leftLegIndex))
+        {
+            SpriteRenderer leftLegRenderer = playerInstance.transform.Find("leftLeg")?.GetComponent<SpriteRenderer>();
+            if (leftLegRenderer != null) leftLegRenderer.sprite = leftlegOption[(int)leftLegIndex];
+        }
+
+        // Right Leg (오른쪽 다리)
+        if (props.TryGetValue("rightLegUI", out object rightLegIndex))
+        {
+            SpriteRenderer rightLegRenderer = playerInstance.transform.Find("rightLeg")?.GetComponent<SpriteRenderer>();
+            if (rightLegRenderer != null) rightLegRenderer.sprite = rightlegOption[(int)rightLegIndex];
+        }
+
+        // Pants (팬츠)
+        if (props.TryGetValue("PantsUI", out object pantIndex))
+        {
+            SpriteRenderer pantsRenderer = playerInstance.transform.Find("pants")?.GetComponent<SpriteRenderer>();
+            if (pantsRenderer != null) pantsRenderer.sprite = pantOption[(int)pantIndex];
+        }
+
+        // Hair (헤어)
+        if (props.TryGetValue("HairUI", out object hairIndex))
+        {
+            SpriteRenderer hairRenderer = playerInstance.transform.Find("hair")?.GetComponent<SpriteRenderer>();
+            if (hairRenderer != null) hairRenderer.sprite = hairOption[(int)hairIndex];
+        }
+
+        // Left Shoe (왼쪽 신발)
+        if (props.TryGetValue("leftShoesUI", out object leftShoesIndex))
+        {
+            SpriteRenderer leftShoeRenderer = playerInstance.transform.Find("leftShoe")?.GetComponent<SpriteRenderer>();
+            if (leftShoeRenderer != null) leftShoeRenderer.sprite = leftshoesOption[(int)leftShoesIndex];
+        }
+
+        // Right Shoe (오른쪽 신발)
+        if (props.TryGetValue("rightShoesUI", out object rightShoesIndex))
+        {
+            SpriteRenderer rightShoeRenderer = playerInstance.transform.Find("rightShoe")?.GetComponent<SpriteRenderer>();
+            if (rightShoeRenderer != null) rightShoeRenderer.sprite = rightshoesOption[(int)rightShoesIndex];
         }
     }
     private GameObject FindPlayerObject(int actorNumber)
     {
-        foreach (var player in FindObjectsOfType<PhotonView>())
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player"); // Player 태그가 있다고 가정
+        foreach (GameObject player in players)
         {
-            if (player.Owner.ActorNumber == actorNumber)
+            PhotonView view = player.GetComponent<PhotonView>();
+            if (view != null && view.Owner != null && view.Owner.ActorNumber == actorNumber)
             {
-                return player.gameObject;
+                return player;
             }
         }
         return null;
