@@ -17,6 +17,10 @@ public class CatPosManager : MonoBehaviour
     {
         
     }
+    public void GetGaguPosition()
+    {
+
+    }
 
     // Update is called once per frame
     void Update()
@@ -25,15 +29,15 @@ public class CatPosManager : MonoBehaviour
         {
             toilet = GameObject.Find("ToiletPosition").transform;
         }
-            if (dish == null)
+        if (dish == null)
         {
             dish = GameObject.Find("CatDishPoint").transform;
         }
-                if (tower == null)
+        if (tower == null)
         {
             tower = GameObject.Find("TowerPosition").transform;
         }
-                    if (bed == null)
+        if (bed == null)
         {
             bed = GameObject.Find("CatBedPosition").transform;
         }

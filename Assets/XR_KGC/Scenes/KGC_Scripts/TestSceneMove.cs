@@ -12,13 +12,22 @@ public class TestSceneMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown((KeyCode.Q)))
+        if (Input.GetKeyDown((KeyCode.Alpha1)))
         {
-            SceneManager.LoadScene("Test_KGC");
+            Debug.Log("1눌림");
+            SceneManager.LoadScene("residential_KGC");
         }
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
+            Debug.Log("2눌림");
+
             SceneManager.LoadScene("Second_KGC");
+        } 
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Debug.Log("3눌림");
+
+            SceneManager.LoadScene("Test2_KGC");
         }
     }
 }
