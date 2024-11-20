@@ -112,6 +112,8 @@ public class GaguSave : MonoBehaviour
 
     public void SaveGagu()
     {
+        FindChildrenWithKeyword(gaguParent);
+
     }
 
     void FindChildrenWithKeyword(GameObject parent)
