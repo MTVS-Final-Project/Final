@@ -5,7 +5,7 @@ using Photon.Realtime;
 using System.Reflection;
 using UnityEngine.SceneManagement;
 
-public class ConnectionManager : MonoBehaviourPunCallbacks
+public class ConectionMgr : MonoBehaviourPunCallbacks
 {
     [SerializeField] Button joinButton;    // Gangzang_LJS로 이동하는 버튼
     [SerializeField] Button roomButton;    // residential_LJS로 이동하는 버튼
@@ -69,6 +69,7 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
     private void SetupPhotonNetwork()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
+
         PhotonNetwork.NickName = "";
         PhotonNetwork.GameVersion = "1.0.0";
         PhotonNetwork.SendRate = 30;
@@ -99,18 +100,19 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
     private void JoinOrCreateRoom(string roomName, string sceneToLoad)
     {
         print("방 생성 중...");
+
         RoomOptions roomOptions = new RoomOptions
         {
             MaxPlayers = 12,
             IsVisible = true,
             IsOpen = true,
-            
+            BroadcastPropsChangeToAll = true // Custom Properties 변경 사항 브로드캐스트
         };
 
         var customProperties = new ExitGames.Client.Photon.Hashtable
-        {
-            { "SceneToLoad", sceneToLoad }
-        };
+    {
+        { "SceneToLoad", sceneToLoad }
+    };
         roomOptions.CustomRoomProperties = customProperties;
 
         PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
