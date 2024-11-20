@@ -1,10 +1,11 @@
 {
 "skeleton": {
-	"hash": "NI8IjobcvHY",
+	"hash": "J/M82nx3diM",
 	"spine": "4.2.37",
-	"x": -115,
-	"width": 250,
-	"height": 538,
+	"x": -290.54,
+	"y": -125.54,
+	"width": 602.69,
+	"height": 813.67,
 	"images": "",
 	"audio": "./audio"
 },
@@ -19,12 +20,36 @@
 ],
 "slots": [
 	{ "name": "레이어 1", "bone": "backpal", "attachment": "레이어 1" },
+	{ "name": "left_arm/leftarm_1", "bone": "backpal", "attachment": "leftarm_1", "visible": false },
+	{ "name": "left_arm/leftarm_2", "bone": "backpal", "attachment": "leftarm_2" },
 	{ "name": "레이어 2", "bone": "backleg", "attachment": "레이어 2" },
-	{ "name": "레이어 3", "bone": "body", "attachment": "레이어 3" },
+	{ "name": "left_leg/leftleg_1", "bone": "backleg", "attachment": "leftleg_1", "visible": false },
+	{ "name": "left_leg/leftleg_2", "bone": "backleg", "attachment": "leftleg_2" },
+	{ "name": "leftshoe/leftshoe_1", "bone": "backleg", "attachment": "leftshoe_1", "visible": false },
+	{ "name": "leftshoe/leftshoe_2", "bone": "backleg", "attachment": "leftshoe_2" },
+	{ "name": "hip/레이어 3", "bone": "body", "attachment": "레이어 3", "visible": false },
+	{ "name": "hip/hip_1", "bone": "body", "attachment": "hip_1", "visible": false },
+	{ "name": "hip/hip_2", "bone": "body", "attachment": "hip_2" },
 	{ "name": "레이어 4", "bone": "apleg", "attachment": "레이어 4" },
-	{ "name": "레이어 5", "bone": "body", "attachment": "레이어 5" },
+	{ "name": "right_leg/rightleg_1", "bone": "apleg", "attachment": "rightleg_1", "visible": false },
+	{ "name": "right_leg/rightleg_2", "bone": "apleg", "attachment": "rightleg_2" },
+	{ "name": "rightshoe/rightshoe_1", "bone": "apleg", "attachment": "rightshoe_1", "visible": false },
+	{ "name": "rightshoe/rightshoe_2", "bone": "apleg", "attachment": "rightshoe_2" },
+	{ "name": "body/레이어 5", "bone": "body", "attachment": "레이어 5" },
+	{ "name": "body/body_1", "bone": "body", "attachment": "body_1", "visible": false },
+	{ "name": "body/body_2", "bone": "body", "attachment": "body_2" },
 	{ "name": "레이어 6", "bone": "appal", "attachment": "레이어 6" },
-	{ "name": "레이어 7", "bone": "head", "attachment": "레이어 7" }
+	{ "name": "right_arm/rightarm_1", "bone": "appal", "attachment": "rightarm_1", "visible": false },
+	{ "name": "right_arm/rightarm_2", "bone": "appal", "attachment": "rightarm_2", "visible": false },
+	{ "name": "head/레이어 7", "bone": "head", "attachment": "레이어 7" },
+	{ "name": "head/eye/eye_1", "bone": "head", "attachment": "eye_1" },
+	{ "name": "head/eye/eye_2", "bone": "head", "attachment": "eye_2", "visible": false },
+	{ "name": "head/mouse/mouse_1", "bone": "head", "attachment": "mouse_1" },
+	{ "name": "head/mouse/mouse_2", "bone": "head", "attachment": "mouse_2", "visible": false },
+	{ "name": "head/eyebrow/eyebrow_1", "bone": "head", "attachment": "eyebrow_1" },
+	{ "name": "head/eyebrow/eyebrow_2", "bone": "head", "attachment": "eyebrow_2", "visible": false },
+	{ "name": "head/hair/hair_2", "bone": "head", "attachment": "hair_2", "visible": false },
+	{ "name": "head/hair/hair_1", "bone": "head", "attachment": "hair_1" }
 ],
 "skins": [
 	{
@@ -36,20 +61,92 @@
 			"레이어 2": {
 				"레이어 2": { "x": 69.14, "y": 4.38, "rotation": 100.67, "width": 78, "height": 180 }
 			},
-			"레이어 3": {
-				"레이어 3": { "x": 125.35, "y": -12.05, "rotation": 90.43, "width": 103, "height": 45 }
-			},
 			"레이어 4": {
 				"레이어 4": { "x": 65.08, "y": 4.61, "rotation": 87.01, "width": 73, "height": 176 }
-			},
-			"레이어 5": {
-				"레이어 5": { "x": 44.84, "y": -11.16, "rotation": 90.43, "width": 108, "height": 154 }
 			},
 			"레이어 6": {
 				"레이어 6": { "x": 57.39, "y": 1.67, "rotation": 81.08, "width": 54, "height": 150 }
 			},
-			"레이어 7": {
+			"body/body_1": {
+				"body_1": { "x": 5.75, "y": -1.4, "rotation": 90.43, "width": 600, "height": 800 }
+			},
+			"body/body_2": {
+				"body_2": { "x": 3.26, "y": -2.66, "rotation": 90.43, "width": 600, "height": 800 }
+			},
+			"body/레이어 5": {
+				"레이어 5": { "x": 44.84, "y": -11.16, "rotation": 90.43, "width": 108, "height": 154 }
+			},
+			"head/eye/eye_1": {
+				"eye_1": { "x": 3.64, "y": 2.72, "rotation": -95.19, "width": 600, "height": 800 }
+			},
+			"head/eye/eye_2": {
+				"eye_2": { "x": -0.09, "y": 6.76, "rotation": -95.19, "width": 600, "height": 800 }
+			},
+			"head/eyebrow/eyebrow_1": {
+				"eyebrow_1": { "x": -8.05, "y": 3.12, "rotation": -95.19, "width": 600, "height": 800 }
+			},
+			"head/eyebrow/eyebrow_2": {
+				"eyebrow_2": { "x": -7.32, "y": 13.06, "rotation": -95.19, "width": 600, "height": 800 }
+			},
+			"head/hair/hair_1": {
+				"hair_1": { "x": -0.43, "y": 2.16, "rotation": -95.19, "width": 600, "height": 800 }
+			},
+			"head/hair/hair_2": {
+				"hair_2": { "x": -0.82, "y": 1.78, "rotation": -95.19, "width": 600, "height": 800 }
+			},
+			"head/mouse/mouse_1": {
+				"mouse_1": { "x": 5.5, "y": 1.07, "rotation": -95.19, "width": 600, "height": 800 }
+			},
+			"head/mouse/mouse_2": {
+				"mouse_2": { "x": -1.98, "y": -7.79, "rotation": -95.19, "width": 600, "height": 800 }
+			},
+			"head/레이어 7": {
 				"레이어 7": { "x": 133.92, "y": -9.66, "rotation": -95.19, "width": 250, "height": 242 }
+			},
+			"hip/hip_1": {
+				"hip_1": { "x": 3.9, "y": -3.91, "rotation": 90.43, "width": 600, "height": 800 }
+			},
+			"hip/hip_2": {
+				"hip_2": { "x": 3.89, "y": -3.28, "rotation": 90.43, "width": 600, "height": 800 }
+			},
+			"hip/레이어 3": {
+				"레이어 3": { "x": 125.35, "y": -12.05, "rotation": 90.43, "width": 103, "height": 45 }
+			},
+			"leftshoe/leftshoe_1": {
+				"leftshoe_1": { "x": -128.86, "y": 12.36, "rotation": 100.67, "width": 600, "height": 800 }
+			},
+			"leftshoe/leftshoe_2": {
+				"leftshoe_2": { "x": -126.42, "y": 13.48, "rotation": 100.67, "width": 600, "height": 800 }
+			},
+			"left_arm/leftarm_1": {
+				"leftarm_1": { "x": -2.9, "y": 36.01, "rotation": 99.3, "width": 600, "height": 800 }
+			},
+			"left_arm/leftarm_2": {
+				"leftarm_2": { "x": -5.46, "y": 35.59, "rotation": 99.3, "width": 600, "height": 800 }
+			},
+			"left_leg/leftleg_1": {
+				"leftleg_1": { "x": -127.34, "y": 11.32, "rotation": 100.67, "width": 600, "height": 800 }
+			},
+			"left_leg/leftleg_2": {
+				"leftleg_2": { "x": -128.74, "y": 11.72, "rotation": 100.67, "width": 600, "height": 800 }
+			},
+			"rightshoe/rightshoe_1": {
+				"rightshoe_1": { "x": -128.95, "y": -7.28, "rotation": 87.01, "width": 600, "height": 800 }
+			},
+			"rightshoe/rightshoe_2": {
+				"rightshoe_2": { "x": -128.36, "y": -8.61, "rotation": 87.01, "width": 600, "height": 800 }
+			},
+			"right_arm/rightarm_1": {
+				"rightarm_1": { "x": -4.8, "y": -28.25, "rotation": 81.08, "width": 600, "height": 800 }
+			},
+			"right_arm/rightarm_2": {
+				"rightarm_2": { "x": -3.71, "y": -29.73, "rotation": 81.08, "width": 600, "height": 800 }
+			},
+			"right_leg/rightleg_1": {
+				"rightleg_1": { "x": -130.18, "y": -5.92, "rotation": 87.01, "width": 600, "height": 800 }
+			},
+			"right_leg/rightleg_2": {
+				"rightleg_2": { "x": -131.54, "y": -7.15, "rotation": 87.01, "width": 600, "height": 800 }
 			}
 		}
 	}
