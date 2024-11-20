@@ -12,8 +12,8 @@ public class CatController : MonoBehaviour
     public float doubleClickTimeLimit = 0.5f;
 
     private float lastClickTime = 0f;
-    private Collider2D headCollider;
-    private Collider2D bodyCollider;
+    private CircleCollider2D headCollider;
+    private BoxCollider2D bodyCollider;
     private Vector3 headOriginalOffset;
     private Vector3 bodyOriginalOffset;
     //private SkeletonAnimation skeletonAnimation; // SkeletonAnimation 컴포넌트 참조
@@ -21,9 +21,9 @@ public class CatController : MonoBehaviour
     public float zoomMultiplier = 2.0f;
     public float minZoom = 2f;
     public float maxZoom = 5f;
-    private float smoothTime = 0.3f;
-    public float clickRadius = 0.3f; // 클릭 인식 범위 반경
-    public float moveSmoothTime = 0.3f; // 카메라 이동 부드럽기
+    private float smoothTime = 0.1f;
+    private float clickRadius = 0.3f; // 클릭 인식 범위 반경
+    public float moveSmoothTime = 0.1f; // 카메라 이동 부드럽기
 
     private Transform catTransform; // Cat 오브젝트의 Transform
     private float targetZoom;
@@ -38,7 +38,7 @@ public class CatController : MonoBehaviour
     public GameObject feather;
 
     public GameObject player; // Unity Inspector에서 플레이어 오브젝트 할당
-    private float interactionDistance = 1.3f; // 상호작용 가능 거리
+    private float interactionDistance = 0.5f; // 상호작용 가능 거리
 
     public bool modifying;
     private void Awake()
@@ -50,11 +50,11 @@ public class CatController : MonoBehaviour
         //    skeletonAnimation.skeleton.ScaleX = -1f;
         //}
 
-        headCollider = transform.Find("Head").GetComponent<Collider2D>();
-        bodyCollider = transform.Find("Body").GetComponent<Collider2D>();
+        //headCollider = transform.Find("Head").GetComponent<CircleCollider2D>();
+        //bodyCollider = transform.Find("Body").GetComponent<BoxCollider2D>();
 
-        headOriginalOffset = headCollider.offset;
-        bodyOriginalOffset = bodyCollider.offset;
+        //headOriginalOffset = headCollider.offset;
+        //bodyOriginalOffset = bodyCollider.offset;
 
         //player = GameObject.Find("ChairDinningB").GetComponent<Transform>();
 
@@ -112,7 +112,7 @@ public class CatController : MonoBehaviour
 
     public void CallCat()
         {
-            StartCoroutine(MoveTowards(player.transform.position- new Vector3(0.5f,0.5f,0)));
+            StartCoroutine(MoveTowards(player.transform.position- new Vector3(0.2f,0.2f,0)));
         }
    
     
@@ -146,6 +146,7 @@ public class CatController : MonoBehaviour
 
             if (distanceToCat <= clickRadius)
             {
+                print(clickRadius);
                 StartCoroutine(ZoomIn());
             }
         }

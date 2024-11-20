@@ -25,8 +25,8 @@ public class PetInteraction : MonoBehaviour
     private Vector3 originalCameraPosition;
     private float originalZoom;
 
-    private int headClickCount = 0;      // ¸Ó¸® Å¬¸¯ È½¼ö
-    private int bodyClickCount = 0;      // ¸öÅë Å¬¸¯ È½¼ö
+    public int headClickCount = 0;      // ¸Ó¸® Å¬¸¯ È½¼ö
+    public int bodyClickCount = 0;      // ¸öÅë Å¬¸¯ È½¼ö
 
     public SkeletonAnimation sk;
 

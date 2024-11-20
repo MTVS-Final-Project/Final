@@ -27,7 +27,7 @@ public class Star : MonoBehaviour
         Color color = sprite.color;
         color.a = Mathf.Clamp(sprite.color.a, 0, Time.deltaTime * colorSpeed);
         sprite.color = color;
-        if(sprite.color.a <= 0.01f)
+        if(sprite.color.a <= 10f)
         {
             Destroy(gameObject);
         }
