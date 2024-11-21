@@ -153,10 +153,10 @@ public class CatAI : MonoBehaviour
         }
 
     }
-    public IEnumerator Eat()
-    {
+    //public IEnumerator Eat()
+    //{
         
-    }
+    //}
 
     public IEnumerator Wandering(float Term) // 플레이어가 부를 때는 중단시켜야 되는 코루틴
     {
