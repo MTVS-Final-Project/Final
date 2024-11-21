@@ -11,7 +11,7 @@ public class DishState : MonoBehaviour
     public SpriteRenderer sr;
     public bool clearDish;
 
-    public int mealCount; //¹ä ¾ç
+    public float mealCount; //¹ä ¾ç
 
     public Sprite[] dish = new Sprite[2];
 

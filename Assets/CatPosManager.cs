@@ -1,5 +1,6 @@
 using Spine.Unity;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class CatPosManager : MonoBehaviour
@@ -7,11 +8,13 @@ public class CatPosManager : MonoBehaviour
     public CatController cc;
 
     public SkeletonAnimation sa;
+    public CatAI catAI;
 
     public Transform toilet;
     public Transform dish;
     public Transform tower;
     public Transform bed;
+    public Transform towerBottom; //타워 올라가기전 위치
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -41,33 +44,84 @@ public class CatPosManager : MonoBehaviour
         {
             bed = GameObject.Find("CatBedPosition").transform;
         }
+        if (towerBottom == null)
+        {
+            towerBottom = tower.parent.transform;
+        }
+    }
+    public void CatMove(Vector3 positioin)
+    {
+        StartCoroutine(MoveTowards(positioin));
+    }
+
+    public void Jump(Vector3 positioin)
+    {
+        StartCoroutine(JumpUp(positioin));
+    }
+    public void GoTower()
+    {
+        StartCoroutine(ToTower(towerBottom.position));
+    }
+
+    public IEnumerator ToTower(Vector3 targetPosition)
+    {
+        sa.AnimationName = "Walking";
+        float duration = 1.0f;
+        float elapsed = 0f;
+        Vector3 startingPosition = transform.position;
+        Vector3 direction = (targetPosition - startingPosition).normalized;
+
+        while (elapsed < duration)
+        {
+            transform.position = Vector3.Lerp(startingPosition, targetPosition, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = targetPosition;
+        yield return new WaitForSeconds(0.2f);
+        yield return StartCoroutine(JumpUp(tower.position));
+        
+        sa.AnimationName = "Sit";
+    }
 
 
-        //가라코드 싹 다 쳐내
-        //if (Input.GetKeyDown(KeyCode.Q))
-        //{
-        //    cc.CatGo(toilet);
-        //}
-        //if (Input.GetKeyDown(KeyCode.W))
-        //{
-        //    StartCoroutine(ToMeal());
-        //    cc.CatGo(dish);
-        //    sa.AnimationName = "Food";
-        //}
-        //if (Input.GetKeyDown(KeyCode.E))
-        //{
-        //    StartCoroutine(StartGara2());
-        //    cc.CatGo(tower);
-        //    // sa.AnimationName = "Sit";
-        //}
-        //if (Input.GetKeyDown(KeyCode.R))
-        //{
-        //    StartCoroutine(StartGara2());
 
-        //    cc.CatGo(bed);
-        //    // sa.AnimationName = "Sit";
 
-        //}
+    public IEnumerator MoveTowards(Vector3 targetPosition)
+    {
+        sa.AnimationName = "Walking";
+        float duration = 1.0f;
+        float elapsed = 0f;
+        Vector3 startingPosition = transform.position;
+        Vector3 direction = (targetPosition - startingPosition).normalized;
+
+        while (elapsed < duration)
+        {
+            transform.position = Vector3.Lerp(startingPosition, targetPosition, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = targetPosition;
+        sa.AnimationName = "Idle";
+    }
+
+    public IEnumerator JumpUp(Vector3 targetPosition)
+    {
+        float duration = 0.3f;
+        float elapsed = 0f;
+        Vector3 startingPosition = transform.position;
+        Vector3 direction = (targetPosition - startingPosition).normalized;
+
+        while (elapsed < duration)
+        {
+            transform.position = Vector3.Lerp(startingPosition, targetPosition, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        transform.position = targetPosition;
+
     }
     public IEnumerator ToMeal()
     {
@@ -87,4 +141,5 @@ public class CatPosManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         sa.AnimationName = "Food";
     }
+
 }
