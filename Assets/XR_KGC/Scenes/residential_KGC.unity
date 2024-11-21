@@ -16280,6 +16280,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7ec4d762be9b5478671bd9255c9e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &707565547 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8354679900807999429, guid: 8f0c10254a14cd944992a571b6ee7e4a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2140491202413770565}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28fc63f604a2b13448b0c0d0bd31cdb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &725345289
 GameObject:
   m_ObjectHideFlags: 0
@@ -45972,6 +45984,16 @@ PrefabInstance:
       propertyPath: backButton
       value: 
       objectReference: {fileID: 569582567}
+    - target: {fileID: 2324325299748812898, guid: 8f0c10254a14cd944992a571b6ee7e4a,
+        type: 3}
+      propertyPath: catAI
+      value: 
+      objectReference: {fileID: 707565547}
+    - target: {fileID: 2324325299748812898, guid: 8f0c10254a14cd944992a571b6ee7e4a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3811378527535573821, guid: 8f0c10254a14cd944992a571b6ee7e4a,
         type: 3}
       propertyPath: QM

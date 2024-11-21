@@ -91,7 +91,6 @@ public class CatController : MonoBehaviour
 
     void Update()
     {
-        print(anim);
         if (!modifying)
         {
         HandleClick();
@@ -128,7 +127,7 @@ public class CatController : MonoBehaviour
             {
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
-                if (hit.collider != null && hit.collider.CompareTag("Ground"))
+                if (hit.collider != null && hit.collider.CompareTag("Ground") && Vector3.Distance(hit.collider.gameObject.transform.position, player.transform.position) < 1f)
                 {
                     if (cam.orthographicSize > 4)
                     {
@@ -219,16 +218,14 @@ public class CatController : MonoBehaviour
         Vector3 startingPosition = transform.position;
         Vector3 direction = (targetPosition - startingPosition).normalized;
 
-
-
         while (elapsed < duration)
         {
             transform.position = Vector3.Lerp(startingPosition, targetPosition, elapsed / duration);
             elapsed += Time.deltaTime;
             yield return null;
         }
-
         transform.position = targetPosition;
+
     }
 
 
