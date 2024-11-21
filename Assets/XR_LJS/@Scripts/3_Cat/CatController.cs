@@ -210,5 +210,24 @@ public class CatController : MonoBehaviour
         transform.position = targetPosition;
     }
 
+    public IEnumerator JumpUp(Vector3 targetPosition)
+    {
+        float duration = 0.3f;
+        float elapsed = 0f;
+        Vector3 startingPosition = transform.position;
+        Vector3 direction = (targetPosition - startingPosition).normalized;
+
+
+
+        while (elapsed < duration)
+        {
+            transform.position = Vector3.Lerp(startingPosition, targetPosition, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = targetPosition;
+    }
+
 
 }
