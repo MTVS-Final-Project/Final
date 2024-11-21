@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 4639841272302375643}
   - component: {fileID: 6789637641362351347}
   - component: {fileID: 6285355409305108487}
+  - component: {fileID: 8354679900807999429}
   - component: {fileID: 1803445584017800795}
   - component: {fileID: 1735738910020601962}
   - component: {fileID: 197202416636280551}
   - component: {fileID: 3811378527535573821}
   - component: {fileID: 2324325299748812898}
   - component: {fileID: 606314600614583065}
-  - component: {fileID: 8354679900807999429}
   m_Layer: 0
   m_Name: Cat
   m_TagString: Cat
@@ -96,6 +96,42 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 749467779396147864}
   m_Mesh: {fileID: 0}
+--- !u!114 &8354679900807999429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749467779396147864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28fc63f604a2b13448b0c0d0bd31cdb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1735738910020601962}
+  anim: {fileID: 606314600614583065}
+  toilet: {fileID: 0}
+  dish: {fileID: 0}
+  tower: {fileID: 0}
+  bed: {fileID: 0}
+  towerBottom: {fileID: 0}
+  sleepy: 100
+  friendly: 100
+  mood: 100
+  hunger: 100
+  moveTerm: 5
+  moveRange: 2
+  discharge: 0
+  metabolism: 1
+  speed: 1
+  eatSpeed: 1
+  ds: {fileID: 0}
+  tiles: []
+  tilesInRange: []
+  rest: 0
+  toSleep: 0
+  toMeal: 0
+  state: 0
 --- !u!114 &1803445584017800795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,10 +215,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cc: {fileID: 1735738910020601962}
   sa: {fileID: 606314600614583065}
+  catAI: {fileID: 0}
   toilet: {fileID: 0}
   dish: {fileID: 0}
   tower: {fileID: 0}
   bed: {fileID: 0}
+  towerBottom: {fileID: 0}
 --- !u!114 &606314600614583065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,28 +264,6 @@ MonoBehaviour:
   _animationName: 
   loop: 1
   timeScale: 1
---- !u!114 &8354679900807999429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 749467779396147864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28fc63f604a2b13448b0c0d0bd31cdb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cpm: {fileID: 2324325299748812898}
-  controller: {fileID: 1735738910020601962}
-  anim: {fileID: 606314600614583065}
-  friendly: 100
-  mood: 100
-  hunger: 100
-  moveTerm: 5
-  moveRange: 2
-  tiles: []
-  tilesInRange: []
 --- !u!1 &1858103880086945475
 GameObject:
   m_ObjectHideFlags: 0
