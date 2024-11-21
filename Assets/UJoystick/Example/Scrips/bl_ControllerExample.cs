@@ -4,13 +4,11 @@ using Photon.Pun;
 public class bl_ControllerExample : MonoBehaviourPunCallbacks
 {
     [SerializeField] private bl_Joystick Joystick;
-    [SerializeField] private float Speed = 5f;
+    [SerializeField] private float Speed = 1f;
 
     private Rigidbody2D rb;
     private PhotonView photonView;
-
-    Vector3 prevLocation = Vector3.zero;
-    Vector2 movement;
+    private Vector2 movement;
 
     void Awake()
     {
@@ -25,7 +23,6 @@ public class bl_ControllerExample : MonoBehaviourPunCallbacks
     {
         rb = GetComponent<Rigidbody2D>();
         photonView = GetComponent<PhotonView>();
-        prevLocation = transform.position;
 
         if (rb != null)
         {
@@ -45,23 +42,24 @@ public class bl_ControllerExample : MonoBehaviourPunCallbacks
             if (Joystick == null) return; // 조이스틱이 없으면 움직임 처리하지 않음
         }
 
+        // 조이스틱 입력값 가져오기
         float horizontalInput = Joystick.Horizontal;
         float verticalInput = Joystick.Vertical;
 
         movement = new Vector2(horizontalInput, verticalInput);
 
+        // 입력값이 1을 초과하면 정규화
         if (movement.magnitude > 1f)
         {
             movement.Normalize();
         }
-
-        
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
-        Vector3 dir = new Vector3(movement.x, movement.y, 0);
-        prevLocation += dir.normalized * Speed * Time.fixedDeltaTime;
-        rb.MovePosition(prevLocation);
+        if (!photonView.IsMine) return;
+
+        // Rigidbody2D의 velocity를 설정하여 이동
+        rb.linearVelocity = movement * Speed;
     }
 }

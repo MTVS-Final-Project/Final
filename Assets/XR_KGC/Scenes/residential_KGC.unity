@@ -4002,6 +4002,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2692293942470495615, guid: 805f50676535f414da4f01c6f73c6ffe,
+        type: 3}
+      propertyPath: moveSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: -658240951671457957, guid: 805f50676535f414da4f01c6f73c6ffe,
         type: 3}
       propertyPath: m_BodyType
@@ -4009,8 +4014,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -658240951671457957, guid: 805f50676535f414da4f01c6f73c6ffe,
         type: 3}
+      propertyPath: m_Simulated
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -658240951671457957, guid: 805f50676535f414da4f01c6f73c6ffe,
+        type: 3}
       propertyPath: m_Constraints
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -658240951671457957, guid: 805f50676535f414da4f01c6f73c6ffe,
+        type: 3}
+      propertyPath: m_GravityScale
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -658240951671457957, guid: 805f50676535f414da4f01c6f73c6ffe,
         type: 3}
@@ -4061,6 +4076,11 @@ PrefabInstance:
         type: 3}
       propertyPath: sceneViewId
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4677794269077108931, guid: 805f50676535f414da4f01c6f73c6ffe,
+        type: 3}
+      propertyPath: Speed
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 4677794269077108931, guid: 805f50676535f414da4f01c6f73c6ffe,
         type: 3}
