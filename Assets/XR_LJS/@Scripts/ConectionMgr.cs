@@ -9,7 +9,7 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
 {
     [SerializeField] Button joinButton;    // Gangzang_LJS로 이동하는 버튼
     [SerializeField] Button roomButton;    // residential_LJS로 이동하는 버튼
-    [SerializeField] Button room2Button;
+    [SerializeField] Button room2Button;  //residential_L 로 이동하는 버튼
 
     void Start()
     {
@@ -52,6 +52,11 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
     {
         JoinOrCreateRoom("room2", "residential_LJS");
         //SceneManager.LoadScene("residential_LJS");
+    }
+
+    public void ConnectToFirendRoom()
+    {
+        JoinOrCreateRoom("room2", "residential_LJS");
     }
 
     public void ConnectToFirstRoom2()
