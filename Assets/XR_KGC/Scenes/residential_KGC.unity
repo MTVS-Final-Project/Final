@@ -4085,7 +4085,7 @@ PrefabInstance:
     - target: {fileID: 4677794269077108931, guid: 805f50676535f414da4f01c6f73c6ffe,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5071326007096956258, guid: 805f50676535f414da4f01c6f73c6ffe,
         type: 3}
@@ -4174,7 +4174,11 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1538497801}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5715024331121306500, guid: 805f50676535f414da4f01c6f73c6ffe,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1822406241}
   m_SourcePrefab: {fileID: 100100000, guid: 805f50676535f414da4f01c6f73c6ffe, type: 3}
 --- !u!1 &241307233
 GameObject:
@@ -40240,12 +40244,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1822108682}
   m_CullTransparentMesh: 1
+--- !u!1 &1822406227 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5715024331121306500, guid: 805f50676535f414da4f01c6f73c6ffe,
+    type: 3}
+  m_PrefabInstance: {fileID: 239706258}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1822406240 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6056999130556733058, guid: 805f50676535f414da4f01c6f73c6ffe,
     type: 3}
   m_PrefabInstance: {fileID: 239706258}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1822406241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822406227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97123b9262aea734d8ed8a2ad983f254, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Joystick: {fileID: 0}
+  Speed: 2.5
 --- !u!1 &1823780123
 GameObject:
   m_ObjectHideFlags: 0
