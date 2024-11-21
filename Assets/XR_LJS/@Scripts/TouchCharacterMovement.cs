@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections;
 using SceneManager = UnityEngine.SceneManagement.SceneManager;
-
+using Spine.Unity;
 public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
 {
     public float moveSpeed = 5f;
@@ -28,8 +28,10 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
     private float lastSyncTime = 0f;
     private bool isNetworkMoving = false;
 
+    SkeletonAnimation sk;
     void Start()
     {
+        sk = GetComponent<SkeletonAnimation>();
         rb = GetComponent<Rigidbody2D>();
 
         if (cat == null) cat = GameObject.Find("Cat");
@@ -60,7 +62,7 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
         lastPositionSyncTime = Time.time;
         if (photonView.IsMine)
         {
-            ApplyCustomization();
+            //ApplyCustomization();
             StartCoroutine(LoadPositionAfterSceneLoad());
             Debug.Log("로컬 플레이어 초기화 완료");
         }
@@ -106,23 +108,7 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    void ApplyCustomization()
-    {
-        if (!photonView.IsMine) return;
-
-        var customProperties = PhotonNetwork.LocalPlayer.CustomProperties;
-        PhotonNet photonNet = FindObjectOfType<PhotonNet>();
-
-        if (photonNet != null)
-        {
-            photonNet.CustomMizeGive(gameObject);
-            Debug.Log("커스터마이징 적용 완료");
-        }
-        else
-        {
-            Debug.LogError("PhotonNet을 찾을 수 없습니다.");
-        }
-    }
+   
 
     void Update()
     {
@@ -136,9 +122,13 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
                 if (Vector3.Distance(transform.position, previousPosition) > 0.001f)
                 {
                     photonView.RPC("SyncPosition", RpcTarget.All, transform.position, targetPosition, isMoving);
+                    
                     previousPosition = transform.position;
+
+                    StartCoroutine(MoveStop());
                 }
                 lastSyncTime = Time.time;
+                
             }
 
             if (Time.time - lastPositionSyncTime > 5f)
@@ -234,6 +224,12 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
             photonView.RPC("SyncPosition", RpcTarget.All, transform.position, targetPosition, false);
         }
     }
+    public IEnumerator MoveStop()
+    {
+        sk.AnimationName = "animation";
+        yield return new WaitForSeconds(1);
+        sk.ClearState();
+    }
 
     [PunRPC]
     void UpdateTargetPosition(Vector3 newPosition)
@@ -273,9 +269,10 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
     void SyncFlip(bool flip)
     {
         isFlipped = flip;
-        foreach (SpriteRenderer renderer in spriteRenderers)
+        // Spine Skeleton을 플립
+        if (sk != null)
         {
-            renderer.flipX = flip;
+            sk.skeleton.ScaleX = flip ? -1f : 1f;  // 플립 상태에 따라 ScaleX 변경
         }
     }
 
@@ -286,23 +283,26 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
             stream.SendNext(rb.position);
             stream.SendNext(isMoving);
             stream.SendNext(targetPosition);
-            stream.SendNext(isFlipped);
+            stream.SendNext(isFlipped);  // 플립 상태도 전송
             stream.SendNext(networkTargetPosition);
         }
         else
         {
+            // 데이터를 수신
             networkPosition = (Vector3)stream.ReceiveNext();
             isNetworkMoving = (bool)stream.ReceiveNext();
             networkTargetPosition = (Vector3)stream.ReceiveNext();
-            bool newFlip = (bool)stream.ReceiveNext();
+            bool newFlip = (bool)stream.ReceiveNext();  // 플립 상태 수신
             Vector3 receivedTargetPos = (Vector3)stream.ReceiveNext();
 
+            // 네트워크 지연 시간 계산 후 위치 보정
             float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
             networkPosition += new Vector3(rb.linearVelocity.x * lag, rb.linearVelocity.y * lag, 0);
 
+            // 수신한 플립 상태에 따라 캐릭터 플립 처리
             if (isFlipped != newFlip)
             {
-                SetCharacterFlip(newFlip);
+                SetCharacterFlip(newFlip);  // SetCharacterFlip 호출하여 플립 상태 적용
             }
         }
     }

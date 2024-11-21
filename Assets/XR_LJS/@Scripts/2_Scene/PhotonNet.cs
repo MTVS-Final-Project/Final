@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using System.Net;
 using ExitGames.Client.Photon;
+using Spine.Unity;
 
 public class PhotonNet : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -77,7 +78,7 @@ public class PhotonNet : MonoBehaviourPunCallbacks, IPunObservable
         if (catTransform != null)
         {
             Vector3 spawnPosition = GetRandomPositionNearCat();
-            GameObject playerInstance = PhotonNetwork.Instantiate("Player", spawnPosition, Quaternion.identity);
+            GameObject playerInstance = PhotonNetwork.Instantiate("SKPlayer", spawnPosition, Quaternion.identity);
             if (playerInstance.GetComponent<PhotonView>().IsMine)
             {
                 LoadCharacterData();
@@ -88,7 +89,7 @@ public class PhotonNet : MonoBehaviourPunCallbacks, IPunObservable
         else if (circleTransform != null)
         {
             Vector3 spawnPos = GetRandomPositionNearCircle();
-            GameObject playerInstance = PhotonNetwork.Instantiate("Player", spawnPos, Quaternion.identity);
+            GameObject playerInstance = PhotonNetwork.Instantiate("SKPlayer", spawnPos, Quaternion.identity);
             if (playerInstance.GetComponent<PhotonView>().IsMine)
             {
                 LoadCharacterData();
