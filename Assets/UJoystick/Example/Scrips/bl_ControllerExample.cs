@@ -9,6 +9,9 @@ public class bl_ControllerExample : MonoBehaviourPunCallbacks
     private Rigidbody2D rb;
     private PhotonView photonView;
 
+    Vector3 prevLocation = Vector3.zero;
+    Vector2 movement;
+
     void Awake()
     {
         // 씬에서 조이스틱 찾아서 자동 할당
@@ -22,6 +25,7 @@ public class bl_ControllerExample : MonoBehaviourPunCallbacks
     {
         rb = GetComponent<Rigidbody2D>();
         photonView = GetComponent<PhotonView>();
+        prevLocation = transform.position;
 
         if (rb != null)
         {
@@ -44,13 +48,20 @@ public class bl_ControllerExample : MonoBehaviourPunCallbacks
         float horizontalInput = Joystick.Horizontal;
         float verticalInput = Joystick.Vertical;
 
-        Vector2 movement = new Vector2(horizontalInput, verticalInput);
+        movement = new Vector2(horizontalInput, verticalInput);
 
         if (movement.magnitude > 1f)
         {
             movement.Normalize();
         }
 
-        rb.linearVelocity = movement * Speed;
+        
+    }
+
+    private void FixedUpdate()
+    {
+        Vector3 dir = new Vector3(movement.x, movement.y, 0);
+        prevLocation += dir.normalized * Speed * Time.fixedDeltaTime;
+        rb.MovePosition(prevLocation);
     }
 }
