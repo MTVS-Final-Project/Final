@@ -15,7 +15,11 @@ public class CatPosManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
+    }
+    public void GetGaguPosition()
+    {
+
     }
 
     // Update is called once per frame
@@ -25,47 +29,47 @@ public class CatPosManager : MonoBehaviour
         {
             toilet = GameObject.Find("ToiletPosition").transform;
         }
-            if (dish == null)
+        if (dish == null)
         {
             dish = GameObject.Find("CatDishPoint").transform;
         }
-                if (tower == null)
+        if (tower == null)
         {
             tower = GameObject.Find("TowerPosition").transform;
         }
-                    if (bed == null)
+        if (bed == null)
         {
             bed = GameObject.Find("CatBedPosition").transform;
         }
 
 
+        //가라코드 싹 다 쳐내
+        //if (Input.GetKeyDown(KeyCode.Q))
+        //{
+        //    cc.CatGo(toilet);
+        //}
+        //if (Input.GetKeyDown(KeyCode.W))
+        //{
+        //    StartCoroutine(ToMeal());
+        //    cc.CatGo(dish);
+        //    sa.AnimationName = "Food";
+        //}
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    StartCoroutine(StartGara2());
+        //    cc.CatGo(tower);
+        //    // sa.AnimationName = "Sit";
+        //}
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    StartCoroutine(StartGara2());
 
-                    if (Input.GetKeyDown(KeyCode.Q))
-        {
-            cc.CatGo(toilet);
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            StartCoroutine(StartGara1());
-            cc.CatGo(dish);
-           // sa.AnimationName = "Food";
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            StartCoroutine (StartGara2());
-            cc.CatGo(tower);
-           // sa.AnimationName = "Sit";
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            StartCoroutine(StartGara2());
+        //    cc.CatGo(bed);
+        //    // sa.AnimationName = "Sit";
 
-            cc.CatGo(bed);
-           // sa.AnimationName = "Sit";
-
-        }
+        //}
     }
-    public IEnumerator StartGara1()
+    public IEnumerator ToMeal()
     {
         sa.AnimationName = "Walking";
         yield return new WaitForSeconds(1);

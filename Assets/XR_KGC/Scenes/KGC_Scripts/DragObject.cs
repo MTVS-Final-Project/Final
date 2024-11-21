@@ -17,7 +17,6 @@ public class DragObject : MonoBehaviour
     void Update()
     {
         // 터치 또는 마우스 입력 감지
-#if UNITY_EDITOR
         // 마우스 입력 처리 (에디터 테스트 용)
         if (Input.GetMouseButtonDown(0))
         {
@@ -31,25 +30,7 @@ public class DragObject : MonoBehaviour
         {
             DragObjectTo(Input.mousePosition);
         }
-#else
-        // 터치 입력 처리 (모바일 용)
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
-            {
-                HandleInput(touch.position);
-            }
-            else if (touch.phase == TouchPhase.Moved && isDragging)
-            {
-                DragObjectTo(touch.position);
-            }
-            else if (touch.phase == TouchPhase.Ended)
-            {
-                isDragging = false;
-            }
-        }
-#endif
+ 
     }
 
     private void HandleInput(Vector3 inputPosition)

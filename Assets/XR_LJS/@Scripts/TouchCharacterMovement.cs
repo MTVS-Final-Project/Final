@@ -306,6 +306,9 @@ public class TouchCharacterMovement : MonoBehaviourPunCallbacks, IPunObservable
             }
         }
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        print(collision.gameObject.name);
+    }
 
-    
 }

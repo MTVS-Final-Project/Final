@@ -16,7 +16,7 @@ public class CatController : MonoBehaviour
     private BoxCollider2D bodyCollider;
     private Vector3 headOriginalOffset;
     private Vector3 bodyOriginalOffset;
-    //private SkeletonAnimation skeletonAnimation; // SkeletonAnimation 컴포넌트 참조
+    //public SkeletonAnimation skeletonAnimation; // SkeletonAnimation 컴포넌트 참조
     [SerializeField] private Camera cam; // 카메라 참조
     public float zoomMultiplier = 2.0f;
     public float minZoom = 2f;
@@ -39,6 +39,8 @@ public class CatController : MonoBehaviour
 
     public GameObject player; // Unity Inspector에서 플레이어 오브젝트 할당
     private float interactionDistance = 0.5f; // 상호작용 가능 거리
+
+    public SkeletonAnimation anim;
 
     public bool modifying;
     private void Awake()
@@ -89,7 +91,7 @@ public class CatController : MonoBehaviour
 
     void Update()
     {
-
+        print(anim);
         if (!modifying)
         {
         HandleClick();
@@ -193,7 +195,26 @@ public class CatController : MonoBehaviour
     }
     public IEnumerator MoveTowards(Vector3 targetPosition)
     {
+        anim.AnimationName = "Walking";
         float duration = 1.0f;
+        float elapsed = 0f;
+        Vector3 startingPosition = transform.position;
+        Vector3 direction = (targetPosition - startingPosition).normalized;
+
+        while (elapsed < duration)
+        {
+            transform.position = Vector3.Lerp(startingPosition, targetPosition, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = targetPosition;
+        anim.AnimationName = "Idle";
+    }
+
+    public IEnumerator JumpUp(Vector3 targetPosition)
+    {
+        float duration = 0.3f;
         float elapsed = 0f;
         Vector3 startingPosition = transform.position;
         Vector3 direction = (targetPosition - startingPosition).normalized;
