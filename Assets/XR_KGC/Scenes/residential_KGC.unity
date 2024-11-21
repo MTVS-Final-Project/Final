@@ -16279,7 +16279,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 2140491202413770565}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 955768553}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7ec4d762be9b5478671bd9255c9e72, type: 3}
@@ -16291,8 +16291,8 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 2140491202413770565}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_GameObject: {fileID: 955768553}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28fc63f604a2b13448b0c0d0bd31cdb6, type: 3}
   m_Name: 
@@ -21892,6 +21892,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 951003847}
   m_CullTransparentMesh: 1
+--- !u!1 &955768553 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 749467779396147864, guid: 8f0c10254a14cd944992a571b6ee7e4a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2140491202413770565}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &955768554 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 606314600614583065, guid: 8f0c10254a14cd944992a571b6ee7e4a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2140491202413770565}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 955768553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &955768562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 955768553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cdef15d425b1544c9ff152e6e4131ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 707565545}
+  anim: {fileID: 955768554}
+  toilet: {fileID: 0}
+  dish: {fileID: 0}
+  tower: {fileID: 0}
+  bed: {fileID: 0}
+  towerBottom: {fileID: 0}
+  sleepy: 100
+  friendly: 100
+  mood: 100
+  hunger: 100
+  moveTerm: 5
+  moveRange: 2
+  discharge: 0
+  metabolism: 1
+  speed: 1
+  eatSpeed: 1
+  ds: {fileID: 0}
+  tiles: []
+  tilesInRange: []
+  rest: 0
+  toSleep: 0
+  toMeal: 0
+  eating: 0
+  state: 0
 --- !u!1 &956397347
 GameObject:
   m_ObjectHideFlags: 0
@@ -46059,6 +46114,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8354679900807999429, guid: 8f0c10254a14cd944992a571b6ee7e4a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9220701425161730126, guid: 8f0c10254a14cd944992a571b6ee7e4a,
         type: 3}
       propertyPath: cam
@@ -46072,7 +46132,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 749467779396147864, guid: 8f0c10254a14cd944992a571b6ee7e4a,
+        type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 955768562}
   m_SourcePrefab: {fileID: 100100000, guid: 8f0c10254a14cd944992a571b6ee7e4a, type: 3}
 --- !u!1001 &3214684902999303950
 PrefabInstance:
