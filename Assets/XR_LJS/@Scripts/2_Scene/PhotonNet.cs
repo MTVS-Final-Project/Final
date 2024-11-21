@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 using System.Net;
 using ExitGames.Client.Photon;
 
-public class PhotonNet : MonoBehaviourPunCallbacks, IPunObservable
+public class PhotonNet : MonoBehaviourPunCallbacks//, IPunObservable
 {
     // 몸 부분
     public SpriteRenderer bodyPart;
@@ -254,46 +254,46 @@ public class PhotonNet : MonoBehaviourPunCallbacks, IPunObservable
         CustomMizeGive(gameObject);
     }
 
-    // IPunObservable 구현
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            // 데이터 전송
-            stream.SendNext(currentBodyIndex);
-            stream.SendNext(currentEyeIndex);
-            stream.SendNext(currentMouthIndex);
-            stream.SendNext(currentLeftArmIndex);
-            stream.SendNext(currentRightArmIndex);
-            stream.SendNext(currentLeftLegIndex);
-            stream.SendNext(currentRightLegIndex);
-            stream.SendNext(currentPantIndex);
-            stream.SendNext(currentHairIndex);
-            stream.SendNext(currentLeftShoesIndex);
-            stream.SendNext(currentRightShoesIndex);
-        }
-        else
-        {
-            // 데이터 수신
-            currentBodyIndex = (int)stream.ReceiveNext();
-            currentEyeIndex = (int)stream.ReceiveNext();
-            currentMouthIndex = (int)stream.ReceiveNext();
-            currentLeftArmIndex = (int)stream.ReceiveNext();
-            currentRightArmIndex = (int)stream.ReceiveNext();
-            currentLeftLegIndex = (int)stream.ReceiveNext();
-            currentRightLegIndex = (int)stream.ReceiveNext();
-            currentPantIndex = (int)stream.ReceiveNext();
-            currentHairIndex = (int)stream.ReceiveNext();
-            currentLeftShoesIndex = (int)stream.ReceiveNext();
-            currentRightShoesIndex = (int)stream.ReceiveNext();
+    //// IPunObservable 구현
+    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    //{
+    //    if (stream.IsWriting)
+    //    {
+    //        // 데이터 전송
+    //        stream.SendNext(currentBodyIndex);
+    //        stream.SendNext(currentEyeIndex);
+    //        stream.SendNext(currentMouthIndex);
+    //        stream.SendNext(currentLeftArmIndex);
+    //        stream.SendNext(currentRightArmIndex);
+    //        stream.SendNext(currentLeftLegIndex);
+    //        stream.SendNext(currentRightLegIndex);
+    //        stream.SendNext(currentPantIndex);
+    //        stream.SendNext(currentHairIndex);
+    //        stream.SendNext(currentLeftShoesIndex);
+    //        stream.SendNext(currentRightShoesIndex);
+    //    }
+    //    else
+    //    {
+    //        // 데이터 수신
+    //        currentBodyIndex = (int)stream.ReceiveNext();
+    //        currentEyeIndex = (int)stream.ReceiveNext();
+    //        currentMouthIndex = (int)stream.ReceiveNext();
+    //        currentLeftArmIndex = (int)stream.ReceiveNext();
+    //        currentRightArmIndex = (int)stream.ReceiveNext();
+    //        currentLeftLegIndex = (int)stream.ReceiveNext();
+    //        currentRightLegIndex = (int)stream.ReceiveNext();
+    //        currentPantIndex = (int)stream.ReceiveNext();
+    //        currentHairIndex = (int)stream.ReceiveNext();
+    //        currentLeftShoesIndex = (int)stream.ReceiveNext();
+    //        currentRightShoesIndex = (int)stream.ReceiveNext();
 
-            // 받은 데이터로 커스터마이징 업데이트
-            UpdateCustomization(currentBodyIndex, currentEyeIndex, currentMouthIndex,
-                              currentLeftArmIndex, currentRightArmIndex, currentLeftLegIndex,
-                              currentRightLegIndex, currentPantIndex, currentHairIndex,
-                              currentLeftShoesIndex, currentRightShoesIndex);
-        }
-    }
+    //        // 받은 데이터로 커스터마이징 업데이트
+    //        UpdateCustomization(currentBodyIndex, currentEyeIndex, currentMouthIndex,
+    //                          currentLeftArmIndex, currentRightArmIndex, currentLeftLegIndex,
+    //                          currentRightLegIndex, currentPantIndex, currentHairIndex,
+    //                          currentLeftShoesIndex, currentRightShoesIndex);
+    //    }
+    //}
 
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
