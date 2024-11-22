@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 1971304516194568755}
   - component: {fileID: 1878365680862574279}
   - component: {fileID: 4493142605492546446}
-  - component: {fileID: 5607658588190990261}
   - component: {fileID: 1311594715125085090}
   - component: {fileID: 7133103378252858151}
+  - component: {fileID: 5607658588190990261}
   m_Layer: 0
   m_Name: SKPlayer2
   m_TagString: Untagged
@@ -130,23 +130,9 @@ MonoBehaviour:
   physicsMovementRelativeTo: {fileID: 0}
   updateTiming: 1
   unscaledTime: 0
-  _animationName: animation
+  _animationName: 
   loop: 1
   timeScale: 1
---- !u!114 &5607658588190990261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1708179914947806040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dbdc6bee1c0bc64f87327932a9163e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Joystick: {fileID: 0}
-  Speed: 5
 --- !u!114 &1311594715125085090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,3 +173,18 @@ MonoBehaviour:
   restrictedSceneName: FirstScene_LJS
   cat: {fileID: 0}
   circle: {fileID: 0}
+  networkPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &5607658588190990261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708179914947806040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dbdc6bee1c0bc64f87327932a9163e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Joystick: {fileID: 0}
+  Speed: 5

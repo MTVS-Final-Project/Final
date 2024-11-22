@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/XR_KGC/Scenes/Park_KGC.unity
     guid: 04307ce44fd65124a8a588757b0a305d
-  - enabled: 1
+  - enabled: 0
     path: Assets/XR_LJS/@Scenes/FirstScene_LJS.unity
     guid: fbfc7753d83b76f4c8488bec8dccb687
   - enabled: 1

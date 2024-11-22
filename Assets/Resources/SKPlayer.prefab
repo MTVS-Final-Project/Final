@@ -130,7 +130,7 @@ MonoBehaviour:
   physicsMovementRelativeTo: {fileID: 0}
   updateTiming: 1
   unscaledTime: 0
-  _animationName: 
+  _animationName: animation
   loop: 1
   timeScale: 1
 --- !u!114 &5326423692747177949
@@ -173,6 +173,7 @@ MonoBehaviour:
   restrictedSceneName: FirstScene_LJS
   cat: {fileID: 0}
   circle: {fileID: 0}
+  networkPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &7585940886351794457
 MonoBehaviour:
   m_ObjectHideFlags: 0
