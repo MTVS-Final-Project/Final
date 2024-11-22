@@ -1118,6 +1118,7 @@ GameObject:
   - component: {fileID: 648021105}
   - component: {fileID: 648021109}
   - component: {fileID: 648021110}
+  - component: {fileID: 648021111}
   m_Layer: 0
   m_Name: temp
   m_TagString: Untagged
@@ -1238,7 +1239,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3ca1d646aa0b947b3456b08818b063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gaguDataList: []
+  tokne: 0
+  furnitureList: []
+--- !u!114 &648021111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648021104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f418d230c07243846a00ad26a16db57d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &704765669
 GameObject:
   m_ObjectHideFlags: 0
@@ -1720,18 +1734,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 3214684902999303950}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &999967827 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5894006056018026987, guid: 8f21c2a4652561047b0f5b0f3130c598,
-    type: 3}
-  m_PrefabInstance: {fileID: 3214684902999303950}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc5862a3adec3d949bcf6b2e86e78932, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1019249249
 GameObject:
   m_ObjectHideFlags: 0
@@ -3572,7 +3574,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 999967827}
+      objectReference: {fileID: 0}
     - target: {fileID: 3047222861031422746, guid: 8f21c2a4652561047b0f5b0f3130c598,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState

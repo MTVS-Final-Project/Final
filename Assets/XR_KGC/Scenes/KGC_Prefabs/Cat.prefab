@@ -109,8 +109,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cdef15d425b1544c9ff152e6e4131ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interaction: {fileID: 0}
   controller: {fileID: 1735738910020601962}
   anim: {fileID: 606314600614583065}
+  player: {fileID: 0}
   toilet: {fileID: 0}
   dish: {fileID: 0}
   tower: {fileID: 0}
@@ -133,6 +135,7 @@ MonoBehaviour:
   toSleep: 0
   toMeal: 0
   eating: 0
+  starving: 0
   state: 0
 --- !u!114 &8354679900807999429
 MonoBehaviour:
@@ -211,6 +214,7 @@ MonoBehaviour:
   player: {fileID: 0}
   anim: {fileID: 606314600614583065}
   modifying: 0
+  camInitPos: {x: 0, y: 0, z: 0}
 --- !u!210 &197202416636280551
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -392,7 +396,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 168431350169496363}
-  - component: {fileID: 2884687662370039923}
   - component: {fileID: 1907515592027227652}
   - component: {fileID: 8660750733793852051}
   m_Layer: 0
@@ -417,42 +420,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4639841272302375643}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &2884687662370039923
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1901418010981900957}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: -0.48432565, y: 1.1825677}
-  m_Radius: 0.8584701
 --- !u!114 &1907515592027227652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,7 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1db1ac178a01f31438356ce67406b856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  catAI: {fileID: 0}
+  catAI: {fileID: 4955412501454556964}
   head: {fileID: 1901418010981900957}
   body: {fileID: 8750455837746935126}
   happy: {fileID: 1858103880086945475}
@@ -491,6 +458,9 @@ MonoBehaviour:
   sk: {fileID: 0}
   headClickCounter: 1
   bodyClickCounter: 1
+  mainCam: {fileID: 0}
+  camStartPos: {x: 0, y: 0, z: 0}
+  dragDis: 0
 --- !u!60 &8660750733793852051
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1415,7 +1385,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3123469210980566203}
-  - component: {fileID: 6078810518071985837}
   - component: {fileID: 9220701425161730126}
   - component: {fileID: 2501962279731985786}
   m_Layer: 0
@@ -1440,52 +1409,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4639841272302375643}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &6078810518071985837
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8750455837746935126}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0.7799817, y: 0.83632135}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.5072974, y: 1.3673177}
-  m_EdgeRadius: 0
 --- !u!114 &9220701425161730126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1498,7 +1421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1db1ac178a01f31438356ce67406b856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  catAI: {fileID: 0}
+  catAI: {fileID: 4955412501454556964}
   head: {fileID: 1901418010981900957}
   body: {fileID: 8750455837746935126}
   happy: {fileID: 1858103880086945475}
@@ -1524,6 +1447,9 @@ MonoBehaviour:
   sk: {fileID: 0}
   headClickCounter: 1
   bodyClickCounter: 1
+  mainCam: {fileID: 0}
+  camStartPos: {x: 0, y: 0, z: 0}
+  dragDis: 0
 --- !u!60 &2501962279731985786
 PolygonCollider2D:
   m_ObjectHideFlags: 0

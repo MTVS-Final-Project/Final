@@ -8,7 +8,7 @@ public class PlaceButtonScript : MonoBehaviour
     public GameObject selected;
     public GameObject AlertText;
 
-    public CatPosManager catPM;
+    public CatAIFSM catAI;
 
     //public GameObject lines; //편집완료할때 꺼질애들
     //public GameObject placeCanvas;
@@ -28,9 +28,9 @@ public class PlaceButtonScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (catPM != null)
+        if (catAI != null)
         {
-            GameObject.Find("Cat").GetComponent<CatPosManager>();
+            GameObject.Find("Cat").GetComponent<CatAIFSM>();
         }
         //if (lines == null)
         //{
@@ -63,10 +63,10 @@ public class PlaceButtonScript : MonoBehaviour
         }
     }
     //고양이가 가구수정된 위치 찾아가는 코드
-    public void PosUpdate()
-    {
-        catPM.GetGaguPosition();
-    }
+    //public void PosUpdate()
+    //{
+    //    catAI.GetGaguPosition();
+    //}
 
 
     public void PlaceOBJ()

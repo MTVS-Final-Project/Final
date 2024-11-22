@@ -55,6 +55,7 @@ public class CatAIFSM : MonoBehaviour
         MovingToTower,  // 타워로 이동 중
         JumpToSleep,
         BegForFood,     //밥달라.
+        WantToPlay,     //놀아달라
         PlayerCalled    // 플레이어가 부른 상태
     }
     public CatState state;
@@ -66,16 +67,33 @@ public class CatAIFSM : MonoBehaviour
         state = CatState.Wandering; // 초기 상태 설정
         StartCoroutine(StateController());
         rest = false; // 초기에는 쉬지 않음
+    }
+
+    public void GetGaguPosition()
+    {
+        //이 스크립트가 진짜 써야되는거임 밑에거는 테스트용임.
+        //toilet = GameObject.Find("CatToilet(Clone)").transform; 
+        //dish = GameObject.Find("Dish(Clone)").transform;
+        //tower = GameObject.Find("TowerPosition").transform;
+        //bed = GameObject.Find("Bed(Clone)").transform;
+        //towerBottom = GameObject.Find("CatTower(Clone)").transform;
+        //ds = GameObject.Find("Dish(Clone)").GetComponent<DishState>();
+
+        //---------------------------------------------------- 고양이 테스트하는용
         toilet = GameObject.Find("CatToilet").transform;
         dish = GameObject.Find("Dish").transform;
         tower = GameObject.Find("TowerPosition").transform;
         bed = GameObject.Find("Bed").transform;
         towerBottom = GameObject.Find("CatTower").transform;
+        ds = GameObject.Find("Dish").GetComponent<DishState>();
 
     }
 
     void LateUpdate()
     {
+
+        GetGaguPosition();
+
         if (player == null)
         {
             GameObject.Find("Player");
@@ -83,12 +101,9 @@ public class CatAIFSM : MonoBehaviour
         // 초기화: 게임 오브젝트 연결
         if (ds == null)
         {
-            ds = GameObject.Find("Dish").GetComponent<DishState>();
         }
 
         UpdateBasicNeeds(); // 기본 욕구 업데이트
-
-
 
         // 상태 변경 조건 확인
         if (hunger < 50 && !toMeal && !starving)
@@ -96,7 +111,9 @@ public class CatAIFSM : MonoBehaviour
             state = CatState.MovingToMeal; // 배고프면 밥 먹으러 이동
         }
 
-        if (sleepy < 30 && !toSleep && !toMeal && !rest)
+
+
+        if (sleepy < 30 && !toSleep && !toMeal && !rest && !starving)
         {
             state = CatState.MovingToTower; // 졸리면 자러 이동
         }
@@ -133,11 +150,11 @@ public class CatAIFSM : MonoBehaviour
         // 쉬고 있을 때와 아닐 때의 수면욕구 변화
         if (!rest)
         {
-            sleepy -= Time.deltaTime * metabolism;   // 활동 중 수면욕구 감소
+            sleepy -= Time.deltaTime * metabolism*0.5f;   // 활동 중 수면욕구 감소
         }
         else
         {
-            sleepy += Time.deltaTime * metabolism;  // 쉬는 중 수면욕구 증가
+            sleepy += Time.deltaTime * metabolism * 1.5f;  // 쉬는 중 수면욕구 증가
         }
 
         // 수면 욕구 최대치 제한 및 상태 복귀
@@ -192,11 +209,12 @@ public class CatAIFSM : MonoBehaviour
                 case CatState.BegForFood:
                     if (ds.mealCount > 0)
                     {
-
                         state = CatState.MovingToMeal;
                     }
                     break;
+                case CatState.WantToPlay:
 
+                    break;
 
                 default:
                     Debug.LogWarning("Unknown state!");
@@ -206,15 +224,21 @@ public class CatAIFSM : MonoBehaviour
             yield return null;
         }
     }
+    public void CallCat()
+    {
+        StartCoroutine(MoveTowards(player.transform.position - new Vector3(0.2f, 0.2f, 0)));
+    }
 
     private void IdleBehavior()
     {
-        // 기본 상태: 무작위로 Wandering 상태로 전환 가능
-        anim.AnimationName = "Idle";
-        if (Random.Range(0, 100) < 20)
-        {
-            state = CatState.Wandering;
-        }
+        anim.AnimationName = "Idle"; //확률에 따라 돌아다니거나 놀거나 하는
+
+        state = CatState.Wandering;
+
+    }
+    public void Ignore()
+    {
+        interaction.Ignore();
     }
 
     private IEnumerator SleepBehavior()
@@ -231,7 +255,7 @@ public class CatAIFSM : MonoBehaviour
             yield return null;
         }
         rest = false;
-        state = CatState.Wandering; // 수면욕구 충족 시 배회 상태로 복귀
+        state = CatState.Idle; // 수면욕구 충족 시 배회 상태로 복귀
     }
 
     private void RespondToPlayer()
@@ -288,7 +312,10 @@ public class CatAIFSM : MonoBehaviour
         }
         yield return new WaitForSeconds(1);
 
-        StartCoroutine(GiveMeFood());
+        if (ds.mealCount <= 0)
+        {
+            StartCoroutine(GiveMeFood());
+        }
 
     }
     public IEnumerator ToTower(Vector3 targetPosition, float duration)
@@ -302,6 +329,7 @@ public class CatAIFSM : MonoBehaviour
 
     public IEnumerator Eat()
     {
+        starving = false;
         // 밥 먹는 중
         anim.AnimationName = "Food";
         while (ds.mealCount > 0)
@@ -318,7 +346,7 @@ public class CatAIFSM : MonoBehaviour
         }
 
         toMeal = false;
-        state = CatState.Wandering; //  
+        state = CatState.Idle; //  
     }
 
     public IEnumerator Wandering(float term)

@@ -29,5 +29,10 @@ public class TestSceneMove : MonoBehaviour
 
             SceneManager.LoadScene("Test2_KGC");
         }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            SceneManager.LoadScene("TestResidential_KGC");
+
+        }
     }
 }

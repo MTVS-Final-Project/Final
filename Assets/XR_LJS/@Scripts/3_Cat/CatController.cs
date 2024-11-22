@@ -42,9 +42,11 @@ public class CatController : MonoBehaviour
 
     public SkeletonAnimation anim;
 
+
+
     public bool modifying;
     //메인카메라 위치
-    public Transform camInitPos;
+    public Vector3 camInitPos;
     
     private void Awake()
     {
@@ -73,8 +75,9 @@ public class CatController : MonoBehaviour
 
     private void Start()
     {
+        
         cam = Camera.main;
-        camInitPos = cam.transform;
+        camInitPos = Camera.main.transform.position;
         // Scene의 모든 GameObject를 가져와서 이름에 "Player"가 포함된 것 찾기 (이전 코드 유지)
         foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>())
         {
@@ -191,6 +194,8 @@ public class CatController : MonoBehaviour
         bar.SetActive(false);
         feather.SetActive(false);
         yield return new WaitForSeconds(smoothTime);
+        cam.transform.position = camInitPos;
+
     }
 
     public void CatGo(Transform t)

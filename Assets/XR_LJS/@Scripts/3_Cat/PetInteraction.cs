@@ -10,7 +10,7 @@ public class PetInteraction : MonoBehaviour
     private Vector3 initialMousePosition;
     public GameObject head;
     public GameObject body;
-   // --------------------------------------------- 고양이 반응 UI
+    // --------------------------------------------- 고양이 반응 UI
     public GameObject happy; //friendly
     public GameObject annoying; //picky
     public GameObject ignoreImage;
@@ -45,7 +45,9 @@ public class PetInteraction : MonoBehaviour
 
     public GameObject mainCam;
     public Vector3 camStartPos;
-    
+    public float dragDis;
+
+   
 
     private void Awake()
     {
@@ -98,7 +100,7 @@ public class PetInteraction : MonoBehaviour
 
     }
 
-    
+
 
     private void HandleClick()
     {
@@ -116,7 +118,20 @@ public class PetInteraction : MonoBehaviour
 
                     if (headClickCount == 3)  // 머리 2회 클릭
                     {
-                        ShowPinkyReaction();
+                        //ShowPinkyReaction(); 고양이의 친밀도에 따라서 달라지는 반응, 기본적으로 부정적임
+                        if (catAI.friendly > 80)
+                        {
+                            Ignore();
+                        }
+                        else if(catAI.friendly >60)
+                        {
+                            StartCoroutine(ShowNegative());
+                        }
+                        else if(catAI.friendly>40)
+                        {
+                            ShowPinkyReaction();
+                        }
+
                         headClickCount = 0;
                         headClickCounter = 1;
                     }
@@ -133,7 +148,7 @@ public class PetInteraction : MonoBehaviour
 
                     if (bodyClickCount == 3)  // 몸통 2회 클릭
                     {
-                        ShowFriendlyReaction();
+                        //ShowFriendlyReaction();고양이 친밀도에 따라 달라지는 반응,기본적으로 긍정적임
                         bodyClickCount = 0;
                         bodyClickCounter = 1;
                     }
@@ -151,9 +166,9 @@ public class PetInteraction : MonoBehaviour
         if (cam.orthographicSize <= 3)
         {
             Vector3 currentMousePosition = Input.mousePosition;
-            float dragDistance = Vector3.Distance(initialMousePosition, currentMousePosition);
+             dragDis = Vector3.Distance(initialMousePosition, currentMousePosition);
 
-            if (dragDistance > 5.0f)  // 드래그 거리 기준
+            if (dragDis > 5.0f)  // 드래그 거리 기준
             {
                 // 머리를 드래그한 경우
                 if (headClickCount > 0)
@@ -162,12 +177,14 @@ public class PetInteraction : MonoBehaviour
                     //sk.AnimationName = "Love";
                     ShowFriendlyReaction();
                     headClickCount = 0;
+                    dragDis = 0;
                 }
                 // 몸통을 드래그한 경우
                 else if (bodyClickCount > 0)
                 {
                     ShowPinkyReaction();
                     bodyClickCount = 0;
+                    dragDis = 0;
                 }
             }
         }
@@ -213,6 +230,7 @@ public class PetInteraction : MonoBehaviour
     private void ShowPinkyReaction()
     {
         sk.AnimationName = "Walking";
+        catAI.mood -= 20;
         annoying.SetActive(true);
         happy.SetActive(false);
         // 코루틴들을 변수에 저장하여 추적
@@ -223,14 +241,40 @@ public class PetInteraction : MonoBehaviour
         CatController.instance.ZoomOut();                          //줌아웃되면서
         mainCam.transform.position = camStartPos;                  //메인카메라 다시 중앙으로
         DisableAllButtons();
-        
+
     }
 
 
+    public IEnumerator ShowNegative()
+    {
+        catAI.mood -= 10;
+        negative.SetActive(true);
+        yield return new WaitForSeconds(2);
+        negative.SetActive(false);
+    }
+    public IEnumerator SuperHappy()
+    {
+        sk.AnimationName = "Love";
+        catAI.mood += 20;
+        superHappy.SetActive(true);
+        yield return new WaitForSeconds(2);
+        superHappy.SetActive(false);
+    }
+
+    public void Ignore()
+    {
+        StartCoroutine(ShowIgnore());
+    }
+    private IEnumerator ShowIgnore()
+    {
+        ignoreImage.SetActive(true);
+        yield return new WaitForSeconds(2);
+        ignoreImage.SetActive(false);
+    }
     private void ShowFriendlyReaction()
     {
         sk.AnimationName = "Love";
-
+        catAI.mood += 10;
         happy.SetActive(true);
         annoying.SetActive(false);
         StartCoroutine(HideImageAndKeepButtonsShown(happy));
@@ -312,7 +356,7 @@ public class PetInteraction : MonoBehaviour
             }
 
             transform.parent.position = targetPosition;
-            
+
         }
     }
 

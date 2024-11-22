@@ -60,15 +60,18 @@ public class GaguSave : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //StartCoroutine(LoadGagu());
         if (furnitureList != null && gaguParent.transform.childCount == 0)
         {
-            StartCoroutine(ReceiveDataFromServer()); // 서버에서 데이터를 받아옵니다.
+            StartCoroutine(LoadGagu());
+            //StartCoroutine(ReceiveDataFromServer()); // 서버에서 데이터를 받아옵니다.
         }
     }
 
     // Update is called once per frame
     void Update()
     {
+        print("작동중");
         if (itemS == null)
         {
             itemS = GameObject.Find("GaguCanvas").GetComponentInChildren<ItemScript>();
@@ -84,6 +87,7 @@ public class GaguSave : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha9))
         {
+            print("9는 눌렸다");
             StartCoroutine(LoadGagu());
         }
         //if (Input.GetKeyDown(KeyCode.Alpha8))
@@ -133,6 +137,7 @@ public class GaguSave : MonoBehaviour
             Debug.Log($"Object {go.name} instantiated at position {go.transform.position}");
         }
         yield return new WaitForSeconds(0.1f);
+        yield return null;
         roomModi.SetActive(false);
 
         foreach (Transform child in gaguParent.transform)
