@@ -6,7 +6,7 @@ using Spine.Unity;
 public class CatController : MonoBehaviour
 {
 
-    public static CatController instance;
+    public static CatController instance; //스태틱변수임
     //public Transform player;
     public float moveSpeed = 2.0f;
     public float doubleClickTimeLimit = 0.5f;

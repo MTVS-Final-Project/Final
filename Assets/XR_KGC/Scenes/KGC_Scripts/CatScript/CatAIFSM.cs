@@ -64,6 +64,7 @@ public class CatAIFSM : MonoBehaviour
         tower = GameObject.Find("TowerPosition").transform;
         bed = GameObject.Find("Bed").transform;
         towerBottom = GameObject.Find("CatTower").transform;
+        
     }
 
     void LateUpdate()
@@ -84,7 +85,7 @@ public class CatAIFSM : MonoBehaviour
             state = CatState.MovingToMeal; // 배고프면 밥 먹으러 이동
         }
 
-        if (sleepy < 30&&!toSleep&&!toMeal)
+        if (sleepy < 30&&!toSleep&&!toMeal&&!rest)
         {
             state = CatState.MovingToTower; // 졸리면 자러 이동
         }
@@ -135,7 +136,7 @@ public class CatAIFSM : MonoBehaviour
             state = CatState.Wandering; // 배회 상태로 복귀
             rest = false;
         }
-        if (hunger > 20)
+        if (hunger > 20  )
         {
             discharge += Time.deltaTime * metabolism*0.01f;
         }
