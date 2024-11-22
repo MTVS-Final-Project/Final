@@ -11,7 +11,7 @@ using Spine.Unity;
 public class PhotonNet : MonoBehaviourPunCallbacks
 {
     public Transform catTransform;
-    
+    public Transform cicleTransform;
 
     void Start()
     {
@@ -20,9 +20,19 @@ public class PhotonNet : MonoBehaviourPunCallbacks
         if (catTransform != null)
         {
             Vector3 spawnPosition = GetRandomPositionNearCat();
-            GameObject playerInstance = PhotonNetwork.Instantiate("SKPlayer", spawnPosition, Quaternion.identity);
+            string myPrefabName = PlayerPrefs.GetInt("selectedCharacter") == 1 ? "SKPlayer" : "SKPlayer2";
+            GameObject playerInstance = PhotonNetwork.Instantiate(myPrefabName, spawnPosition, Quaternion.identity);
             CatController.instance.player = playerInstance;
         }
+
+        if (cicleTransform != null)
+        {
+            Vector3 spawnPosition = GetRandomPositionNearCircle();
+            string myPrefabName = PlayerPrefs.GetInt("selectedCharacter") == 1 ? "SKPlayer" : "SKPlayer2";
+            GameObject playerInstance = PhotonNetwork.Instantiate(myPrefabName, spawnPosition, Quaternion.identity);
+            CatController.instance.player = playerInstance;
+        }
+
         
     }
     Vector3 GetRandomPositionNearCat()
@@ -31,8 +41,13 @@ public class PhotonNet : MonoBehaviourPunCallbacks
         float offsetY = Random.Range(-0.1f, 0.1f);
         return catTransform != null ? catTransform.position + new Vector3(offsetX, offsetY, 0) : Vector3.zero;
     }
+    Vector3 GetRandomPositionNearCircle()
+    {
+        float offX = Random.Range(-0.1f, 0.1f);
+        float offY = Random.Range(-0.1f, 0.1f);
+        return cicleTransform != null ? cicleTransform.position + new Vector3(offX, offY, 0) : Vector3.zero;
+    }
 
-   
-    
-   
+
+
 }

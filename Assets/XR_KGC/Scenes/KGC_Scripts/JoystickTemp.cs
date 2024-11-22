@@ -6,9 +6,9 @@ public class joystickTemp : MonoBehaviourPunCallbacks
     [SerializeField] private bl_Joystick Joystick;
     [SerializeField] private float Speed = 1f;
 
-    private Rigidbody2D rb;
     private PhotonView photonView;
     private Vector2 movement;
+    private Transform playerTransform;
 
     void Awake()
     {
@@ -21,20 +21,12 @@ public class joystickTemp : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         photonView = GetComponent<PhotonView>();
-
-        if (rb != null)
-        {
-            rb.interpolation = RigidbodyInterpolation2D.Interpolate;
-            rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-        }
+        playerTransform = transform;
     }
 
     void Update()
     {
-        if (!photonView.IsMine) return;
-
         // 혹시 조이스틱을 찾지 못했다면 다시 한번 시도
         if (Joystick == null)
         {
@@ -59,7 +51,8 @@ public class joystickTemp : MonoBehaviourPunCallbacks
     {
         if (!photonView.IsMine) return;
 
-        // Rigidbody2D의 velocity를 설정하여 이동
-        rb.linearVelocity = movement * Speed;
+        // Transform을 사용하여 이동
+        Vector2 newPosition = (Vector2)playerTransform.position + (movement * Speed * Time.deltaTime);
+        playerTransform.position = newPosition;
     }
 }
