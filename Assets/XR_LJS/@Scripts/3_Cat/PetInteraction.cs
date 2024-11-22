@@ -5,11 +5,21 @@ using Spine.Unity;
 
 public class PetInteraction : MonoBehaviour
 {
+    public CatAIFSM catAI; //고양이 AI참조용
+
     private Vector3 initialMousePosition;
     public GameObject head;
     public GameObject body;
-    public GameObject whiteImageFriendly;
-    public GameObject whiteImagePicky;
+   // --------------------------------------------- 고양이 반응 UI
+    public GameObject happy; //friendly
+    public GameObject annoying; //picky
+    public GameObject ignoreImage;
+    public GameObject superHappy;
+    public GameObject negative;
+    public GameObject hungry;
+    public GameObject wantPlay;
+    public GameObject DirtToilet;
+
     public GameObject backButton;
     [SerializeField] private Camera cam;
     public float minZoom = 2f;
@@ -30,13 +40,17 @@ public class PetInteraction : MonoBehaviour
 
     public SkeletonAnimation sk;
 
+    public float headClickCounter = 1;
+    public float bodyClickCounter = 1;
+    
+
     private void Awake()
     {
     }
     private void Start()
     {
-        whiteImageFriendly.SetActive(false);
-        whiteImagePicky.SetActive(false);
+        happy.SetActive(false);
+        annoying.SetActive(false);
         backButton.SetActive(false);
         originalCameraPosition = cam.transform.position;
         originalZoom = cam.orthographicSize;
@@ -53,6 +67,27 @@ public class PetInteraction : MonoBehaviour
         {
             HandleClick();
         }
+        if (headClickCount > 0) //머리 클릭이 시작됐으면 카운터 시작
+        {
+            headClickCounter -= Time.deltaTime;
+            if (headClickCounter <= 0)
+            {
+                headClickCount = 0;
+                headClickCounter = 1;
+            }
+        }
+        if (bodyClickCount > 0) //몸통 클릭이 시작됐으면 카운터 시작
+        {
+            bodyClickCounter -= Time.deltaTime;
+            if (bodyClickCounter <= 0)
+            {
+                bodyClickCount = 0;
+                bodyClickCounter = 1;
+            }
+        }
+
+
+
     }
 
     
@@ -71,10 +106,11 @@ public class PetInteraction : MonoBehaviour
                     headClickCount++;
                     bodyClickCount = 0; // 다른 부분의 클릭 카운트 초기화
 
-                    if (headClickCount == 2)  // 머리 2회 클릭
+                    if (headClickCount == 3)  // 머리 2회 클릭
                     {
                         ShowPinkyReaction();
                         headClickCount = 0;
+                        headClickCounter = 1;
                     }
                     else
                     {
@@ -87,10 +123,11 @@ public class PetInteraction : MonoBehaviour
                     bodyClickCount++;
                     headClickCount = 0; // 다른 부분의 클릭 카운트 초기화
 
-                    if (bodyClickCount == 2)  // 몸통 2회 클릭
+                    if (bodyClickCount == 3)  // 몸통 2회 클릭
                     {
                         ShowFriendlyReaction();
                         bodyClickCount = 0;
+                        bodyClickCounter = 1;
                     }
                     else
                     {
@@ -164,14 +201,14 @@ public class PetInteraction : MonoBehaviour
     private void ShowPinkyReaction()
     {
         sk.AnimationName = "Walking";
-        whiteImagePicky.SetActive(true);
-        whiteImageFriendly.SetActive(false);
+        annoying.SetActive(true);
+        happy.SetActive(false);
         // 코루틴들을 변수에 저장하여 추적
-        StartCoroutine(HideImageAndKeepButtonsHidden(whiteImagePicky));
+        StartCoroutine(HideImageAndKeepButtonsHidden(annoying));
         StartCoroutine(MoveCatAwayOnGround());
         // 스파인 애니메이션 멈추기
         StartCoroutine(StopAnimationAfterReaction());
-        CatController.instance.ZoomOut();
+        CatController.instance.ZoomOut();                          //줌아웃되면서
         DisableAllButtons();
         
     }
@@ -180,9 +217,9 @@ public class PetInteraction : MonoBehaviour
     {
         sk.AnimationName = "Love";
 
-        whiteImageFriendly.SetActive(true);
-        whiteImagePicky.SetActive(false);
-        StartCoroutine(HideImageAndKeepButtonsShown(whiteImageFriendly));
+        happy.SetActive(true);
+        annoying.SetActive(false);
+        StartCoroutine(HideImageAndKeepButtonsShown(happy));
         // 반응이 끝난 후 애니메이션 멈추기
         StartCoroutine(StopAnimationAfterReaction());
     }

@@ -8,6 +8,8 @@ public class ToiletZoom : MonoBehaviour
     public GameObject player;
 
     public ParentManager pm;
+
+    public int quantity = 0;//얼마나 많이 쌓였는지.
     //이 캔버스안의 모든 게임오브잭트가 비활성화일때만 작동하게.
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
