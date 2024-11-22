@@ -21,17 +21,17 @@ public class CatRotation : MonoBehaviour
         // X축의 값이 양수인지 음수인지 확인
         if (moveVector.x > 0)
         {
-            Debug.Log("X축 이동: 양수 (오른쪽으로 이동)");
+            //Debug.Log("X축 이동: 양수 (오른쪽으로 이동)");
             transform.rotation = Quaternion.Euler(0, 180, 0); // 오른쪽을 보는 방향
         }
         else if (moveVector.x < 0)
         {
-            Debug.Log("X축 이동: 음수 (왼쪽으로 이동)");
+           // Debug.Log("X축 이동: 음수 (왼쪽으로 이동)");
             transform.rotation = Quaternion.Euler(0, 0, 0); // 왼쪽을 보는 방향
         }
         else
         {
-            Debug.Log("X축 이동 없음");
+           // Debug.Log("X축 이동 없음");
         }
 
         // 현재 위치를 이전 위치로 갱신

@@ -42,6 +42,9 @@ public class PetInteraction : MonoBehaviour
 
     public float headClickCounter = 1;
     public float bodyClickCounter = 1;
+
+    public GameObject mainCam;
+    public Vector3 camStartPos;
     
 
     private void Awake()
@@ -49,6 +52,11 @@ public class PetInteraction : MonoBehaviour
     }
     private void Start()
     {
+        if (mainCam == null)
+        {
+            mainCam = Camera.main.gameObject;
+            camStartPos = mainCam.transform.position;
+        }
         happy.SetActive(false);
         annoying.SetActive(false);
         backButton.SetActive(false);
@@ -197,6 +205,10 @@ public class PetInteraction : MonoBehaviour
         }
     }
 
+    public void GiveMeFood()
+    {
+        StartCoroutine(Showhungry());
+    }
 
     private void ShowPinkyReaction()
     {
@@ -209,9 +221,11 @@ public class PetInteraction : MonoBehaviour
         // 스파인 애니메이션 멈추기
         StartCoroutine(StopAnimationAfterReaction());
         CatController.instance.ZoomOut();                          //줌아웃되면서
+        mainCam.transform.position = camStartPos;                  //메인카메라 다시 중앙으로
         DisableAllButtons();
         
     }
+
 
     private void ShowFriendlyReaction()
     {
@@ -224,6 +238,12 @@ public class PetInteraction : MonoBehaviour
         StartCoroutine(StopAnimationAfterReaction());
     }
 
+    private IEnumerator Showhungry()
+    {
+        hungry.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        hungry.SetActive(false);
+    }
     private IEnumerator HideImageAndKeepButtonsShown(GameObject image)
     {
         // 이미지를 숨기는 로직
