@@ -1,19 +1,12 @@
 ﻿using UnityEngine;
 using Photon.Pun;
-using UnityEngine.EventSystems;
 
 public class bl_ControllerExample : MonoBehaviourPunCallbacks
 {
     [SerializeField] private bl_Joystick Joystick;
     [SerializeField] private float Speed = 5f;
-    private Rigidbody2D rb;
-    private PhotonView photonView;
     private PolygonCollider2D boundaryCollider;
     private Transform playerTransform;
-    private bool isDragging = false;
-    private int touchId = -1;
-    private Canvas canvas;
-    private PointerEventData pointerEventData;
 
     void Awake()
     {
@@ -27,29 +20,14 @@ public class bl_ControllerExample : MonoBehaviourPunCallbacks
             boundaryCollider = polCol.GetComponent<PolygonCollider2D>();
         }
         playerTransform = transform;
-        canvas = FindObjectOfType<Canvas>();
-        pointerEventData = new PointerEventData(EventSystem.current);
-    }
-
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        photonView = GetComponent<PhotonView>();
-        if (rb != null)
-        {
-            rb.interpolation = RigidbodyInterpolation2D.Interpolate;
-            rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-        }
     }
 
     void Update()
     {
         if (!photonView.IsMine) return;
 
-        //HandleInput();
         ProcessMovement();
     }
-
 
     private void ProcessMovement()
     {
@@ -61,7 +39,7 @@ public class bl_ControllerExample : MonoBehaviourPunCallbacks
 
         if (movement.magnitude > 1f)
         {
-            movement.Normalize();
+            movement.Normalize();  // 입력 벡터를 정규화하여 속도를 일정하게 유지
         }
 
         // 다음 위치 계산
@@ -70,78 +48,22 @@ public class bl_ControllerExample : MonoBehaviourPunCallbacks
         // 경계 확인 및 이동
         if (IsPointInPolygon(nextPosition))
         {
-            if (rb != null)
-            {
-                rb.MovePosition(nextPosition);
-            }
-            else
-            {
-                playerTransform.position = nextPosition;
-            }
+            playerTransform.position = nextPosition;  // Transform을 사용하여 위치 이동
         }
         else
         {
-            Vector2 clampedPosition = ClampToPolygon(nextPosition);
-            if (rb != null)
-            {
-                rb.MovePosition(clampedPosition);
-            }
-            else
-            {
-                playerTransform.position = clampedPosition;
-            }
+            Vector2 clampedPosition = ClampToPolygon(nextPosition);  // 경계를 벗어난 경우 폴리곤 안으로 클램핑
+            playerTransform.position = clampedPosition;  // 위치 업데이트
         }
     }
 
-    private void OnTouchBegan(Vector2 position)
-    {
-        if (canvas != null && Joystick != null)
-        {
-            pointerEventData.position = position;
-            Joystick.OnPointerDown(pointerEventData);
-        }
-    }
-
-    private void OnTouchMoved(Vector2 position)
-    {
-        if (canvas != null && Joystick != null)
-        {
-            pointerEventData.position = position;
-            Joystick.OnDrag(pointerEventData);
-        }
-    }
-
-    private void OnTouchEnded()
-    {
-        if (Joystick != null)
-        {
-            Joystick.OnPointerUp(pointerEventData);
-        }
-    }
-
-    private Vector3 GetWorldPosition(Vector2 screenPosition)
-    {
-        if (canvas.renderMode == RenderMode.ScreenSpaceOverlay)
-        {
-            return screenPosition;
-        }
-        else
-        {
-            Vector2 tempVector = Vector2.zero;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvas.transform as RectTransform,
-                screenPosition,
-                canvas.worldCamera,
-                out tempVector);
-            return canvas.transform.TransformPoint(tempVector);
-        }
-    }
-
+    // 포인트가 폴리곤 내부에 있는지 확인
     private bool IsPointInPolygon(Vector2 point)
     {
         return boundaryCollider.OverlapPoint(point);
     }
 
+    // 폴리곤 내에서 가장 가까운 유효한 위치를 찾기 위한 함수
     private Vector2 ClampToPolygon(Vector2 position)
     {
         if (IsPointInPolygon(position))
@@ -155,6 +77,7 @@ public class bl_ControllerExample : MonoBehaviourPunCallbacks
         float currentDistance = distance;
         Vector2 validPosition = currentPos;
 
+        // 이진 탐색 방식으로 유효한 위치 찾기
         for (int i = 0; i < 10; i++)
         {
             currentDistance = (minDistance + maxDistance) * 0.5f;
