@@ -445,6 +445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selected: {fileID: 0}
   AlertText: {fileID: 0}
+  catPM: {fileID: 0}
   ms: {fileID: 0}
   gaguOnGagu: 0
   itemOn: 0
@@ -16006,6 +16007,7 @@ MonoBehaviour:
   bar: {fileID: 1502580254}
   feather: {fileID: 587160226}
   player: {fileID: 0}
+  anim: {fileID: 0}
   modifying: 0
 --- !u!114 &707565546
 MonoBehaviour:
@@ -16063,10 +16065,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cc: {fileID: 707565545}
   sa: {fileID: 707565550}
+  catAI: {fileID: 0}
   toilet: {fileID: 0}
   dish: {fileID: 0}
   tower: {fileID: 0}
   bed: {fileID: 0}
+  towerBottom: {fileID: 0}
 --- !u!114 &707565550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20184,10 +20188,6 @@ PrefabInstance:
     - target: {fileID: 165178, guid: 7973d81b61b491640b7a0d00c9de83d3, type: 3}
       propertyPath: m_Name
       value: Joystick
-      objectReference: {fileID: 0}
-    - target: {fileID: 11467636, guid: 7973d81b61b491640b7a0d00c9de83d3, type: 3}
-      propertyPath: logText
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 22406132, guid: 7973d81b61b491640b7a0d00c9de83d3, type: 3}
       propertyPath: m_Pivot.x
@@ -25388,10 +25388,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1db1ac178a01f31438356ce67406b856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  catAI: {fileID: 0}
   head: {fileID: 1169560996}
   body: {fileID: 1863606590}
-  whiteImageFriendly: {fileID: 2015878285}
-  whiteImagePicky: {fileID: 1974436799}
+  happy: {fileID: 0}
+  annoying: {fileID: 0}
+  ignoreImage: {fileID: 0}
+  superHappy: {fileID: 0}
+  negative: {fileID: 0}
+  hungry: {fileID: 0}
+  wantPlay: {fileID: 0}
+  DirtToilet: {fileID: 0}
   backButton: {fileID: 569582567}
   cam: {fileID: 267871335}
   minZoom: 2
@@ -25405,6 +25412,8 @@ MonoBehaviour:
   headClickCount: 0
   bodyClickCount: 0
   sk: {fileID: 0}
+  headClickCounter: 1
+  bodyClickCounter: 1
 --- !u!1 &1178273953
 GameObject:
   m_ObjectHideFlags: 0
@@ -40653,10 +40662,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1db1ac178a01f31438356ce67406b856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  catAI: {fileID: 0}
   head: {fileID: 1169560996}
   body: {fileID: 1863606590}
-  whiteImageFriendly: {fileID: 2015878285}
-  whiteImagePicky: {fileID: 1974436799}
+  happy: {fileID: 0}
+  annoying: {fileID: 0}
+  ignoreImage: {fileID: 0}
+  superHappy: {fileID: 0}
+  negative: {fileID: 0}
+  hungry: {fileID: 0}
+  wantPlay: {fileID: 0}
+  DirtToilet: {fileID: 0}
   backButton: {fileID: 569582567}
   cam: {fileID: 267871335}
   minZoom: 2
@@ -40670,6 +40686,8 @@ MonoBehaviour:
   headClickCount: 0
   bodyClickCount: 0
   sk: {fileID: 0}
+  headClickCounter: 1
+  bodyClickCounter: 1
 --- !u!1 &1864566374
 GameObject:
   m_ObjectHideFlags: 0
@@ -46039,8 +46057,8 @@ SceneRoots:
   - {fileID: 267871336}
   - {fileID: 1021629139}
   - {fileID: 150457309}
-  - {fileID: 795552779}
   - {fileID: 1260279678}
+  - {fileID: 795552779}
   - {fileID: 307219184}
   - {fileID: 1532433380}
   - {fileID: 43048672}
