@@ -32,7 +32,7 @@ public class PhotonNet : MonoBehaviourPunCallbacks
             string myPrefabName = PlayerPrefs.GetInt("selectedCharacter") == 1 ? "SKPlayer" : "SKPlayer2";
             GameObject playerInstance = PhotonNetwork.Instantiate(myPrefabName, spawnPosition, Quaternion.identity);
             playerInstance.name = "Player";
-            CatController.instance.player = playerInstance;
+            //CatController.instance.player = playerInstance;
         }
 
         

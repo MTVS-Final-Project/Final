@@ -35,5 +35,14 @@ public class ChatItem : MonoBehaviour
         // 텍스트 내용에 맞춰서 크기를 조절
         RectTransform rt = GetComponent<RectTransform>();
         rt.sizeDelta = new Vector2(rt.sizeDelta.x, chatText.preferredHeight);
+
+
+        yield return null;
+        // ChatView 게임 오브젝트 찾자
+        GameObject go = GameObject.Find("ChatView");
+        // 찾은 오브젝트에서 ChatManagaer 컴포넌트를 가져오자
+        ChatManager cm = go.GetComponent<ChatManager>();
+        // 가져온 컴포넌트 AutoScollBottom 함수 호출
+        cm.AutoScrollBottom();
     }
 }
