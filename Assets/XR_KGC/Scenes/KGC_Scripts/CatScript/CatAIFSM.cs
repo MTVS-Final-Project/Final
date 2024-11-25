@@ -72,20 +72,20 @@ public class CatAIFSM : MonoBehaviour
     public void GetGaguPosition()
     {
         //이 스크립트가 진짜 써야되는거임 밑에거는 테스트용임.
-        //toilet = GameObject.Find("CatToilet(Clone)").transform; 
-        //dish = GameObject.Find("Dish(Clone)").transform;
-        //tower = GameObject.Find("TowerPosition").transform;
-        //bed = GameObject.Find("Bed(Clone)").transform;
-        //towerBottom = GameObject.Find("CatTower(Clone)").transform;
-        //ds = GameObject.Find("Dish(Clone)").GetComponent<DishState>();
+        toilet = GameObject.Find("CatToilet(Clone)").transform;
+        dish = GameObject.Find("Dish(Clone)").transform;
+        tower = GameObject.Find("TowerPosition").transform;
+        bed = GameObject.Find("Bed(Clone)").transform;
+        towerBottom = GameObject.Find("CatTower(Clone)").transform;
+        ds = GameObject.Find("Dish(Clone)").GetComponent<DishState>();
 
         //---------------------------------------------------- 고양이 테스트하는용
-        toilet = GameObject.Find("CatToilet").transform;
-        dish = GameObject.Find("Dish").transform;
-        tower = GameObject.Find("TowerPosition").transform;
-        bed = GameObject.Find("Bed").transform;
-        towerBottom = GameObject.Find("CatTower").transform;
-        ds = GameObject.Find("Dish").GetComponent<DishState>();
+        //toilet = GameObject.Find("CatToilet").transform;
+        //dish = GameObject.Find("Dish").transform;
+        //tower = GameObject.Find("TowerPosition").transform;
+        //bed = GameObject.Find("Bed").transform;
+        //towerBottom = GameObject.Find("CatTower").transform;
+        //ds = GameObject.Find("Dish").GetComponent<DishState>();
 
     }
 
