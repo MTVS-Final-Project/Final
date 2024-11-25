@@ -29,7 +29,7 @@ public class RoomDataFetcher : MonoBehaviour
 
     private void Start()
     {
-        FetchRoomData("67408c8fe6cda410940db97b");
+        FetchRoomData("674407f1e6cda410940db97c");
     }
 
     // 데이터를 가져오는 함수

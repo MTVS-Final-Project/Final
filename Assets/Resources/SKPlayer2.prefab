@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1311594715125085090}
   - component: {fileID: 7133103378252858151}
   - component: {fileID: 5607658588190990261}
+  - component: {fileID: -2295790545914635598}
   m_Layer: 0
   m_Name: SKPlayer2
   m_TagString: Player
@@ -187,4 +188,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Joystick: {fileID: 0}
-  Speed: 5
+  Speed: 2
+--- !u!114 &-2295790545914635598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708179914947806040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2391c961ca876b5469dcb7bbf96a3318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
