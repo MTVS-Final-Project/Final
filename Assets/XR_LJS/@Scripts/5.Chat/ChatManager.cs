@@ -18,10 +18,15 @@ public class ChatManager : MonoBehaviourPun
     // 채팅이 추가되기 전에 Content의 높이(h)값을 가지고 있는 변수
     float prevContentH;
 
+    // 닉네임 색상
+    Color nickNameColor;
 
     private TouchScreenKeyboard keyboard; // 안드로이드 키보드
     void Start()
     {
+        // 닉네임 색상 랜덤하게 설정
+        nickNameColor = Random.ColorHSV();
+
         //input Chat의 내용이 변경될때 호출되는 함수 등록
         inputChat.onValueChanged.AddListener(OnValueChanged);
         //input Chat 엔터를 쳤을 때 호출되는 함수 등록
@@ -45,8 +50,15 @@ public class ChatManager : MonoBehaviourPun
     {
         //만약의 s의 길이가 0이면 함수를 나가자
         if (s.Length == 0) return;
-        
-        photonView.RPC(nameof(AddChat), RpcTarget.All, s);  
+
+        // 채팅 내용을 NickName : 채팅 내용
+        // "<color=#ffffff> 원하는 내용 </color>"
+        string nick = "<color=#" + ColorUtility.ToHtmlStringRGB(nickNameColor) + ">" + PhotonNetwork.NickName +
+"</color>";
+        string chat = nick + " : " + s;
+
+        //AddChat rpc 함수 호출
+        photonView.RPC(nameof(AddChat), RpcTarget.All, chat);  
 
         //강제로 inputChat을 활성화하자
         inputChat.ActivateInputField();

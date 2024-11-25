@@ -71,7 +71,7 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.AutomaticallySyncScene = true;
 
-        PhotonNetwork.NickName = "";
+        PhotonNetwork.NickName = "Player" + Random.Range(1, 9000);
         PhotonNetwork.GameVersion = "1.0.0";
         PhotonNetwork.SendRate = 60;
         PhotonNetwork.SerializationRate = 60;
