@@ -7,6 +7,8 @@ public class CatTemp : MonoBehaviour
     public bool hostile = false;
     public GameObject goodReaction;
     public GameObject badReaction;
+    public GameObject negativeReaction;
+    public GameObject veryGoodReaction;
     public QuestManager QM;
 
     public CatBehavior CB;

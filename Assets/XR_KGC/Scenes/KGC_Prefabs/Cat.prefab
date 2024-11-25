@@ -206,11 +206,13 @@ MonoBehaviour:
   minZoom: 2
   maxZoom: 5
   moveSmoothTime: 0.3
+  isZoomedIn: 0
   backButton: {fileID: 0}
   toyButton: {fileID: 0}
   ToyExitButton: {fileID: 0}
   bar: {fileID: 0}
   feather: {fileID: 0}
+  snack: {fileID: 0}
   player: {fileID: 0}
   anim: {fileID: 606314600614583065}
   modifying: 0
@@ -242,6 +244,8 @@ MonoBehaviour:
   hostile: 0
   goodReaction: {fileID: 1858103880086945475}
   badReaction: {fileID: 4916150047827848274}
+  negativeReaction: {fileID: 6081301469001249641}
+  veryGoodReaction: {fileID: 8352210535094963612}
   QM: {fileID: 0}
   CB: {fileID: 0}
 --- !u!114 &606314600614583065

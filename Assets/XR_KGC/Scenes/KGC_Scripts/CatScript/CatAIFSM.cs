@@ -92,6 +92,12 @@ public class CatAIFSM : MonoBehaviour
 
     void LateUpdate()
     {
+        if (controller.isZoomedIn)
+        {
+            state = CatState.PlayerCalled;
+        }
+
+
         if (player == null)
         {
              player =  GameObject.Find("Player");
@@ -168,6 +174,11 @@ public class CatAIFSM : MonoBehaviour
         if (hunger > 20)
         {
             discharge += Time.deltaTime * metabolism * 0.01f;
+        }
+
+        if (!rest && starving)
+        {
+            mood -= Time.deltaTime;
         }
 
     }
@@ -262,8 +273,12 @@ public class CatAIFSM : MonoBehaviour
     private void RespondToPlayer()
     {
         // 플레이어 호출에 응답
-        StopAllCoroutines();
+        //StopAllCoroutines();
+
+        if (!controller.isZoomedIn)//줌아웃이라면
+        {
         state = CatState.Idle; // 응답 후 기본 상태로 복귀
+        }
     }
 
     public IEnumerator ToMeal(Vector3 targetPosition, float duration)

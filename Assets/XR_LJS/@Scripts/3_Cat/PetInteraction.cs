@@ -122,6 +122,7 @@ public class PetInteraction : MonoBehaviour
                         if (catAI.friendly > 80)
                         {
                             Ignore();
+                            catAI.mood -= 5;
                         }
                         else if (catAI.friendly > 60)
                         {
@@ -214,6 +215,8 @@ public class PetInteraction : MonoBehaviour
                     if (catAI.friendly > 80)
                     {
                         Ignore();
+                        catAI.mood -= 5;
+
                     }
                     else if (catAI.friendly > 60)
                     {
@@ -298,6 +301,7 @@ public class PetInteraction : MonoBehaviour
         catAI.mood += 20;
         superHappy.SetActive(true);
         yield return new WaitForSeconds(2);
+        sk.AnimationName = "Idle";
         superHappy.SetActive(false);
     }
 
@@ -311,7 +315,7 @@ public class PetInteraction : MonoBehaviour
         yield return new WaitForSeconds(2);
         ignoreImage.SetActive(false);
     }
-    private void ShowFriendlyReaction()
+    public void ShowFriendlyReaction()
     {
         sk.AnimationName = "Love";
         catAI.mood += 10;
@@ -363,6 +367,7 @@ public class PetInteraction : MonoBehaviour
     {
         // 반응이 끝난 후 일정 시간 뒤에 애니메이션 멈추기
         yield return new WaitForSeconds(1f); // 예시로 1초 기다림
+        sk.AnimationName = "Idle";
         sk.state.ClearTrack(0); // 트랙 0에서 애니메이션을 멈춤
     }
     private IEnumerator MoveCatAwayOnGround()
