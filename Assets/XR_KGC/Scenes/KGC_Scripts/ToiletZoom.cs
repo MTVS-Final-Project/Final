@@ -48,7 +48,7 @@ public class ToiletZoom : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 // 충돌한 오브젝트가 자신인지 확인
-                if (hit.collider.gameObject == gameObject&&Vector3.Distance(transform.position,player.transform.position)<1)
+                if (hit.collider.gameObject == this.gameObject&&Vector3.Distance(transform.position,player.transform.position)<1)
                 {
                     // 오브젝트가 클릭된 경우 확대 기능 실행
                     ZoomIn();

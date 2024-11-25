@@ -264,7 +264,10 @@ public class PetInteraction : MonoBehaviour
             }
         }
     }
-
+    public void LetsPlay()
+    {
+        StartCoroutine(ShowPlay());
+    }
     public void GiveMeFood()
     {
         StartCoroutine(Showhungry());
@@ -287,7 +290,12 @@ public class PetInteraction : MonoBehaviour
 
     }
 
-
+    public IEnumerator ShowPlay()
+    {
+        wantPlay.SetActive(true);
+        yield return new WaitForSeconds(5);
+        wantPlay.SetActive(false);
+    }
     public IEnumerator ShowNegative()
     {
         catAI.mood -= 10;

@@ -100,7 +100,7 @@ public class CatAIFSM : MonoBehaviour
 
         if (player == null)
         {
-             player =  GameObject.Find("Player");
+            player = GameObject.Find("Player");
         }
         print("여기까지됨");
         GetGaguPosition();
@@ -157,7 +157,7 @@ public class CatAIFSM : MonoBehaviour
         // 쉬고 있을 때와 아닐 때의 수면욕구 변화
         if (!rest)
         {
-            sleepy -= Time.deltaTime * metabolism*0.5f;   // 활동 중 수면욕구 감소
+            sleepy -= Time.deltaTime * metabolism * 0.5f;   // 활동 중 수면욕구 감소
         }
         else
         {
@@ -225,7 +225,7 @@ public class CatAIFSM : MonoBehaviour
                     }
                     break;
                 case CatState.WantToPlay:
-
+                    yield return StartCoroutine(LetsPlay());
                     break;
 
                 default:
@@ -245,7 +245,15 @@ public class CatAIFSM : MonoBehaviour
     {
         anim.AnimationName = "Idle"; //확률에 따라 돌아다니거나 놀거나 하는
 
-        state = CatState.Wandering;
+        int ran = Random.Range(0, 5);
+        if (ran > 3 && mood > 80 && friendly > 80 && hunger > 70)
+        {
+            state = CatState.WantToPlay;
+        }
+        else
+        {
+            state = CatState.Wandering;
+        }
 
     }
     public void Ignore()
@@ -277,7 +285,7 @@ public class CatAIFSM : MonoBehaviour
 
         if (!controller.isZoomedIn)//줌아웃이라면
         {
-        state = CatState.Idle; // 응답 후 기본 상태로 복귀
+            state = CatState.Idle; // 응답 후 기본 상태로 복귀
         }
     }
 
@@ -296,6 +304,32 @@ public class CatAIFSM : MonoBehaviour
             state = CatState.BegForFood; // 임시
             StartCoroutine(GiveMeFood());
             starving = true;
+        }
+    }
+    public IEnumerator LetsPlay()
+    {
+        Vector3 targetPosition = player.transform.position;
+        float playerDistance = Vector3.Distance(targetPosition, transform.position);
+
+        if (playerDistance > 1)
+        {
+            anim.AnimationName = "Walking";
+            float duration = 1;
+            float elapsed = 0f;
+            Vector3 startingPosition = transform.position;
+
+            while (elapsed < duration)
+            {
+                transform.position = Vector3.Lerp(startingPosition, targetPosition, elapsed / duration);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            anim.AnimationName = "idle";//놀자하는표현
+            interaction.LetsPlay();
+            yield return new WaitForSeconds(5);
+            transform.position = targetPosition;
+            state = CatState.Idle;
+
         }
     }
 
@@ -364,6 +398,7 @@ public class CatAIFSM : MonoBehaviour
         toMeal = false;
         state = CatState.Idle; //  
     }
+
 
     public IEnumerator Wandering(float term)
     {

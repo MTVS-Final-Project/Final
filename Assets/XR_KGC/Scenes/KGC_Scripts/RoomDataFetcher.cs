@@ -29,7 +29,7 @@ public class RoomDataFetcher : MonoBehaviour
 
     private void Start()
     {
-        FetchRoomData("6744496cd0c93b4e07351bf5");
+        FetchRoomData("67445510d0c93b4e07351bf7");
     }
 
     // 데이터를 가져오는 함수
@@ -40,7 +40,7 @@ public class RoomDataFetcher : MonoBehaviour
 
     private IEnumerator GetRoomDataCoroutine(string roomId)
     {
-        string url = $"{baseUrl}/{roomId}"; // Room ID를 URL에 추가
+        string url = $"{baseUrl}?roomId={roomId}";// Room ID를 URL에 추가
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
             // 요청 헤더 설정

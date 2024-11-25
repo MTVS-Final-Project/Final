@@ -11587,89 +11587,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 528256809}
   m_CullTransparentMesh: 1
---- !u!1001 &541864566
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 62280698225060343, guid: e76a4e45b137d5149b3275a2d41d50b9,
-        type: 3}
-      propertyPath: m_Name
-      value: SKPlayer
-      objectReference: {fileID: 0}
-    - target: {fileID: 62280698225060343, guid: e76a4e45b137d5149b3275a2d41d50b9,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 448617062926008630, guid: e76a4e45b137d5149b3275a2d41d50b9,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5326423692747177949, guid: e76a4e45b137d5149b3275a2d41d50b9,
-        type: 3}
-      propertyPath: sceneViewId
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712873196371442249, guid: e76a4e45b137d5149b3275a2d41d50b9,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.20524314
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712873196371442249, guid: e76a4e45b137d5149b3275a2d41d50b9,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.6180772
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712873196371442249, guid: e76a4e45b137d5149b3275a2d41d50b9,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 6.1541853
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712873196371442249, guid: e76a4e45b137d5149b3275a2d41d50b9,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712873196371442249, guid: e76a4e45b137d5149b3275a2d41d50b9,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712873196371442249, guid: e76a4e45b137d5149b3275a2d41d50b9,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712873196371442249, guid: e76a4e45b137d5149b3275a2d41d50b9,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712873196371442249, guid: e76a4e45b137d5149b3275a2d41d50b9,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712873196371442249, guid: e76a4e45b137d5149b3275a2d41d50b9,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712873196371442249, guid: e76a4e45b137d5149b3275a2d41d50b9,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e76a4e45b137d5149b3275a2d41d50b9, type: 3}
 --- !u!1 &551893294
 GameObject:
   m_ObjectHideFlags: 0
@@ -20514,7 +20431,7 @@ MonoBehaviour:
   - "\uAE43\uD138\uC7A5\uB09C\uAC10"
   - "\uAC04\uC2DD"
   sprites:
-  - {fileID: 21300000, guid: a28e9464da403504390a76b3d6ce982b, type: 3}
+  - {fileID: 21300000, guid: f94763fbbd2641b4b9787fc45121d89a, type: 3}
   - {fileID: 21300000, guid: dd297235010d1874c89ae0dc536aa858, type: 3}
 --- !u!1 &920940890
 GameObject:
@@ -45780,6 +45697,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4955412501454556964, guid: 8f0c10254a14cd944992a571b6ee7e4a,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6285355409305108487, guid: 8f0c10254a14cd944992a571b6ee7e4a,
         type: 3}
       propertyPath: m_Mesh
@@ -46169,4 +46091,3 @@ SceneRoots:
   - {fileID: 2027974660}
   - {fileID: 155650790}
   - {fileID: 943573189}
-  - {fileID: 541864566}
