@@ -50,7 +50,7 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
     // residential_LJS로 이동하는 두 번째 룸 연결
     public void ConnectToSecondRoom()
     {
-        JoinOrCreateRoom("room2", "residential_LJS");
+        JoinOrCreateRoom("room2", "TestResidential_KGC");
         //SceneManager.LoadScene("residential_LJS");
     }
 
@@ -59,9 +59,10 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
         JoinOrCreateRoom("room2", "residential_L");
         //SceneManager.LoadScene("residential_L");
     }
+   
     public void ConnetToRoom()
     {
-        PhotonNetwork.LoadLevel("Room_KGC");
+        SceneManager.LoadScene("Room_KGC");
         //SceneManager.LoadScene("Room_KGC");
         // SceneManager.LoadScene(2);
     }

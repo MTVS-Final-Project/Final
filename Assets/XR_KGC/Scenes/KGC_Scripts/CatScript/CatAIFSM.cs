@@ -91,13 +91,13 @@ public class CatAIFSM : MonoBehaviour
 
     void LateUpdate()
     {
-
-        GetGaguPosition();
-
         if (player == null)
         {
-            GameObject.Find("Player");
+             player =  GameObject.Find("Player");
         }
+        print("여기까지됨");
+        GetGaguPosition();
+
         // 초기화: 게임 오브젝트 연결
         if (ds == null)
         {
