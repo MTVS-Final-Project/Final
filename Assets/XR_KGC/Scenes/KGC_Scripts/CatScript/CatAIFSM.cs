@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 public class CatAIFSM : MonoBehaviour
 {
@@ -28,6 +29,13 @@ public class CatAIFSM : MonoBehaviour
     public float moveRange = 2;   // 한 번에 최대 얼마나 멀리 가는지
     public float discharge = 0;   // 화장실 사용 욕구
     public float metabolism = 1;  // 신진대사, 높을수록 배고픔이 빨리 줄고 수면을 짧게 해도 됨
+    
+    // 고양이 상태 플래그
+    public bool rest;      // 고양이가 쉬고 있는지
+    public bool toSleep;   // 고양이가 자고 싶은지
+    public bool toMeal;    // 고양이가 밥 먹고 싶은지
+    public bool eating;    // 고양이가 밥 먹고 있는지
+    public bool starving; //배고픈데 밥그릇에 밥이 없다.
 
     // 고양이 속도 관련
     public float speed = 1;       // 고양이 속도, 기분/허기 상태에 따라 다름
@@ -37,12 +45,6 @@ public class CatAIFSM : MonoBehaviour
     public List<GameObject> tiles = new List<GameObject>();        // 배회 상태일 때 이동 가능한 타일
     public List<GameObject> tilesInRange = new List<GameObject>(); // 고양이 주변 일정 거리 내 타일
 
-    // 고양이 상태 플래그
-    public bool rest;      // 고양이가 쉬고 있는지
-    public bool toSleep;   // 고양이가 자고 싶은지
-    public bool toMeal;    // 고양이가 밥 먹고 싶은지
-    public bool eating;    // 고양이가 밥 먹고 있는지
-    public bool starving; //배고픈데 밥그릇에 밥이 없다.
 
     // 고양이 상태
     public enum CatState
@@ -464,6 +466,7 @@ public class CatAIFSM : MonoBehaviour
         float duration = 0.3f;
         float elapsed = 0f;
         Vector3 startingPosition = transform.position;
+        anim.AnimationName = "Jump";
 
         while (elapsed < duration)
         {
@@ -471,6 +474,7 @@ public class CatAIFSM : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
+        anim.AnimationName = "Idle";
         state = CatState.Sleeping; // Sleeping 상태로 전환
 
         transform.position = targetPosition;

@@ -82,10 +82,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1db1ac178a01f31438356ce67406b856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  catAI: {fileID: 0}
   head: {fileID: 2132787280971995510}
   body: {fileID: 5958898862089339726}
-  whiteImageFriendly: {fileID: 8400268018956499259}
-  whiteImagePicky: {fileID: 8478316177893804482}
+  happy: {fileID: 0}
+  annoying: {fileID: 0}
+  ignoreImage: {fileID: 0}
+  superHappy: {fileID: 0}
+  negative: {fileID: 0}
+  hungry: {fileID: 0}
+  wantPlay: {fileID: 0}
+  DirtToilet: {fileID: 0}
   backButton: {fileID: 0}
   cam: {fileID: 0}
   minZoom: 2
@@ -99,6 +106,11 @@ MonoBehaviour:
   headClickCount: 0
   bodyClickCount: 0
   sk: {fileID: 0}
+  headClickCounter: 1
+  bodyClickCounter: 1
+  mainCam: {fileID: 0}
+  camStartPos: {x: 0, y: 0, z: 0}
+  dragDis: 0
 --- !u!60 &2286073479469548885
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -169,6 +181,7 @@ GameObject:
   - component: {fileID: 3412794286528284775}
   - component: {fileID: 1174834491356000631}
   - component: {fileID: 415097522703797072}
+  - component: {fileID: 604009480605788121}
   m_Layer: 0
   m_Name: Cat1
   m_TagString: Cat
@@ -279,13 +292,17 @@ MonoBehaviour:
   minZoom: 2
   maxZoom: 5
   moveSmoothTime: 0.3
+  isZoomedIn: 0
   backButton: {fileID: 0}
   toyButton: {fileID: 0}
   ToyExitButton: {fileID: 0}
   bar: {fileID: 0}
   feather: {fileID: 0}
+  snack: {fileID: 0}
   player: {fileID: 0}
+  anim: {fileID: 0}
   modifying: 0
+  camInitPos: {x: 0, y: 0, z: 0}
 --- !u!210 &2511544581045108366
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -313,6 +330,8 @@ MonoBehaviour:
   hostile: 0
   goodReaction: {fileID: 8400268018956499259}
   badReaction: {fileID: 8478316177893804482}
+  negativeReaction: {fileID: 0}
+  veryGoodReaction: {fileID: 0}
   QM: {fileID: 0}
   CB: {fileID: 0}
 --- !u!114 &1174834491356000631
@@ -329,10 +348,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cc: {fileID: 495086390622987306}
   sa: {fileID: 415097522703797072}
+  catAI: {fileID: 0}
   toilet: {fileID: 0}
   dish: {fileID: 0}
   tower: {fileID: 0}
   bed: {fileID: 0}
+  towerBottom: {fileID: 0}
 --- !u!114 &415097522703797072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,6 +397,18 @@ MonoBehaviour:
   _animationName: 
   loop: 1
   timeScale: 1
+--- !u!114 &604009480605788121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3175199326243200426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 879e939975a7e0c44aea6f0ca031bab7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4301523461249145371
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,10 +742,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1db1ac178a01f31438356ce67406b856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  catAI: {fileID: 0}
   head: {fileID: 2132787280971995510}
   body: {fileID: 5958898862089339726}
-  whiteImageFriendly: {fileID: 8400268018956499259}
-  whiteImagePicky: {fileID: 8478316177893804482}
+  happy: {fileID: 0}
+  annoying: {fileID: 0}
+  ignoreImage: {fileID: 0}
+  superHappy: {fileID: 0}
+  negative: {fileID: 0}
+  hungry: {fileID: 0}
+  wantPlay: {fileID: 0}
+  DirtToilet: {fileID: 0}
   backButton: {fileID: 0}
   cam: {fileID: 0}
   minZoom: 2
@@ -726,6 +766,11 @@ MonoBehaviour:
   headClickCount: 0
   bodyClickCount: 0
   sk: {fileID: 0}
+  headClickCounter: 1
+  bodyClickCounter: 1
+  mainCam: {fileID: 0}
+  camStartPos: {x: 0, y: 0, z: 0}
+  dragDis: 0
 --- !u!60 &7553707959346435533
 PolygonCollider2D:
   m_ObjectHideFlags: 0

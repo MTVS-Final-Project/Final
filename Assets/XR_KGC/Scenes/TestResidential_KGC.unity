@@ -45592,6 +45592,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 606314600614583065, guid: 8f0c10254a14cd944992a571b6ee7e4a,
+        type: 3}
+      propertyPath: _animationName
+      value: Sleep
+      objectReference: {fileID: 0}
     - target: {fileID: 749467779396147864, guid: 8f0c10254a14cd944992a571b6ee7e4a,
         type: 3}
       propertyPath: m_Name
