@@ -7,21 +7,21 @@ public class RediScene2 : MonoBehaviour
 {
     public GameObject charactorSelectUI;
     public Transform catTransform;
-    public SkeletonAnimation[] sk;
-    public string[] currentCount;
     void Start()
     {
         //SkeletonAnimation sk = GetComponent<SkeletonAnimation>();
-       
+
         //sk.initialSkinName = "1";
         //sk.Initialize(true);
-        
+
     }
 
     public void InstantePlayer2()
     {
-        PlayerPrefs.SetInt("selectedCharacter", 2);
+
+        //PlayerPrefs.SetInt("selectedCharacter", 2);
         SceneManager.LoadScene("Room_KGC");
+
     }
 
     Vector3 GetRandomPositionNearCat()
