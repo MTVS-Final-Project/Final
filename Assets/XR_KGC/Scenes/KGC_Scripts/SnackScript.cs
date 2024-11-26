@@ -40,6 +40,7 @@ public class SnackScript : MonoBehaviour
         CatAI.mood += 10;
         CatAI.friendly += 20;
         CatAI.hunger += 20;
+        CatAI.weight += 0.5f;
 
         CatAI.interaction.ShowFriendlyReaction();
         button.interactable = false;

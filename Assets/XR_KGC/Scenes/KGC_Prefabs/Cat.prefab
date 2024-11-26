@@ -120,27 +120,33 @@ MonoBehaviour:
   bed: {fileID: 0}
   towerBottom: {fileID: 0}
   sleepy: 100
-  friendly: 100
+  friendly: 70
   mood: 100
   hunger: 100
   moveTerm: 5
   moveRange: 2
   discharge: 0
   metabolism: 1
+  weight: 3
+  speed: 1
+  eatSpeed: 1
+  CatIndex: 0
   rest: 0
   toSleep: 0
   toMeal: 0
   eating: 0
   starving: 0
-  speed: 1
-  eatSpeed: 1
+  isFat: 0
   ds: {fileID: 0}
   tiles: []
   tilesInRange: []
-  CatIndex: 0
   CatType:
   - whiteCat/BrownNyang
-  isFat: 0
+  - whiteCat/GrayNyang
+  - whiteCat/WhiteNyang
+  - whiteCat/BrownNyang_F
+  - whiteCat/GrayNyang_F
+  - whiteCat/WhiteNyang_F
   state: 0
 --- !u!114 &8354679900807999429
 MonoBehaviour:
@@ -252,7 +258,7 @@ MonoBehaviour:
   negativeReaction: {fileID: 6081301469001249641}
   veryGoodReaction: {fileID: 8352210535094963612}
   QM: {fileID: 0}
-  CB: {fileID: 0}
+  catAI: {fileID: 0}
 --- !u!114 &606314600614583065
 MonoBehaviour:
   m_ObjectHideFlags: 0

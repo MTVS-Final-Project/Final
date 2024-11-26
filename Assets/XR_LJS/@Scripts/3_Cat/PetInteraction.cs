@@ -128,7 +128,7 @@ public class PetInteraction : MonoBehaviour
                         {
                             StartCoroutine(ShowNegative());
                         }
-                        else if (catAI.friendly > 40) //안 친하면 그냥 부정적임.
+                        else //if (catAI.friendly > 40) //안 친하면 그냥 부정적임.
                         {
                             ShowPinkyReaction();
                         }
@@ -158,7 +158,7 @@ public class PetInteraction : MonoBehaviour
                             ShowFriendlyReaction();//고양이 친밀도에 따라 달라지는 반응,기본적으로 긍정적임
 
                         }
-                        else if (catAI.friendly > 40) //친밀도가 낮으면 그냥 부정적
+                        else // (catAI.friendly > 40) //친밀도가 낮으면 그냥 부정적
                         {
                             ShowPinkyReaction();
                         }
@@ -201,7 +201,7 @@ public class PetInteraction : MonoBehaviour
                         ShowFriendlyReaction();//고양이 친밀도에 따라 달라지는 반응,기본적으로 긍정적임
 
                     }
-                    else if (catAI.friendly > 40) //친밀도가 낮으면 그냥 부정적
+                    else  //(catAI.friendly > 40) //친밀도가 낮으면 그냥 부정적
                     {
                         ShowPinkyReaction();
                     }
@@ -222,7 +222,7 @@ public class PetInteraction : MonoBehaviour
                     {
                         StartCoroutine(ShowNegative());
                     }
-                    else if (catAI.friendly > 40) //안 친하면 그냥 부정적임.
+                    else  //(catAI.friendly > 40) //안 친하면 그냥 부정적임.
                     {
                         ShowPinkyReaction();
                     }
@@ -289,7 +289,10 @@ public class PetInteraction : MonoBehaviour
         DisableAllButtons();
 
     }
-
+    public void Negative()
+    {
+        StartCoroutine(ShowNegative()); 
+    }
     public IEnumerator ShowPlay()
     {
         wantPlay.SetActive(true);
@@ -298,10 +301,17 @@ public class PetInteraction : MonoBehaviour
     }
     public IEnumerator ShowNegative()
     {
+        sk.AnimationName = "HAAAAAAAA";
         catAI.mood -= 10;
         negative.SetActive(true);
+        CatController.instance.ZoomOut();                          //줌아웃되면서
         yield return new WaitForSeconds(2);
+        sk.AnimationName = "Idle";
         negative.SetActive(false);
+    }
+    public void SuperH()
+    {
+        StartCoroutine(SuperHappy()); 
     }
     public IEnumerator SuperHappy()
     {
