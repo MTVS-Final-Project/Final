@@ -12,6 +12,8 @@ public class CatAIFSM : MonoBehaviour
     public CatController controller;
     public SkeletonAnimation anim;
     public GameObject player;
+    public SkeletonAnimation sa;
+
 
     // 고양이 가구 위치
     public Transform toilet;      // 화장실 위치
@@ -29,7 +31,7 @@ public class CatAIFSM : MonoBehaviour
     public float moveRange = 2;   // 한 번에 최대 얼마나 멀리 가는지
     public float discharge = 0;   // 화장실 사용 욕구
     public float metabolism = 1;  // 신진대사, 높을수록 배고픔이 빨리 줄고 수면을 짧게 해도 됨
-    
+
     // 고양이 상태 플래그
     public bool rest;      // 고양이가 쉬고 있는지
     public bool toSleep;   // 고양이가 자고 싶은지
@@ -45,6 +47,10 @@ public class CatAIFSM : MonoBehaviour
     public List<GameObject> tiles = new List<GameObject>();        // 배회 상태일 때 이동 가능한 타일
     public List<GameObject> tilesInRange = new List<GameObject>(); // 고양이 주변 일정 거리 내 타일
 
+    public int CatIndex = 0; //0번은 어두운놈, 1번은 노란눈 2번은 파란눈 3번부터 각자 살찐거로.
+    [SerializeField]
+    private List<string> CatType;
+    public bool isFat = false; //살쪘는지 아닌지 확인용.
 
     // 고양이 상태
     public enum CatState
@@ -66,11 +72,22 @@ public class CatAIFSM : MonoBehaviour
     {
         interaction = gameObject.GetComponentInChildren<PetInteraction>();
         player = GameObject.Find("Player");
+        sa = gameObject.GetComponent<SkeletonAnimation>();
+        SetCatSkin(CatIndex);
         state = CatState.Wandering; // 초기 상태 설정
         StartCoroutine(StateController());
         rest = false; // 초기에는 쉬지 않음
     }
 
+    public void SetCatSkin(int index)
+    {
+        Debug.Log("스킨변경 실행됨");
+        sa.skeleton.SetSkin(CatType[index]);
+        sa.skeleton.SetSlotsToSetupPose();
+        sa.AnimationState.Apply(sa.skeleton);
+
+        Debug.Log(CatType[index]);
+    }
     public void GetGaguPosition()
     {
         //이 스크립트가 진짜 써야되는거임 밑에거는 테스트용임.
@@ -94,6 +111,42 @@ public class CatAIFSM : MonoBehaviour
 
     void LateUpdate()
     {
+        if (isFat)
+        {
+            if (CatIndex == 0)
+            {
+                SetCatSkin(3);
+            }
+            else if (CatIndex == 1)
+            {
+                SetCatSkin(4);
+            }
+            else if (CatIndex == 2)
+            {
+                SetCatSkin(5);
+            }
+        }
+        else
+        {
+            if (CatIndex == 0)
+            {
+                SetCatSkin(0);
+            }
+            else if (CatIndex == 1)
+            {
+                SetCatSkin(1);
+            }
+            else if (CatIndex == 2)
+            {
+                SetCatSkin(2);
+            }
+        }
+
+        if (hunger > 200)
+        {
+            isFat = true;
+        }
+
         if (controller.isZoomedIn)
         {
             state = CatState.PlayerCalled;

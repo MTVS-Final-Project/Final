@@ -8,20 +8,21 @@ public class GaguCheck : MonoBehaviour
 
     public PlaceButtonScript buttonScript;
     public SpriteRenderer sr; //스프라이트 색 바꾸기
+                              // public DragObject dr; //부모오브젝트에서 이 스크립트가 활성화돼있을때 색상변경하기.
 
     public Vector3 snapPos;
 
-   // public bool findButtonScript;
+    // public bool findButtonScript;
 
-   // public DragObject dragObject;
-    
+    public DragObject dragObject;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-       // dragObject = transform.parent.GetComponent<DragObject>();
-       buttonScript = GameObject.Find("PlaceCanvas").GetComponent<PlaceButtonScript>();
-       sr = transform.parent.GetChild(1).GetComponent<SpriteRenderer>();
+        dragObject = transform.parent.GetComponent<DragObject>();
+        buttonScript = GameObject.Find("PlaceCanvas").GetComponent<PlaceButtonScript>();
+        sr = transform.parent.GetChild(1).GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -45,6 +46,12 @@ public class GaguCheck : MonoBehaviour
             sr.color = new Color(255f / 255f, 0f / 255f, 0f / 255f, 150f / 255f);
             //sr.color = new Color32(255, 0, 0, 150);
         }
+        else if (!onGagu && dragObject.isActiveAndEnabled)
+        {
+            sr.color = new Color(255f / 255f, 255f / 255f, 255f / 255f, 150f / 255f);
+
+        }
+
         else
         {
             sr.color = Color.white;
@@ -55,10 +62,10 @@ public class GaguCheck : MonoBehaviour
     {
         if ((other.CompareTag("Set")))
         {
-                onGagu = true;
-           // buttonScript.gaguOnGagu = true;
+            onGagu = true;
+            // buttonScript.gaguOnGagu = true;
         }
-        
+
         if (other.CompareTag("Ground"))
         {
             onGround = true;

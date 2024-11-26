@@ -113,6 +113,7 @@ MonoBehaviour:
   controller: {fileID: 1735738910020601962}
   anim: {fileID: 606314600614583065}
   player: {fileID: 0}
+  sa: {fileID: 0}
   toilet: {fileID: 0}
   dish: {fileID: 0}
   tower: {fileID: 0}
@@ -126,16 +127,20 @@ MonoBehaviour:
   moveRange: 2
   discharge: 0
   metabolism: 1
-  speed: 1
-  eatSpeed: 1
-  ds: {fileID: 0}
-  tiles: []
-  tilesInRange: []
   rest: 0
   toSleep: 0
   toMeal: 0
   eating: 0
   starving: 0
+  speed: 1
+  eatSpeed: 1
+  ds: {fileID: 0}
+  tiles: []
+  tilesInRange: []
+  CatIndex: 0
+  CatType:
+  - whiteCat/BrownNyang
+  isFat: 0
   state: 0
 --- !u!114 &8354679900807999429
 MonoBehaviour:
@@ -261,7 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 52853cdbc7f08dd4696e3a33cde3b813, type: 2}
-  initialSkinName: whiteCat/WhiteNyang
+  initialSkinName: whiteCat/GrayNyang
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
   initialFlipY: 0
@@ -288,7 +293,7 @@ MonoBehaviour:
   physicsMovementRelativeTo: {fileID: 0}
   updateTiming: 1
   unscaledTime: 0
-  _animationName: 
+  _animationName: Sleep
   loop: 1
   timeScale: 1
 --- !u!114 &1679088933163241106

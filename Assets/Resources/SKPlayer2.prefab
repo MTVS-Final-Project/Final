@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7133103378252858151}
   - component: {fileID: 5607658588190990261}
   - component: {fileID: -2295790545914635598}
+  - component: {fileID: -8227197680270484057}
   m_Layer: 0
   m_Name: SKPlayer2
   m_TagString: Player
@@ -201,3 +202,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2391c961ca876b5469dcb7bbf96a3318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-8227197680270484057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708179914947806040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 920dffc2970f28d4bbf964e4e0a83b4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mr: {fileID: 0}

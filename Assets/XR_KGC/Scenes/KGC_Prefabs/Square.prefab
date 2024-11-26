@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1128538409495463237}
   - component: {fileID: 2741063926562249564}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Temp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -404,6 +404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a47b538ab7d98f54a87bed87acd5becf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Renderer: {fileID: 0}
   currentMode: 0
 --- !u!1 &5070099657109323255
 GameObject:
@@ -537,3 +538,4 @@ MonoBehaviour:
   buttonScript: {fileID: 0}
   sr: {fileID: 0}
   snapPos: {x: 0, y: 0, z: 0}
+  dragObject: {fileID: 0}

@@ -6,6 +6,7 @@ public class DragObject : MonoBehaviour
     public bool isDragging = false;
     private Vector3 offset;
 
+
     void Start()
     {
         if (mainCamera == null)
@@ -30,7 +31,12 @@ public class DragObject : MonoBehaviour
         {
             DragObjectTo(Input.mousePosition);
         }
- 
+       
+        //else
+        //{
+        //    sr.color = Color.white;
+        //}
+
     }
 
     private void HandleInput(Vector3 inputPosition)

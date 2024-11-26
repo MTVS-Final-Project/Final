@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4028017144395213955}
   - component: {fileID: 7585940886351794457}
   - component: {fileID: -5849774873849074157}
+  - component: {fileID: 7883953761127083541}
   m_Layer: 0
   m_Name: SKPlayer
   m_TagString: Untagged
@@ -201,3 +202,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2391c961ca876b5469dcb7bbf96a3318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7883953761127083541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62280698225060343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 920dffc2970f28d4bbf964e4e0a83b4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mr: {fileID: 0}
