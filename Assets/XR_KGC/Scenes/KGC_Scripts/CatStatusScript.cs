@@ -11,6 +11,7 @@ public class CatStatusScript : MonoBehaviour
     public Text sleep;
     public Text male;
     public Text age;
+    public Text name;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,6 +22,7 @@ public class CatStatusScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        name.text = catAI.name;
         weight.text = catAI.weight.ToString();
         hunger.text = Mathf.Floor(catAI.hunger).ToString();
         friendly.text = catAI.friendly.ToString();

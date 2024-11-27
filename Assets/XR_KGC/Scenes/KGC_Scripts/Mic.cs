@@ -137,8 +137,6 @@ public class Mic : MonoBehaviour
         }
         // 두 값 출력
         result_text.text = $"Similarity: {response.Similarity}\nis_same_voice: {response.is_same_voice} final_result{response.final_result}command_match{response.command_match}";
-
-        
     }
 
     private void SaveRecording(AudioClip clip)

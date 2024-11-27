@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 606314600614583065}
   - component: {fileID: 1679088933163241106}
   - component: {fileID: 8587933207424758183}
+  - component: {fileID: -6199600307001332526}
   m_Layer: 0
   m_Name: Cat
   m_TagString: Cat
@@ -228,6 +229,7 @@ MonoBehaviour:
   bar: {fileID: 0}
   feather: {fileID: 0}
   snack: {fileID: 0}
+  menuButton: {fileID: 0}
   player: {fileID: 0}
   anim: {fileID: 606314600614583065}
   modifying: 0
@@ -239,7 +241,7 @@ SortingGroup:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 749467779396147864}
-  m_Enabled: 1
+  m_Enabled: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 55
@@ -276,7 +278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 52853cdbc7f08dd4696e3a33cde3b813, type: 2}
-  initialSkinName: whiteCat/GrayNyang
+  initialSkinName: whiteCat/BrownNyang
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
   initialFlipY: 0
@@ -303,7 +305,7 @@ MonoBehaviour:
   physicsMovementRelativeTo: {fileID: 0}
   updateTiming: 1
   unscaledTime: 0
-  _animationName: Sleep
+  _animationName: Walking
   loop: 1
   timeScale: 1
 --- !u!114 &1679088933163241106
@@ -341,6 +343,19 @@ CapsuleCollider:
   m_Height: 2.0021856
   m_Direction: 1
   m_Center: {x: -0.61, y: 1.256691, z: 0}
+--- !u!114 &-6199600307001332526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749467779396147864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 920dffc2970f28d4bbf964e4e0a83b4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mr: {fileID: 0}
 --- !u!1 &1858103880086945475
 GameObject:
   m_ObjectHideFlags: 0

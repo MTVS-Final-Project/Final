@@ -100,7 +100,7 @@ public class CatAIFSM : MonoBehaviour
         }
     }
 
-
+    private CatData catData;
     // 고양이 상태
     public enum CatState
     {
@@ -119,6 +119,7 @@ public class CatAIFSM : MonoBehaviour
 
     void Start()
     {
+        catData = GameObject.Find("GameManager").GetComponent<CatData>();
         interaction = gameObject.GetComponentInChildren<PetInteraction>();
         player = GameObject.Find("Player");
         sa = gameObject.GetComponent<SkeletonAnimation>();
@@ -126,6 +127,9 @@ public class CatAIFSM : MonoBehaviour
         state = CatState.Wandering; // 초기 상태 설정
         StartCoroutine(StateController());
         rest = false; // 초기에는 쉬지 않음
+        StartCoroutine(SaveCatDataPeriodically());
+
+        LoadCatStatsFromCatData();
     }
 
     public void SetCatSkin(int index)
@@ -593,4 +597,70 @@ public class CatAIFSM : MonoBehaviour
 
         transform.position = targetPosition;
     }
+
+
+    private IEnumerator SaveCatDataPeriodically()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(10f); // 10초 대기
+            SaveCatStatsToCatData();
+        }
+    }
+
+    public void SaveCatStatsToCatData()
+    {
+        if (catData != null)
+        {
+            catData.catStats = new CatData.CatStats(
+                personality,
+                sleepy,
+                friendly,
+                mood,
+                hunger,
+                moveTerm,
+                moveRange,
+                discharge,
+                metabolism,
+                weight,
+                speed,
+                eatSpeed,
+                CatIndex,
+                male,
+                age
+            );
+
+            Debug.Log("Cat stats have been saved to CatData.");
+        }
+    }
+
+    public void LoadCatStatsFromCatData()
+    {
+        if (catData != null && catData.catStats != null)
+        {
+            CatData.CatStats stats = catData.catStats;
+
+            // CatAIFSM의 변수에 CatStats 값 할당
+            personality = stats.personality;
+            sleepy = stats.sleepy;
+            friendly = stats.friendly;
+            mood = stats.mood;
+            hunger = stats.hunger;
+            moveTerm = stats.moveTerm;
+            moveRange = stats.moveRange;
+            discharge = stats.discharge;
+            metabolism = stats.metabolism;
+            weight = stats.weight;
+            speed = stats.speed;
+            eatSpeed = stats.eatSpeed;
+            CatIndex = stats.CatIndex;
+            age = stats.age;
+            male = stats.male;
+
+            Debug.Log("Cat stats have been loaded from CatData.");
+        }
+    }
+
+
+
 }

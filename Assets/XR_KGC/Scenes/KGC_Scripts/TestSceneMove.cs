@@ -35,4 +35,8 @@ public class TestSceneMove : MonoBehaviour
 
         }
     }
+    public void MoveToStreet()
+    {
+        SceneManager.LoadScene("Room_KGC");
+    }
 }
