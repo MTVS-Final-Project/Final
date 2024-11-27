@@ -7,11 +7,20 @@ using UnityEngine.Networking;
 using System.Net;
 using ExitGames.Client.Photon;
 using Spine.Unity;
+using UnityEngine.Audio;
 
 public class PhotonNet : MonoBehaviourPunCallbacks
 {
     public Transform catTransform;
     public Transform cicleTransform;
+
+    public AudioClip backgroundMusicClip;  // 배경음악으로 사용할 AudioClip
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        
+    }
     void Start()
     {
         if (catTransform != null)
@@ -32,6 +41,18 @@ public class PhotonNet : MonoBehaviourPunCallbacks
             playerInstance.name = "Player";
             //CatController.instance.player = playerInstance;
         }
+        // AudioSource 컴포넌트 가져오기
+        audioSource = GetComponent<AudioSource>();
+
+        // AudioClip을 AudioSource에 할당
+        audioSource.clip = backgroundMusicClip;
+
+        // 배경음악을 반복 재생하도록 설정
+        audioSource.loop = true;
+
+        // 배경음악 재생
+        audioSource.Play();
+        
 
 
     }

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using Spine.Unity;
+using UnityEngine.Audio;
 
 public class CatController : MonoBehaviour
 {
@@ -49,10 +50,15 @@ public class CatController : MonoBehaviour
     public bool modifying;
     //메인카메라 위치
     public Vector3 camInitPos;
+
+
     
+
+
     private void Awake()
     {
         instance = this;
+        
         //skeletonAnimation = GetComponent<SkeletonAnimation>();
         //if (skeletonAnimation != null)
         //{
@@ -102,6 +108,7 @@ public class CatController : MonoBehaviour
 
     void Update()
     {
+        
         if (!modifying)
         {
         HandleClick();
@@ -199,6 +206,7 @@ public class CatController : MonoBehaviour
         snack.SetActive(false);
         yield return new WaitForSeconds(smoothTime);
         cam.transform.position = camInitPos;
+        
 
     }
 
@@ -213,18 +221,18 @@ public class CatController : MonoBehaviour
         float elapsed = 0f;
         Vector3 startingPosition = transform.position;
         Vector3 direction = (targetPosition - startingPosition).normalized;
-
+        
         while (elapsed < duration)
         {
             transform.position = Vector3.Lerp(startingPosition, targetPosition, elapsed / duration);
             elapsed += Time.deltaTime;
             yield return null;
         }
-
+        
         transform.position = targetPosition;
         anim.AnimationName = "Idle";
     }
-
+    
     public IEnumerator JumpUp(Vector3 targetPosition)
     {
         float duration = 0.3f;

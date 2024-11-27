@@ -445,7 +445,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selected: {fileID: 0}
   AlertText: {fileID: 0}
+  catAI: {fileID: 0}
   ms: {fileID: 0}
+  gp: {fileID: 0}
   gaguOnGagu: 0
   itemOn: 0
 --- !u!1 &12960265
@@ -1352,6 +1354,7 @@ MonoBehaviour:
   lines: {fileID: 0}
   GaguCanvas: {fileID: 0}
   PlaceCanvas: {fileID: 0}
+  camera: {fileID: 0}
 --- !u!1 &71117169
 GameObject:
   m_ObjectHideFlags: 0
@@ -5599,7 +5602,7 @@ PrefabInstance:
         type: 3}
       propertyPath: catTransform
       value: 
-      objectReference: {fileID: 707565541}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11820,7 +11823,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 707565545}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CatController, Assembly-CSharp
         m_MethodName: ZoomOut
         m_Mode: 1
@@ -15536,24 +15539,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705108867}
   m_CullTransparentMesh: 1
---- !u!4 &707565541 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 643668968344479241, guid: 6cc1b913f9f98d0488912e0f3dd190a4,
-    type: 3}
-  m_PrefabInstance: {fileID: 6869932250635418362}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &707565545 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7310836249025789589, guid: 6cc1b913f9f98d0488912e0f3dd190a4,
-    type: 3}
-  m_PrefabInstance: {fileID: 6869932250635418362}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7ec4d762be9b5478671bd9255c9e72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &725345289
 GameObject:
   m_ObjectHideFlags: 0
@@ -29477,7 +29462,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1196275988}
   m_HandleRect: {fileID: 1196275987}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -36245,7 +36230,7 @@ MonoBehaviour:
   clicked: 0
   samevoice: 0
   uploadURL: https://safe-quickly-lioness.ngrok-free.app/compare-voice/
-  cc: {fileID: 0}
+  catAI: {fileID: 0}
 --- !u!1 &1697472337
 GameObject:
   m_ObjectHideFlags: 0
@@ -44835,6 +44820,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 495086390622987306, guid: 6cc1b913f9f98d0488912e0f3dd190a4,
+        type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 6869932250635418363}
+    - target: {fileID: 495086390622987306, guid: 6cc1b913f9f98d0488912e0f3dd190a4,
+        type: 3}
+      propertyPath: clip
+      value: 
+      objectReference: {fileID: 8300000, guid: e19834a5b36c3344684a8e5e8ec6fbf4, type: 3}
     - target: {fileID: 643668968344479241, guid: 6cc1b913f9f98d0488912e0f3dd190a4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -44955,11 +44950,28 @@ PrefabInstance:
       propertyPath: backButton
       value: 
       objectReference: {fileID: 569582567}
+    - target: {fileID: 9117484469048232513, guid: 6cc1b913f9f98d0488912e0f3dd190a4,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6cc1b913f9f98d0488912e0f3dd190a4, type: 3}
+--- !u!114 &6869932250635418363 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 415097522703797072, guid: 6cc1b913f9f98d0488912e0f3dd190a4,
+    type: 3}
+  m_PrefabInstance: {fileID: 6869932250635418362}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7133890701599484942
 PrefabInstance:
   m_ObjectHideFlags: 0
