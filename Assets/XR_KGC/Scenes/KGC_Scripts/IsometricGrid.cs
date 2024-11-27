@@ -82,6 +82,7 @@ public class IsometricGridWithLines : MonoBehaviour
         lineRenderer.endWidth = 0.02f;
 
         // lineParent를 부모로 설정
+        lineObj.layer = 10;
         lineObj.transform.parent = lineParent;
     }
 }

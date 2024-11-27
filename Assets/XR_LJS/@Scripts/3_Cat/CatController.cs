@@ -29,13 +29,15 @@ public class CatController : MonoBehaviour
     private float targetZoom;
     private float zoomVelocity = 0f;
     private Vector3 cameraVelocity = Vector3.zero;
-    private bool isZoomedIn = false; // 현재 줌인 상태를 추적
+
+    public bool isZoomedIn = false; // 현재 줌인 상태를 추적
 
     public GameObject backButton; // 돌아가기 버튼 오브젝트
     public GameObject toyButton;
     public GameObject ToyExitButton;
     public GameObject bar;
     public GameObject feather;
+    public GameObject snack;
 
     public GameObject player; // Unity Inspector에서 플레이어 오브젝트 할당
     private float interactionDistance = 0.5f; // 상호작용 가능 거리
@@ -71,6 +73,7 @@ public class CatController : MonoBehaviour
         ToyExitButton.SetActive(false);
         bar.SetActive(false);
         feather.SetActive(false);
+        snack.SetActive(false);
     }
 
     private void Start()
@@ -193,6 +196,7 @@ public class CatController : MonoBehaviour
         ToyExitButton.SetActive(false);
         bar.SetActive(false);
         feather.SetActive(false);
+        snack.SetActive(false);
         yield return new WaitForSeconds(smoothTime);
         cam.transform.position = camInitPos;
 

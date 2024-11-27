@@ -15,6 +15,7 @@ public class PlaceButtonScript : MonoBehaviour
     //public GameObject GaguCanvas;
     //public GameObject RoomModify;
     public ModifySetup ms; //참조해서 편집완료할때 끄는 함수 실행
+    public GameObject gp;//가구들 들어있는 부모오브젝트
 
     public bool gaguOnGagu;
     public bool itemOn;
@@ -23,6 +24,10 @@ public class PlaceButtonScript : MonoBehaviour
     void Start()
     {
         AlertText = transform.GetChild(4).gameObject;
+        if (gp == null)
+        {
+            gp = GameObject.Find("GaguParent");
+        }
     }
 
     // Update is called once per frame
@@ -87,8 +92,18 @@ public class PlaceButtonScript : MonoBehaviour
     }
     public void Cancel()
     {
-       // GameObject go = GameObject.Find("OBJPreview");
-        Destroy(selected);
+        // GameObject go = GameObject.Find("OBJPreview");
+        // Destroy(selected);
+        for (int i = 0; i < gp.transform.childCount; i++)
+        {
+            GameObject childObject = gp.transform.GetChild(i).gameObject;
+            if (childObject.GetComponent<DragObject>().isActiveAndEnabled)
+            {
+                Destroy(childObject);
+            }
+            //Debug.Log("자식 오브젝트: " + childObject.name);
+        }
+
         selected = null;
     }
 

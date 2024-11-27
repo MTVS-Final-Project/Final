@@ -113,29 +113,40 @@ MonoBehaviour:
   controller: {fileID: 1735738910020601962}
   anim: {fileID: 606314600614583065}
   player: {fileID: 0}
+  sa: {fileID: 0}
   toilet: {fileID: 0}
   dish: {fileID: 0}
   tower: {fileID: 0}
   bed: {fileID: 0}
   towerBottom: {fileID: 0}
   sleepy: 100
-  friendly: 100
+  friendly: 70
   mood: 100
   hunger: 100
   moveTerm: 5
   moveRange: 2
   discharge: 0
   metabolism: 1
+  weight: 3
   speed: 1
   eatSpeed: 1
-  ds: {fileID: 0}
-  tiles: []
-  tilesInRange: []
+  CatIndex: 0
   rest: 0
   toSleep: 0
   toMeal: 0
   eating: 0
   starving: 0
+  isFat: 0
+  ds: {fileID: 0}
+  tiles: []
+  tilesInRange: []
+  CatType:
+  - whiteCat/BrownNyang
+  - whiteCat/GrayNyang
+  - whiteCat/WhiteNyang
+  - whiteCat/BrownNyang_F
+  - whiteCat/GrayNyang_F
+  - whiteCat/WhiteNyang_F
   state: 0
 --- !u!114 &8354679900807999429
 MonoBehaviour:
@@ -206,11 +217,13 @@ MonoBehaviour:
   minZoom: 2
   maxZoom: 5
   moveSmoothTime: 0.3
+  isZoomedIn: 0
   backButton: {fileID: 0}
   toyButton: {fileID: 0}
   ToyExitButton: {fileID: 0}
   bar: {fileID: 0}
   feather: {fileID: 0}
+  snack: {fileID: 0}
   player: {fileID: 0}
   anim: {fileID: 606314600614583065}
   modifying: 0
@@ -242,8 +255,10 @@ MonoBehaviour:
   hostile: 0
   goodReaction: {fileID: 1858103880086945475}
   badReaction: {fileID: 4916150047827848274}
+  negativeReaction: {fileID: 6081301469001249641}
+  veryGoodReaction: {fileID: 8352210535094963612}
   QM: {fileID: 0}
-  CB: {fileID: 0}
+  catAI: {fileID: 0}
 --- !u!114 &606314600614583065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,7 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 52853cdbc7f08dd4696e3a33cde3b813, type: 2}
-  initialSkinName: whiteCat/WhiteNyang
+  initialSkinName: whiteCat/GrayNyang
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
   initialFlipY: 0
@@ -284,7 +299,7 @@ MonoBehaviour:
   physicsMovementRelativeTo: {fileID: 0}
   updateTiming: 1
   unscaledTime: 0
-  _animationName: 
+  _animationName: Sleep
   loop: 1
   timeScale: 1
 --- !u!114 &1679088933163241106

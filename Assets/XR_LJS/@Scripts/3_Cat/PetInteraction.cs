@@ -47,7 +47,7 @@ public class PetInteraction : MonoBehaviour
     public Vector3 camStartPos;
     public float dragDis;
 
-   
+
 
     private void Awake()
     {
@@ -118,16 +118,17 @@ public class PetInteraction : MonoBehaviour
 
                     if (headClickCount == 3)  // 머리 2회 클릭
                     {
-                        //ShowPinkyReaction(); 고양이의 친밀도에 따라서 달라지는 반응, 기본적으로 부정적임
+                        //ShowPinkyReaction(); 고양이의 친밀도에 따라서 달라지는 반응, 기본적으로 부정적인데 친하면 안싫어함
                         if (catAI.friendly > 80)
                         {
                             Ignore();
+                            catAI.mood -= 5;
                         }
-                        else if(catAI.friendly >60)
+                        else if (catAI.friendly > 60)
                         {
                             StartCoroutine(ShowNegative());
                         }
-                        else if(catAI.friendly>40)
+                        else //if (catAI.friendly > 40) //안 친하면 그냥 부정적임.
                         {
                             ShowPinkyReaction();
                         }
@@ -148,7 +149,22 @@ public class PetInteraction : MonoBehaviour
 
                     if (bodyClickCount == 3)  // 몸통 2회 클릭
                     {
-                        //ShowFriendlyReaction();고양이 친밀도에 따라 달라지는 반응,기본적으로 긍정적임
+                        if (catAI.friendly > 80)
+                        {
+                            StartCoroutine(SuperHappy());
+                        }
+                        else if (catAI.friendly > 60)
+                        {
+                            ShowFriendlyReaction();//고양이 친밀도에 따라 달라지는 반응,기본적으로 긍정적임
+
+                        }
+                        else // (catAI.friendly > 40) //친밀도가 낮으면 그냥 부정적
+                        {
+                            ShowPinkyReaction();
+                        }
+
+
+
                         bodyClickCount = 0;
                         bodyClickCounter = 1;
                     }
@@ -166,23 +182,50 @@ public class PetInteraction : MonoBehaviour
         if (cam.orthographicSize <= 3)
         {
             Vector3 currentMousePosition = Input.mousePosition;
-             dragDis = Vector3.Distance(initialMousePosition, currentMousePosition);
+            dragDis = Vector3.Distance(initialMousePosition, currentMousePosition);
 
             if (dragDis > 5.0f)  // 드래그 거리 기준
             {
-                // 머리를 드래그한 경우
+                // 머리를 드래그한 경우 //기본적으로 긍정적
                 if (headClickCount > 0)
                 {
 
                     //sk.AnimationName = "Love";
-                    ShowFriendlyReaction();
+                   // ShowFriendlyReaction();
+                    if (catAI.friendly > 80)
+                    {
+                        StartCoroutine(SuperHappy());
+                    }
+                    else if (catAI.friendly > 60)
+                    {
+                        ShowFriendlyReaction();//고양이 친밀도에 따라 달라지는 반응,기본적으로 긍정적임
+
+                    }
+                    else  //(catAI.friendly > 40) //친밀도가 낮으면 그냥 부정적
+                    {
+                        ShowPinkyReaction();
+                    }
                     headClickCount = 0;
                     dragDis = 0;
                 }
                 // 몸통을 드래그한 경우
                 else if (bodyClickCount > 0)
                 {
-                    ShowPinkyReaction();
+                    //ShowPinkyReaction(); //기본이 부정
+                    if (catAI.friendly > 80)
+                    {
+                        Ignore();
+                        catAI.mood -= 5;
+
+                    }
+                    else if (catAI.friendly > 60)
+                    {
+                        StartCoroutine(ShowNegative());
+                    }
+                    else  //(catAI.friendly > 40) //안 친하면 그냥 부정적임.
+                    {
+                        ShowPinkyReaction();
+                    }
                     bodyClickCount = 0;
                     dragDis = 0;
                 }
@@ -221,7 +264,10 @@ public class PetInteraction : MonoBehaviour
             }
         }
     }
-
+    public void LetsPlay()
+    {
+        StartCoroutine(ShowPlay());
+    }
     public void GiveMeFood()
     {
         StartCoroutine(Showhungry());
@@ -243,14 +289,29 @@ public class PetInteraction : MonoBehaviour
         DisableAllButtons();
 
     }
-
-
+    public void Negative()
+    {
+        StartCoroutine(ShowNegative()); 
+    }
+    public IEnumerator ShowPlay()
+    {
+        wantPlay.SetActive(true);
+        yield return new WaitForSeconds(5);
+        wantPlay.SetActive(false);
+    }
     public IEnumerator ShowNegative()
     {
+        sk.AnimationName = "HAAAAAAAA";
         catAI.mood -= 10;
         negative.SetActive(true);
+        CatController.instance.ZoomOut();                          //줌아웃되면서
         yield return new WaitForSeconds(2);
+        sk.AnimationName = "Idle";
         negative.SetActive(false);
+    }
+    public void SuperH()
+    {
+        StartCoroutine(SuperHappy()); 
     }
     public IEnumerator SuperHappy()
     {
@@ -258,6 +319,7 @@ public class PetInteraction : MonoBehaviour
         catAI.mood += 20;
         superHappy.SetActive(true);
         yield return new WaitForSeconds(2);
+        sk.AnimationName = "Idle";
         superHappy.SetActive(false);
     }
 
@@ -271,7 +333,7 @@ public class PetInteraction : MonoBehaviour
         yield return new WaitForSeconds(2);
         ignoreImage.SetActive(false);
     }
-    private void ShowFriendlyReaction()
+    public void ShowFriendlyReaction()
     {
         sk.AnimationName = "Love";
         catAI.mood += 10;
@@ -323,6 +385,7 @@ public class PetInteraction : MonoBehaviour
     {
         // 반응이 끝난 후 일정 시간 뒤에 애니메이션 멈추기
         yield return new WaitForSeconds(1f); // 예시로 1초 기다림
+        sk.AnimationName = "Idle";
         sk.state.ClearTrack(0); // 트랙 0에서 애니메이션을 멈춤
     }
     private IEnumerator MoveCatAwayOnGround()

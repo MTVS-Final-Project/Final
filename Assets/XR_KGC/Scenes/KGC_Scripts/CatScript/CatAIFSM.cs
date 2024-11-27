@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 public class CatAIFSM : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class CatAIFSM : MonoBehaviour
     public CatController controller;
     public SkeletonAnimation anim;
     public GameObject player;
+    public SkeletonAnimation sa;
+
 
     // 고양이 가구 위치
     public Transform toilet;      // 화장실 위치
@@ -28,14 +31,12 @@ public class CatAIFSM : MonoBehaviour
     public float moveRange = 2;   // 한 번에 최대 얼마나 멀리 가는지
     public float discharge = 0;   // 화장실 사용 욕구
     public float metabolism = 1;  // 신진대사, 높을수록 배고픔이 빨리 줄고 수면을 짧게 해도 됨
+    public float weight = 3; //고양이 몸무게
 
     // 고양이 속도 관련
-    public float speed = 1;       // 고양이 속도, 기분/허기 상태에 따라 다름
+    public float speed = 1;       // 고양이 속도, 기분/허기 상태에 따라 다름 낮아야 빠름
     public float eatSpeed = 1;    // 밥 먹는 속도, 높으면 빨리 먹음
-
-    public DishState ds;          // 밥그릇 상태 확인
-    public List<GameObject> tiles = new List<GameObject>();        // 배회 상태일 때 이동 가능한 타일
-    public List<GameObject> tilesInRange = new List<GameObject>(); // 고양이 주변 일정 거리 내 타일
+    public int CatIndex = 0; //0번은 어두운놈, 1번은 노란눈 2번은 파란눈 3번부터 각자 살찐거로.
 
     // 고양이 상태 플래그
     public bool rest;      // 고양이가 쉬고 있는지
@@ -43,6 +44,51 @@ public class CatAIFSM : MonoBehaviour
     public bool toMeal;    // 고양이가 밥 먹고 싶은지
     public bool eating;    // 고양이가 밥 먹고 있는지
     public bool starving; //배고픈데 밥그릇에 밥이 없다.
+    public bool isFat = false; //살쪘는지 아닌지 확인용.
+
+
+    public DishState ds;          // 밥그릇 상태 확인
+    public List<GameObject> tiles = new List<GameObject>();        // 배회 상태일 때 이동 가능한 타일
+    public List<GameObject> tilesInRange = new List<GameObject>(); // 고양이 주변 일정 거리 내 타일
+
+    [SerializeField]
+    private List<string> CatType;
+
+    [System.Serializable]
+    public class CatStats
+    {
+        public float sleepy;
+        public float friendly;
+        public float mood;
+        public float hunger;
+        public float moveTerm;
+        public float moveRange;
+        public float discharge;
+        public float metabolism;
+        public float weight;
+        public float speed;
+        public float eatSpeed;
+        public int CatIndex;
+
+        public CatStats(float sleepy, float friendly, float mood, float hunger, float moveTerm,
+            float moveRange, float discharge, float metabolism, float weight, float speed,
+            float eatSpeed, int CatIndex)
+        {
+            this.sleepy = sleepy;
+            this.friendly = friendly;
+            this.mood = mood;
+            this.hunger = hunger;
+            this.moveTerm = moveTerm;
+            this.moveRange = moveRange;
+            this.discharge = discharge;
+            this.metabolism = metabolism;
+            this.weight = weight;
+            this.speed = speed;
+            this.eatSpeed = eatSpeed;
+            this.CatIndex = CatIndex;
+        }
+    }
+
 
     // 고양이 상태
     public enum CatState
@@ -64,14 +110,26 @@ public class CatAIFSM : MonoBehaviour
     {
         interaction = gameObject.GetComponentInChildren<PetInteraction>();
         player = GameObject.Find("Player");
+        sa = gameObject.GetComponent<SkeletonAnimation>();
+        SetCatSkin(CatIndex);
         state = CatState.Wandering; // 초기 상태 설정
         StartCoroutine(StateController());
         rest = false; // 초기에는 쉬지 않음
     }
 
+    public void SetCatSkin(int index)
+    {
+        Debug.Log("스킨변경 실행됨");
+        sa.skeleton.SetSkin(CatType[index]);
+        sa.skeleton.SetSlotsToSetupPose();
+        sa.AnimationState.Apply(sa.skeleton);
+
+        Debug.Log(CatType[index]);
+    }
     public void GetGaguPosition()
     {
         //이 스크립트가 진짜 써야되는거임 밑에거는 테스트용임.
+
         toilet = GameObject.Find("CatToilet(Clone)").transform;
         dish = GameObject.Find("Dish(Clone)").transform;
         tower = GameObject.Find("TowerPosition").transform;
@@ -91,9 +149,63 @@ public class CatAIFSM : MonoBehaviour
 
     void LateUpdate()
     {
+        if (friendly > 120)
+        {
+            friendly = 100;
+        }
+        if (mood > 150)
+        {
+            mood = 150;
+        }
+        if (isFat)
+        {
+
+            speed = 1.3f;
+            if (CatIndex == 0)
+            {
+                SetCatSkin(3);
+            }
+            else if (CatIndex == 1)
+            {
+                SetCatSkin(4);
+            }
+            else if (CatIndex == 2)
+            {
+                SetCatSkin(5);
+            }
+        }
+        else
+        {
+            speed = 1f;
+
+            if (CatIndex == 0)
+            {
+                SetCatSkin(0);
+            }
+            else if (CatIndex == 1)
+            {
+                SetCatSkin(1);
+            }
+            else if (CatIndex == 2)
+            {
+                SetCatSkin(2);
+            }
+        }
+
+        if (weight >= 6)
+        {
+            isFat = true;
+        }
+
+        if (controller.isZoomedIn)
+        {
+            state = CatState.PlayerCalled;
+        }
+
+
         if (player == null)
         {
-             player =  GameObject.Find("Player");
+            player = GameObject.Find("Player");
         }
         print("여기까지됨");
         GetGaguPosition();
@@ -150,7 +262,7 @@ public class CatAIFSM : MonoBehaviour
         // 쉬고 있을 때와 아닐 때의 수면욕구 변화
         if (!rest)
         {
-            sleepy -= Time.deltaTime * metabolism*0.5f;   // 활동 중 수면욕구 감소
+            sleepy -= Time.deltaTime * metabolism * 0.5f;   // 활동 중 수면욕구 감소
         }
         else
         {
@@ -160,13 +272,18 @@ public class CatAIFSM : MonoBehaviour
         // 수면 욕구 최대치 제한 및 상태 복귀
         if (sleepy > 100)
         {
-            sleepy = 100;
+            // sleepy = 100;
             state = CatState.Wandering; // 배회 상태로 복귀
             rest = false;
         }
         if (hunger > 20)
         {
             discharge += Time.deltaTime * metabolism * 0.01f;
+        }
+
+        if (!rest && starving)
+        {
+            mood -= Time.deltaTime;
         }
 
     }
@@ -213,7 +330,7 @@ public class CatAIFSM : MonoBehaviour
                     }
                     break;
                 case CatState.WantToPlay:
-
+                    yield return StartCoroutine(LetsPlay());
                     break;
 
                 default:
@@ -233,7 +350,15 @@ public class CatAIFSM : MonoBehaviour
     {
         anim.AnimationName = "Idle"; //확률에 따라 돌아다니거나 놀거나 하는
 
-        state = CatState.Wandering;
+        int ran = Random.Range(0, 5);
+        if (ran > 3 && mood > 80 && friendly > 80 && hunger > 70)
+        {
+            state = CatState.WantToPlay;
+        }
+        else
+        {
+            state = CatState.Wandering;
+        }
 
     }
     public void Ignore()
@@ -261,8 +386,12 @@ public class CatAIFSM : MonoBehaviour
     private void RespondToPlayer()
     {
         // 플레이어 호출에 응답
-        StopAllCoroutines();
-        state = CatState.Idle; // 응답 후 기본 상태로 복귀
+        //StopAllCoroutines();
+
+        if (!controller.isZoomedIn)//줌아웃이라면
+        {
+            state = CatState.Idle; // 응답 후 기본 상태로 복귀
+        }
     }
 
     public IEnumerator ToMeal(Vector3 targetPosition, float duration)
@@ -280,6 +409,32 @@ public class CatAIFSM : MonoBehaviour
             state = CatState.BegForFood; // 임시
             StartCoroutine(GiveMeFood());
             starving = true;
+        }
+    }
+    public IEnumerator LetsPlay()
+    {
+        Vector3 targetPosition = player.transform.position;
+        float playerDistance = Vector3.Distance(targetPosition, transform.position);
+
+        if (playerDistance > 1)
+        {
+            anim.AnimationName = "Walking";
+            float duration = speed;
+            float elapsed = 0f;
+            Vector3 startingPosition = transform.position;
+
+            while (elapsed < duration)
+            {
+                transform.position = Vector3.Lerp(startingPosition, targetPosition, elapsed / duration);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            anim.AnimationName = "Butt";//놀자하는표현
+            interaction.LetsPlay();
+            yield return new WaitForSeconds(5);
+            transform.position = targetPosition;
+            state = CatState.Idle;
+
         }
     }
 
@@ -301,7 +456,7 @@ public class CatAIFSM : MonoBehaviour
                 elapsed += Time.deltaTime;
                 yield return null;
             }
-            anim.AnimationName = "idle"; //앞발 휘적이는거로 바꿔야됨.
+            anim.AnimationName = "Play"; //앞발 휘적이는거로 바꿔야됨.
             interaction.GiveMeFood();
             transform.position = targetPosition;
 
@@ -349,6 +504,7 @@ public class CatAIFSM : MonoBehaviour
         state = CatState.Idle; //  
     }
 
+
     public IEnumerator Wandering(float term)
     {
         // 고양이 배회 상태
@@ -375,7 +531,7 @@ public class CatAIFSM : MonoBehaviour
     {
         // 특정 목표 위치로 이동
         anim.AnimationName = "Walking";
-        float duration = 1.0f;
+        float duration = speed;
         float elapsed = 0f;
         Vector3 startingPosition = transform.position;
 
@@ -413,6 +569,7 @@ public class CatAIFSM : MonoBehaviour
         float duration = 0.3f;
         float elapsed = 0f;
         Vector3 startingPosition = transform.position;
+        anim.AnimationName = "Jump";
 
         while (elapsed < duration)
         {
@@ -420,6 +577,7 @@ public class CatAIFSM : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
+        anim.AnimationName = "Idle";
         state = CatState.Sleeping; // Sleeping 상태로 전환
 
         transform.position = targetPosition;

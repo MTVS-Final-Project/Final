@@ -73,12 +73,12 @@ public class Appearance : MonoBehaviourPunCallbacks
             int hairyellow = 0;
             if (Index == 0 && option[hairyellow])
             {
-                PlayerPrefs.SetInt("selectedCharacter", 1);  // "SKPlayer" 선택
+                PlayerPrefs.SetInt("selectedCharacter", 1);  // "SKPlayer" 저장
                 print("SKPlayer을 저장");
             }
             else if (Index == 1 && option[1])
             {
-                PlayerPrefs.SetInt("selectedCharacter", 2);  // "SKPlayer2" 선택
+                PlayerPrefs.SetInt("selectedCharacter", 2);  // "SKPlayer2" 저장
                 print("SKPlayer2를 저장");
             }
         }
