@@ -2223,6 +2223,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 827833198}
+  - component: {fileID: 827833199}
   m_Layer: 0
   m_Name: CatSelector
   m_TagString: Untagged
@@ -2245,6 +2246,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &827833199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827833197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39b56d242ddfdbd4eb30907207b827e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 0}
 --- !u!4 &838920595 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2833845909196190703, guid: a167a05b5ecc76c4787a6320dc5ae34a,

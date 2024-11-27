@@ -54,6 +54,7 @@ public class PetInteraction : MonoBehaviour
     }
     private void Start()
     {
+        cam = Camera.main;
         if (mainCam == null)
         {
             mainCam = Camera.main.gameObject;

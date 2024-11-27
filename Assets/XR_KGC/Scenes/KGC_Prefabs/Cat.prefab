@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 3811378527535573821}
   - component: {fileID: 606314600614583065}
   - component: {fileID: 1679088933163241106}
+  - component: {fileID: 8587933207424758183}
   m_Layer: 0
   m_Name: Cat
   m_TagString: Cat
@@ -119,6 +120,7 @@ MonoBehaviour:
   tower: {fileID: 0}
   bed: {fileID: 0}
   towerBottom: {fileID: 0}
+  personality: 
   sleepy: 100
   friendly: 70
   mood: 100
@@ -128,6 +130,8 @@ MonoBehaviour:
   discharge: 0
   metabolism: 1
   weight: 3
+  age: 0.3
+  male: 0
   speed: 1
   eatSpeed: 1
   CatIndex: 0
@@ -314,6 +318,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2391c961ca876b5469dcb7bbf96a3318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &8587933207424758183
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749467779396147864}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.02
+  m_Height: 2.0021856
+  m_Direction: 1
+  m_Center: {x: -0.61, y: 1.256691, z: 0}
 --- !u!1 &1858103880086945475
 GameObject:
   m_ObjectHideFlags: 0

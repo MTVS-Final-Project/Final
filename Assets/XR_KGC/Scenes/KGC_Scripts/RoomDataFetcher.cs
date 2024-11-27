@@ -18,7 +18,7 @@ public class Furniture
 public class RoomData
 {
     public string id;
-    public int makerId;
+    public int ownerId;
     public List<Furniture> furnitureList;
     public string createdAt;
 }
@@ -29,7 +29,7 @@ public class RoomDataFetcher : MonoBehaviour
 
     private void Start()
     {
-        FetchRoomData("67445510d0c93b4e07351bf7");
+        FetchRoomData("7");
     }
 
     // 데이터를 가져오는 함수

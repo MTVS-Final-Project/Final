@@ -47,9 +47,9 @@ public class TempManager : MonoBehaviour
 
     public IEnumerator SendDataToServer()
     {
-        int makerId = 7;
+        int ownerId = 7;
 
-        GaguSave.GaguDataListWrapper dataWrapper = new GaguSave.GaguDataListWrapper(makerId,furnitureList);
+        GaguSave.GaguDataListWrapper dataWrapper = new GaguSave.GaguDataListWrapper(ownerId, furnitureList);
         string jsonData = JsonUtility.ToJson(dataWrapper);
         Debug.Log("Sending JSON Data: " + jsonData);
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);

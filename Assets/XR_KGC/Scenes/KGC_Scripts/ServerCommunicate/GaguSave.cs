@@ -47,12 +47,12 @@ public class GaguSave : MonoBehaviour
     [System.Serializable]
     public class GaguDataListWrapper
     {
-        public int makerId;
+        public int ownerId;
         public List<GaguData> furnitureList;
 
-        public GaguDataListWrapper(int makerId, List<GaguData> dataList)
+        public GaguDataListWrapper(int ownerId, List<GaguData> dataList)
         {
-            this.makerId = makerId;
+            this.ownerId = ownerId;
             furnitureList = dataList;
         }
     }
