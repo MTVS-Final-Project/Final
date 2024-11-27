@@ -12,11 +12,8 @@ public class PhotonNet : MonoBehaviourPunCallbacks
 {
     public Transform catTransform;
     public Transform cicleTransform;
-
     void Start()
     {
-        
-
         if (catTransform != null)
         {
             Vector3 spawnPosition = GetRandomPositionNearCat();
@@ -25,6 +22,7 @@ public class PhotonNet : MonoBehaviourPunCallbacks
             playerInstance.name = "Player";
             CatController.instance.player = playerInstance;
         }
+
 
         if (cicleTransform != null)
         {
@@ -35,7 +33,7 @@ public class PhotonNet : MonoBehaviourPunCallbacks
             //CatController.instance.player = playerInstance;
         }
 
-        
+
     }
     Vector3 GetRandomPositionNearCat()
     {
@@ -49,7 +47,4 @@ public class PhotonNet : MonoBehaviourPunCallbacks
         float offY = Random.Range(-0.1f, 0.1f);
         return cicleTransform != null ? cicleTransform.position + new Vector3(offX, offY, 0) : Vector3.zero;
     }
-
-
-
 }

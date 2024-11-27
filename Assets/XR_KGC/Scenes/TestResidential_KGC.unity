@@ -30766,7 +30766,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1196275988}
   m_HandleRect: {fileID: 1196275987}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -44147,6 +44147,18 @@ PrefabInstance:
       propertyPath: catTransform
       value: 
       objectReference: {fileID: 2140491202413770566}
+    - target: {fileID: 8437363301060831927, guid: e896c0d09c628044f8da587a1713f165,
+        type: 3}
+      propertyPath: hairblackSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 96ec4df8a0aeb2b4090e72525091f1ce,
+        type: 3}
+    - target: {fileID: 8437363301060831927, guid: e896c0d09c628044f8da587a1713f165,
+        type: 3}
+      propertyPath: hairyellowSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6faf253c6a952de46bfc6b2f71244393,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
