@@ -1,19 +1,12 @@
 ﻿using UnityEngine;
 using Photon.Pun;
-using UnityEngine.EventSystems;
 
 public class bl_ControllerExample : MonoBehaviourPunCallbacks
 {
     [SerializeField] private bl_Joystick Joystick;
     [SerializeField] private float Speed = 5f;
-    private Rigidbody2D rb;
-    private PhotonView photonView;
     private PolygonCollider2D boundaryCollider;
     private Transform playerTransform;
-    private bool isDragging = false;
-    private int touchId = -1;
-    private Canvas canvas;
-    private PointerEventData pointerEventData;
 
     void Awake()
     {
@@ -21,206 +14,84 @@ public class bl_ControllerExample : MonoBehaviourPunCallbacks
         {
             Joystick = FindObjectOfType<bl_Joystick>();
         }
-        boundaryCollider = GameObject.Find("polCollider").GetComponent<PolygonCollider2D>();
-        playerTransform = transform;
-        canvas = GameObject.FindObjectOfType<Canvas>();
-        pointerEventData = new PointerEventData(EventSystem.current);
-    }
-
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        photonView = GetComponent<PhotonView>();
-        if (rb != null)
+        GameObject polCol = GameObject.Find("polCollider");
+        if (polCol != null)
         {
-            rb.interpolation = RigidbodyInterpolation2D.Interpolate;
-            rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+            boundaryCollider = polCol.GetComponent<PolygonCollider2D>();
         }
+        playerTransform = transform;
     }
 
     void Update()
     {
         if (!photonView.IsMine) return;
 
-        //HandleInput();
         ProcessMovement();
     }
 
-//    private void HandleInput()
-//    {
-//#if UNITY_ANDROID || UNITY_IOS
-//        // 모바일 터치 입력 처리
-//        if (Input.touchCount > 0)
-//        {
-//            Touch myTouch = Input.GetTouch(0);
-
-//            switch (myTouch.phase)
-//            {
-//                case TouchPhase.Began:
-//                    if (!isDragging)
-//                    {
-//                        touchId = touch.fingerId;
-//                        isDragging = true;
-//                        OnTouchBegan(touch.position);
-//                    }
-//                    break;
-
-//                case TouchPhase.Moved:
-//                    if (isDragging && touch.fingerId == touchId)
-//                    {
-//                        OnTouchMoved(touch.position);
-//                    }
-//                    break;
-
-//                case TouchPhase.Ended:
-//                case TouchPhase.Canceled:
-//                    if (touch.fingerId == touchId)
-//                    {
-//                        isDragging = false;
-//                        touchId = -1;
-//                        OnTouchEnded();
-//                    }
-//                    break;
-//            }
-//        }
-//    }
-//#else
-//       // PC 마우스 입력 처리
-//       if (Input.GetMouseButtonDown(0))
-//       {
-//           isDragging = true;
-//           OnTouchBegan(Input.mousePosition);
-//       }
-//       else if (Input.GetMouseButton(0) && isDragging)
-//       {
-//           OnTouchMoved(Input.mousePosition);
-//       }
-//       else if (Input.GetMouseButtonUp(0))
-//       {
-//           isDragging = false;
-//           OnTouchEnded();
-//       }
-//#endif
-//}
-
-private void ProcessMovement()
-{
-    if (Joystick == null) return;
-
-    float horizontalInput = Joystick.Horizontal;
-    float verticalInput = Joystick.Vertical;
-    Vector2 movement = new Vector2(horizontalInput, verticalInput);
-
-    if (movement.magnitude > 1f)
+    private void ProcessMovement()
     {
-        movement.Normalize();
-    }
+        if (Joystick == null) return;
 
-    // 다음 위치 계산
-    Vector2 nextPosition = (Vector2)playerTransform.position + (movement * Speed * Time.deltaTime);
+        float horizontalInput = Joystick.Horizontal;
+        float verticalInput = Joystick.Vertical;
+        Vector2 movement = new Vector2(horizontalInput, verticalInput);
 
-    // 경계 확인 및 이동
-    if (IsPointInPolygon(nextPosition))
-    {
-        if (rb != null)
+        if (movement.magnitude > 1f)
         {
-            rb.MovePosition(nextPosition);
+            movement.Normalize();  // 입력 벡터를 정규화하여 속도를 일정하게 유지
+        }
+
+        // 다음 위치 계산
+        Vector2 nextPosition = (Vector2)playerTransform.position + (movement * Speed * Time.deltaTime);
+
+        // 경계 확인 및 이동
+        if (IsPointInPolygon(nextPosition))
+        {
+            playerTransform.position = nextPosition;  // Transform을 사용하여 위치 이동
         }
         else
         {
-            playerTransform.position = nextPosition;
+            Vector2 clampedPosition = ClampToPolygon(nextPosition);  // 경계를 벗어난 경우 폴리곤 안으로 클램핑
+            playerTransform.position = clampedPosition;  // 위치 업데이트
         }
     }
-    else
+
+    // 포인트가 폴리곤 내부에 있는지 확인
+    private bool IsPointInPolygon(Vector2 point)
     {
-        Vector2 clampedPosition = ClampToPolygon(nextPosition);
-        if (rb != null)
+        return boundaryCollider.OverlapPoint(point);
+    }
+
+    // 폴리곤 내에서 가장 가까운 유효한 위치를 찾기 위한 함수
+    private Vector2 ClampToPolygon(Vector2 position)
+    {
+        if (IsPointInPolygon(position))
+            return position;
+
+        Vector2 currentPos = playerTransform.position;
+        Vector2 direction = (position - currentPos).normalized;
+        float distance = Vector2.Distance(currentPos, position);
+        float minDistance = 0f;
+        float maxDistance = distance;
+        float currentDistance = distance;
+        Vector2 validPosition = currentPos;
+
+        // 이진 탐색 방식으로 유효한 위치 찾기
+        for (int i = 0; i < 10; i++)
         {
-            rb.MovePosition(clampedPosition);
+            currentDistance = (minDistance + maxDistance) * 0.5f;
+            Vector2 testPosition = currentPos + direction * currentDistance;
+            if (IsPointInPolygon(testPosition))
+            {
+                validPosition = testPosition;
+                minDistance = currentDistance;
+            }
+            else
+            {
+                maxDistance = currentDistance;
+            }
         }
-        else
-        {
-            playerTransform.position = clampedPosition;
-        }
+        return validPosition;
     }
-}
-
-private void OnTouchBegan(Vector2 position)
-{
-    if (canvas != null && Joystick != null)
-    {
-        pointerEventData.position = position;
-        Joystick.OnPointerDown(pointerEventData);
-    }
-}
-
-private void OnTouchMoved(Vector2 position)
-{
-    if (canvas != null && Joystick != null)
-    {
-        pointerEventData.position = position;
-        Joystick.OnDrag(pointerEventData);
-    }
-}
-
-private void OnTouchEnded()
-{
-    if (Joystick != null)
-    {
-        Joystick.OnPointerUp(pointerEventData);
-    }
-}
-
-private Vector3 GetWorldPosition(Vector2 screenPosition)
-{
-    if (canvas.renderMode == RenderMode.ScreenSpaceOverlay)
-    {
-        return screenPosition;
-    }
-    else
-    {
-        Vector2 tempVector = Vector2.zero;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvas.transform as RectTransform,
-            screenPosition,
-            canvas.worldCamera,
-            out tempVector);
-        return canvas.transform.TransformPoint(tempVector);
-    }
-}
-
-private bool IsPointInPolygon(Vector2 point)
-{
-    return boundaryCollider.OverlapPoint(point);
-}
-
-private Vector2 ClampToPolygon(Vector2 position)
-{
-    if (IsPointInPolygon(position))
-        return position;
-
-    Vector2 currentPos = playerTransform.position;
-    Vector2 direction = (position - currentPos).normalized;
-    float distance = Vector2.Distance(currentPos, position);
-    float minDistance = 0f;
-    float maxDistance = distance;
-    float currentDistance = distance;
-    Vector2 validPosition = currentPos;
-
-    for (int i = 0; i < 10; i++)
-    {
-        currentDistance = (minDistance + maxDistance) * 0.5f;
-        Vector2 testPosition = currentPos + direction * currentDistance;
-        if (IsPointInPolygon(testPosition))
-        {
-            validPosition = testPosition;
-            minDistance = currentDistance;
-        }
-        else
-        {
-            maxDistance = currentDistance;
-        }
-    }
-    return validPosition;
-}
 }

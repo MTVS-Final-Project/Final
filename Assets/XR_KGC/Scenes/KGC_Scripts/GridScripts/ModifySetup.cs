@@ -12,6 +12,7 @@ public class ModifySetup : MonoBehaviour
     public GameObject lines; //격자무늬
     public GameObject GaguCanvas;//가구 선택창
     public GameObject PlaceCanvas;//가구 회전 배치 버튼모음
+    public Camera camera;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,6 +24,7 @@ public class ModifySetup : MonoBehaviour
         RoomModify.SetActive(false);
         GaguCanvas.SetActive(false);
         PlaceCanvas.SetActive(false);
+        camera = Camera.main;
     }
 
     // Update is called once per frame
@@ -49,6 +51,7 @@ public class ModifySetup : MonoBehaviour
     }
     public void StartModify()
     {
+        camera.cullingMask = 1<<10;
         lines.SetActive(true);
         GaguCanvas.SetActive(true);
         RoomModify.SetActive(true);
@@ -56,6 +59,8 @@ public class ModifySetup : MonoBehaviour
     }
     public void EndModify()
     {
+        camera.cullingMask = -1;
+
         lines.SetActive(false);
         GaguCanvas.SetActive(false);
         RoomModify.SetActive(false);

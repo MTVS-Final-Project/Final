@@ -11,11 +11,13 @@ public class DishState : MonoBehaviour
     public SpriteRenderer sr;
     public bool clearDish;
 
-    public int mealCount; //밥 양
+    public float mealCount; //밥 양
 
     public Sprite[] dish = new Sprite[2];
 
     public ParentManager pm;
+
+    public GameObject player; //가구 상호작용할때 플래이어가 일정거리 이하일때만
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -32,6 +34,16 @@ public class DishState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (player == null)
+        {
+            player = GameObject.Find("Player");
+        }
+
+        if (RoomModify == null)
+        {
+            RoomModify = GameObject.Find("RoomModify");
+
+        }
         if (mealCount <= 0)
         {
             clearDish = true;
@@ -67,7 +79,7 @@ public class DishState : MonoBehaviour
                 if (Physics.Raycast(ray, out hit))
                 {
                     // 충돌한 오브젝트가 자신인지 확인
-                    if (hit.collider.gameObject == gameObject)
+                    if (hit.collider.gameObject == gameObject && Vector3.Distance(transform.position, player.transform.position)<1)
                     {
                         // 오브젝트가 클릭된 경우 확대 기능 실행
                         ZoomInDish();

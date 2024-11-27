@@ -5,9 +5,10 @@ using UnityEngine.Rendering;
 
 public class Appearance : MonoBehaviourPunCallbacks
 {
+    public static Appearance appearance;
     public SpriteRenderer part;
     public Sprite[] option;
-    private int _index;
+    private int _index = 0; // 기본값을 0으로 설정
 
     private PhotonView _photonView;
 
@@ -17,6 +18,7 @@ public class Appearance : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        appearance = this;
         _photonView = GetComponent<PhotonView>();
     }
 
@@ -48,6 +50,7 @@ public class Appearance : MonoBehaviourPunCallbacks
         {
             Index = (int)remoteIndex;
         }
+
     }
 
     // 번호에 맞춰서 이미지 변경
@@ -62,7 +65,23 @@ public class Appearance : MonoBehaviourPunCallbacks
     [PunRPC]
     public void Swap()
     {
+        
         Index = (Index + 1) % option.Length;
+        if (part.gameObject.CompareTag("Hair"))
+        {
+            print("hair만");
+            int hairyellow = 0;
+            if (Index == 0 && option[hairyellow])
+            {
+                PlayerPrefs.SetInt("selectedCharacter", 1);  // "SKPlayer" 저장
+                print("SKPlayer을 저장");
+            }
+            else if (Index == 1 && option[1])
+            {
+                PlayerPrefs.SetInt("selectedCharacter", 2);  // "SKPlayer2" 저장
+                print("SKPlayer2를 저장");
+            }
+        }
 
         if (_photonView != null && _photonView.IsMine && PhotonNetwork.IsMessageQueueRunning)
         {

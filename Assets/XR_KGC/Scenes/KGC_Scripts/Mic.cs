@@ -23,13 +23,13 @@ public class Mic : MonoBehaviour
     // 서버 URL
     public string uploadURL = "https://6862-59-13-225-125.ngrok-free.app/chatbot/json"; // 실제 서버의 URL로 변경하세요.
 
-    public CatController cc;
+    public CatAIFSM catAI;
 
     private void Update()
     {
-        if (cc == null)
+        if (catAI == null)
         {
-            cc = GameObject.Find("Cat").GetComponent<CatController>();
+            catAI = GameObject.Find("Cat").GetComponent<CatAIFSM>();
         }
         //if (Input.GetKeyDown(KeyCode.O))
         //{
@@ -45,7 +45,7 @@ public class Mic : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            cc.CallCat();
+            catAI.CallCat();
         }
     }
 
@@ -128,10 +128,11 @@ public class Mic : MonoBehaviour
         var response = JsonUtility.FromJson<ServerResponse>(responseText);
         if (response.is_same_voice)
         {
-            cc.CallCat();
+            catAI.CallCat();
         }
         else
         {
+            catAI.Ignore();
             Debug.Log("반응하지 않음");
         }
         // 두 값 출력

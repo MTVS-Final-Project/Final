@@ -51,6 +51,7 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
     public void ConnectToSecondRoom()
     {
         JoinOrCreateRoom("room2", "residential_LJS");
+        //JoinOrCreateRoom("room2", "TestResidential_KGC");
         //SceneManager.LoadScene("residential_LJS");
     }
 
@@ -64,9 +65,10 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
         JoinOrCreateRoom("room2", "residential_L");
         //SceneManager.LoadScene("residential_L");
     }
+   
     public void ConnetToRoom()
     {
-        PhotonNetwork.LoadLevel("Room_KGC");
+        SceneManager.LoadScene("Room_KGC");
         //SceneManager.LoadScene("Room_KGC");
         // SceneManager.LoadScene(2);
     }
@@ -75,10 +77,10 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.AutomaticallySyncScene = true;
 
-        PhotonNetwork.NickName = "";
+        PhotonNetwork.NickName = "Player" + Random.Range(1, 9000);
         PhotonNetwork.GameVersion = "1.0.0";
-        PhotonNetwork.SendRate = 30;
-        PhotonNetwork.SerializationRate = 30;
+        PhotonNetwork.SendRate = 60;
+        PhotonNetwork.SerializationRate = 60;
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -164,10 +166,10 @@ public class ConectionMgr : MonoBehaviourPunCallbacks
     {
         base.OnPlayerEnteredRoom(newPlayer);
         // 새로운 플레이어가 입장했을 때 커스터마이징을 동기화
-        if (photonView.IsMine)
-        {
-            photonView.RPC("UpdateCustomization", RpcTarget.AllBuffered);
-        }
+        //if (photonView.IsMine)
+        //{
+        //    photonView.RPC("UpdateCustomization", RpcTarget.AllBuffered);
+        //}
         print($"{newPlayer.NickName} 님이 입장하셨습니다.");
     }
 

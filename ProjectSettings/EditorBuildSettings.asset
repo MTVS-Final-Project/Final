@@ -21,8 +21,8 @@ EditorBuildSettings:
     path: Assets/XR_KGC/Scenes/Park_KGC.unity
     guid: 04307ce44fd65124a8a588757b0a305d
   - enabled: 1
-    path: Assets/XR_LJS/@Scenes/FirstScene_LJS.unity
-    guid: fbfc7753d83b76f4c8488bec8dccb687
+    path: Assets/XR_LJS/@Scenes/FirstScene_LJS2.unity
+    guid: 2e8c343db90c1414fb746b1e412b3703
   - enabled: 1
     path: Assets/XR_KGC/Scenes/Room_KGC.unity
     guid: f695295c9e83d0345a852602e7aa91a7
@@ -38,6 +38,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/XR_KSY/Scenes/MainScene_KSY.unity
     guid: 3e20e6cb72883f6449a92f944c77acf2
+  - enabled: 1
+    path: Assets/XR_KGC/Scenes/Second_KGC.unity
+    guid: 2d58939610bd3c64aab0c9bc285898fc
+  - enabled: 1
+    path: Assets/XR_KGC/Scenes/residential_KGC.unity
+    guid: feea91da38f278e438b506fbe696de56
+  - enabled: 1
+    path: Assets/XR_KGC/Scenes/Test2_KGC.unity
+    guid: b7da1f3c53567ea408940d33c081353b
+  - enabled: 1
+    path: Assets/XR_KGC/Scenes/TestResidential_KGC.unity
+    guid: 1e9d6d5391f42ac4887a4f1d07bf92f6
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6ee72d15cf39dd748a13eac57397b9af,
       type: 2}

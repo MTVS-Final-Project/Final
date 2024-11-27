@@ -2,11 +2,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using Spine.Unity;
+using UnityEngine.Audio;
 
 public class CatController : MonoBehaviour
 {
 
-    public static CatController instance;
+    public static CatController instance; //스태틱변수임
     //public Transform player;
     public float moveSpeed = 2.0f;
     public float doubleClickTimeLimit = 0.5f;
@@ -16,7 +17,7 @@ public class CatController : MonoBehaviour
     private BoxCollider2D bodyCollider;
     private Vector3 headOriginalOffset;
     private Vector3 bodyOriginalOffset;
-    //private SkeletonAnimation skeletonAnimation; // SkeletonAnimation 컴포넌트 참조
+    //public SkeletonAnimation skeletonAnimation; // SkeletonAnimation 컴포넌트 참조
     [SerializeField] private Camera cam; // 카메라 참조
     public float zoomMultiplier = 2.0f;
     public float minZoom = 2f;
@@ -29,21 +30,35 @@ public class CatController : MonoBehaviour
     private float targetZoom;
     private float zoomVelocity = 0f;
     private Vector3 cameraVelocity = Vector3.zero;
-    private bool isZoomedIn = false; // 현재 줌인 상태를 추적
+
+    public bool isZoomedIn = false; // 현재 줌인 상태를 추적
 
     public GameObject backButton; // 돌아가기 버튼 오브젝트
     public GameObject toyButton;
     public GameObject ToyExitButton;
     public GameObject bar;
     public GameObject feather;
+    public GameObject snack;
 
     public GameObject player; // Unity Inspector에서 플레이어 오브젝트 할당
     private float interactionDistance = 0.5f; // 상호작용 가능 거리
 
+    public SkeletonAnimation anim;
+
+
+
     public bool modifying;
+    //메인카메라 위치
+    public Vector3 camInitPos;
+
+
+    
+
+
     private void Awake()
     {
         instance = this;
+        
         //skeletonAnimation = GetComponent<SkeletonAnimation>();
         //if (skeletonAnimation != null)
         //{
@@ -64,10 +79,14 @@ public class CatController : MonoBehaviour
         ToyExitButton.SetActive(false);
         bar.SetActive(false);
         feather.SetActive(false);
+        snack.SetActive(false);
     }
 
     private void Start()
     {
+        
+        cam = Camera.main;
+        camInitPos = Camera.main.transform.position;
         // Scene의 모든 GameObject를 가져와서 이름에 "Player"가 포함된 것 찾기 (이전 코드 유지)
         foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>())
         {
@@ -89,7 +108,7 @@ public class CatController : MonoBehaviour
 
     void Update()
     {
-
+        
         if (!modifying)
         {
         HandleClick();
@@ -126,7 +145,7 @@ public class CatController : MonoBehaviour
             {
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
-                if (hit.collider != null && hit.collider.CompareTag("Ground"))
+                if (hit.collider != null && hit.collider.CompareTag("Ground") && Vector3.Distance(hit.collider.gameObject.transform.position, player.transform.position) < 1f)
                 {
                     if (cam.orthographicSize > 4)
                     {
@@ -184,7 +203,11 @@ public class CatController : MonoBehaviour
         ToyExitButton.SetActive(false);
         bar.SetActive(false);
         feather.SetActive(false);
+        snack.SetActive(false);
         yield return new WaitForSeconds(smoothTime);
+        cam.transform.position = camInitPos;
+        
+
     }
 
     public void CatGo(Transform t)
@@ -193,12 +216,29 @@ public class CatController : MonoBehaviour
     }
     public IEnumerator MoveTowards(Vector3 targetPosition)
     {
+        anim.AnimationName = "Walking";
         float duration = 1.0f;
         float elapsed = 0f;
         Vector3 startingPosition = transform.position;
         Vector3 direction = (targetPosition - startingPosition).normalized;
-
-
+        
+        while (elapsed < duration)
+        {
+            transform.position = Vector3.Lerp(startingPosition, targetPosition, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        
+        transform.position = targetPosition;
+        anim.AnimationName = "Idle";
+    }
+    
+    public IEnumerator JumpUp(Vector3 targetPosition)
+    {
+        float duration = 0.3f;
+        float elapsed = 0f;
+        Vector3 startingPosition = transform.position;
+        Vector3 direction = (targetPosition - startingPosition).normalized;
 
         while (elapsed < duration)
         {
@@ -206,8 +246,8 @@ public class CatController : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
-
         transform.position = targetPosition;
+
     }
 
 

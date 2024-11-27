@@ -8,13 +8,14 @@ using System.IO;
 using Newtonsoft.Json;
 using SFB;
 using UnityEngine.SceneManagement;
-//using Unity.Android.Gradle.Manifest;
-using UnityEngine.InputSystem;
 using Photon.Pun;
+using System.Text;
+using System.Reflection.Emit;
+using UnityEngine.EventSystems;
 
 public class MarketplaceUI : MonoBehaviour
 {
-    private static readonly string baseUrl = "https://your-swagger-server.com/api";
+    private static readonly string baseUrl = "http://13.124.6.53:8080/api/v1/market";
 
     public Image showUpImage;
     public Image showImage;
@@ -35,197 +36,236 @@ public class MarketplaceUI : MonoBehaviour
     public GameObject downPop;
     public GameObject upPop;
 
-    public Button[] categoryBtns;
-
-    public Sprite gagu;
-
-    private bool uploadTest;
-
-    public Button gagutest;
-    public GameObject gT;
-
     public TextMeshProUGUI money;
-
-    private bool uploadTest2;
 
     public GameObject chu;
     public GameObject gumae;
 
+    public TextMeshProUGUI itemName;
+
     private void Start()
     {
+        Debug.Log("Marketplace UI Start Initialized");
+
         uploadButton.onClick.AddListener(OpenFilePicker);
         purchaseButton.onClick.AddListener(PurchaseSelectedItem);
         menuBtn.SetActive(true);
         downPop.SetActive(false);
         upPop.SetActive(false);
-        uploadTest = false;
-        gT.SetActive(false);
         chu.SetActive(false);
         gumae.SetActive(false);
-
-        for (int i = 0; i < categoryBtns.Length; i++)
-        {
-            int categoryId = i + 1;
-            categoryBtns[i].onClick.AddListener(() => OnCategoryButtonClicked(categoryId));
-        }
     }
 
-    void Update()
+    public void OnCategoryButtonClicked()
     {
-        if(Keyboard.current.spaceKey.wasPressedThisFrame)
-        {
-            uploadTest = true;
-            Debug.Log("uploadTest = true");
-        }
-    }
-
-
-
-    private void OnCategoryButtonClicked(int categoryId)
-    {
-        selectedCategory = categoryId;
-        StartCoroutine(GetItemsByCategory(selectedCategory, DisplayItems));
+        StartCoroutine(GetAllItems(DisplayItems));
     }
 
     public void OpenDownloadPopUp()
     {
+        Debug.Log("Opening Download Popup");
         menuBtn.SetActive(false);
         downPop.SetActive(true);
     }
 
     public void OpenUploadPopUp()
     {
+        Debug.Log("Opening Upload Popup");
         menuBtn.SetActive(false);
         upPop.SetActive(true);
     }
 
     public void SetPopBtn()
     {
-        menuBtn.SetActive(true) ;
-        downPop.SetActive(false) ;
-        upPop.SetActive(false) ;
+        Debug.Log("Resetting Popups");
+        menuBtn.SetActive(true);
+        downPop.SetActive(false);
+        upPop.SetActive(false);
     }
 
     public void ChuGu()
     {
+        Debug.Log("Closing Purchase Feedback Popups");
         chu.SetActive(false);
         gumae.SetActive(false);
     }
 
     public void Backback()
     {
-        if(menuBtn.activeSelf)
+        if (menuBtn.activeSelf)
         {
-            //SceneManager.LoadScene(5);
+            Debug.Log("Returning to Room Scene");
             PhotonNetwork.LoadLevel("Room_KGC");
         }
         else
         {
+            Debug.Log("Returning to Main Menu");
             menuBtn.SetActive(true);
             downPop.SetActive(false);
             upPop.SetActive(false);
         }
     }
 
-    // 파일 탐색기에서 PNG 파일 선택
     private void OpenFilePicker()
     {
         var paths = StandaloneFileBrowser.OpenFilePanel("Select a PNG File", "", "png", false);
         if (paths.Length > 0 && !string.IsNullOrEmpty(paths[0]))
         {
             selectedFilePath = paths[0];
-            Debug.Log("Selected file: " + selectedFilePath);
-        }
-        showUpImage.sprite = gagu;
-        nameInputField.text = null;
-        categoryDropdown.value = (1);
-    }
-
-    // 아이템 업로드
-    public void OnUploadButtonClick()
-    {
-        string itemName = nameInputField.text;
-        selectedCategory = categoryDropdown.value;
-
-        if (/*!string.IsNullOrEmpty(selectedFilePath) &&*/ !string.IsNullOrEmpty(itemName))
-        {
-            StartCoroutine(UploadItem(itemName, selectedCategory/*, selectedFilePath*/));
-            chu.SetActive(true);
+            Debug.Log($"File Selected: {selectedFilePath}");
+            ReplaceSprite(selectedFilePath);
         }
         else
         {
-            Debug.LogError("Please select a file and enter a name.");
+            Debug.LogWarning("No file selected.");
+        }
+        nameInputField.text = null;
+        categoryDropdown.value = 0;
+    }
+
+    private void ReplaceSprite(string filePath)
+    {
+        if (!File.Exists(filePath))
+        {
+            Debug.LogError($"File not found at path: {filePath}");
+            return;
+        }
+
+        byte[] fileData = File.ReadAllBytes(filePath);
+        Texture2D texture = new Texture2D(2, 2);
+        if (texture.LoadImage(fileData))
+        {
+            Sprite newSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            showUpImage.sprite = newSprite;
+            Debug.Log("Sprite successfully replaced.");
+        }
+        else
+        {
+            Debug.LogError("Failed to load image data.");
         }
     }
 
-    // 선택된 카테고리의 아이템 목록을 ScrollView에 표시
+    public void OnUploadButtonClick()
+    {
+        string itemName = nameInputField.text;
+        string description = "설명";
+        float price = float.Parse("20"); // 가격 입력 필드 (문자열 -> 숫자 변환)
+        int makerId = 0; // 현재 사용자 ID를 가져옴
+        string category = "카테고리1"; // 선택된 카테고리
+        string filePath = selectedFilePath;
+
+        
+        if (!string.IsNullOrEmpty(filePath) && !string.IsNullOrEmpty(itemName) && !string.IsNullOrEmpty(category))
+        {
+            Debug.Log($"Uploading item: {itemName} in Category {category}");
+            StartCoroutine(UploadItem(itemName, description, price, makerId, category, filePath));
+            chu.SetActive(true); // 업로드 상태 UI 활성화
+        }
+        else
+        {
+            Debug.LogError("Upload failed: Please provide all required information.");
+        }
+    }
+    private IEnumerator GetAllItems(System.Action<List<Item>> callback)
+    {
+        string url = $"{baseUrl}/item"; // 전체 아이템을 가져오는 API URL
+
+        using (UnityWebRequest www = UnityWebRequest.Get(url))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError($"Error fetching items: {www.error}");
+            }
+            else
+            {
+                string json = www.downloadHandler.text;
+                List<Item> items = JsonConvert.DeserializeObject<List<Item>>(json); // 아이템 목록 파싱
+                callback(items); // 아이템 목록을 콜백으로 전달
+            }
+        }
+    }
     private void DisplayItems(List<Item> items)
     {
+        Debug.Log($"Displaying {items.Count} items");
+
+        // 1. 아이템 리스트가 null인지 확인
+        if (items == null || items.Count == 0)
+        {
+            Debug.LogWarning("No items to display.");
+            return;
+        }
+
         displayedItems = items;
 
+        // 2. 콘텐츠 영역에 기존 아이템을 모두 삭제
         foreach (Transform child in content)
         {
             Destroy(child.gameObject);
         }
 
+        // 3. 아이템 생성 및 UI에 추가
         foreach (Item item in items)
         {
+            if (item == null) continue;  // 아이템이 null일 경우 건너뛰기
+
             GameObject itemObj = Instantiate(itemPrefab, content);
-            itemObj.transform.Find("ItemName").GetComponent<Text>().text = item.name;
-            itemObj.GetComponent<Button>().onClick.AddListener(() => SelectItemForPurchase(item));
+            if (itemObj == null) continue; // 아이템 객체 생성에 실패할 경우 건너뛰기
 
-            // 이미지 로드
-            StartCoroutine(LoadImage(item.imageUrl, itemObj.transform.Find("ItemImage").GetComponent<Image>()));
+            
+            if (itemName != null)
+            {
+                itemName.text = item.name;
+            }
+            else
+            {
+                Debug.LogError("Item name UI element not found.");
+            }
+
+            // 5. 아이템 클릭 시 선택하도록 이벤트 추가
+            Button itemButton = itemObj.GetComponent<Button>();
+            if (itemButton != null)
+            {
+                itemButton.onClick.AddListener(() => SelectItemForPurchase(item));
+            }
+            else
+            {
+                Debug.LogError("Button component not found in item prefab.");
+            }
+
+            // 6. 이미지 로딩 (UI 요소가 null인지 체크)
+            Image itemImage = itemObj.transform.Find("ItemImage")?.GetComponent<Image>();
+            if (itemImage != null)
+            {
+                // StartCoroutine(LoadImage(item.imageUrl, itemImage));
+            }
+            else
+            {
+                Debug.Log("Image component not found in item prefab.");
+            }
+
+            Debug.Log($"Item Added: {item.name}");
         }
     }
 
-    public void TestCode()
+    public void SelectItemForPurchase(Item item)
     {
-        if(uploadTest == true)
-        {
-            gT.SetActive(true);
-        }
-        else
-        {
-            gT.SetActive(false);
-        }
-    }
-
-    public void TestShow()
-    {
-        showImage.sprite = gagu;
-        uploadTest2 = true;
-    }
-
-    public void TestBuy()
-    {
-        if(uploadTest2 == true)
-        {
-            money.text = "0";
-            gumae.SetActive(true);
-        }
-        
-    }
-
-    // 선택한 아이템을 구매 대상으로 설정
-    private void SelectItemForPurchase(Item item)
-    {
+        Debug.Log($"Item Selected for Purchase: {item.name} (ID: {item.itemId})");
         selectedItemForPurchase = item;
-        showImage.sprite = gagu;
-        Debug.Log("Selected item for purchase: " + item.name);
+        itemName.text = item.name;
     }
 
-    // 아이템 구매 요청
-    private void PurchaseSelectedItem()
+    public void PurchaseSelectedItem()
     {
         if (selectedItemForPurchase != null)
         {
-            StartCoroutine(PurchaseItem(selectedItemForPurchase.id, success =>
+            Debug.Log($"Attempting to purchase: {selectedItemForPurchase.name} (ID: {selectedItemForPurchase.itemId})");
+            StartCoroutine(PurchaseItem(selectedItemForPurchase.itemId, success =>
             {
                 if (success)
                 {
-                    Debug.Log("Purchase successful: " + selectedItemForPurchase.name);
-                    StartCoroutine(GetItemsByCategory(selectedCategory, DisplayItems));
+                    Debug.Log($"Purchase successful for {selectedItemForPurchase.name}");
+                    StartCoroutine(GetItemsByCategory(DisplayItems));
                 }
                 else
                 {
@@ -239,68 +279,104 @@ public class MarketplaceUI : MonoBehaviour
         }
     }
 
-    // 이미지 로드
     private IEnumerator LoadImage(string url, Image image)
     {
+        Debug.Log($"Loading image from URL: {url}");
+        url = $"{baseUrl}/item";
         using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(url))
         {
             yield return www.SendWebRequest();
             if (www.result == UnityWebRequest.Result.Success)
             {
-                // Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-                // image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
-                image.sprite = gagu;
-                
+                Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+                image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+                Debug.Log("Image loaded successfully.");
             }
             else
             {
-                image.sprite = gagu;
-                Debug.LogError("Error loading image: " + www.error);
+                Debug.LogError($"Error loading image: {www.error}");
             }
         }
     }
 
-    // 서버로 아이템 업로드
-    private IEnumerator UploadItem(string itemName, int category/*, string filePath*/)
+    private IEnumerator UploadItem(string itemName, string description, float price, int makerId, string category, string filePath)
     {
-        string url = $"{baseUrl}/upload";
-        //byte[] fileData = File.ReadAllBytes(filePath);
+        Debug.Log($"Starting Upload for {itemName} in Category {category}");
+        string url = $"{baseUrl}/item";
 
-        WWWForm form = new WWWForm();
-        form.AddField("name", itemName);
-        form.AddField("category", category);
-        //form.AddBinaryData("file", fileData, Path.GetFileName(filePath), "image/png");
-
-        uploadTest = true;
-
-        using (UnityWebRequest www = UnityWebRequest.Post(url, form))
+        // JSON 데이터 생성
+        UploadItemRequest jsonData = new UploadItemRequest
         {
+            makerId = makerId,
+            name = itemName,
+            description = description,
+            price = price,
+            category = category
+        };
+
+        // JSON 직렬화
+        string jsonString = JsonUtility.ToJson(jsonData);
+        Debug.Log($"Request JSON: {jsonString}");
+
+        using (UnityWebRequest www = new UnityWebRequest(url, "POST"))
+        {
+            // JSON 문자열을 UTF8로 바이트 배열로 변환하여 전송
+            www.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(jsonString));
+            www.downloadHandler = new DownloadHandlerBuffer();
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            // 요청 보내기
+            Debug.Log($"Request JSON: {jsonString}");
             yield return www.SendWebRequest();
 
+            // 응답 확인
             if (www.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError("Error uploading file: " + www.error);
+                Debug.LogError($"Upload failed: {www.error}\nResponse: {www.downloadHandler.text}");
             }
             else
             {
-                Debug.Log("File uploaded successfully: " + www.downloadHandler.text);
+                Debug.Log($"Upload successful: {www.downloadHandler.text}");
             }
         }
     }
 
-    // 서버로부터 카테고리별 아이템 목록 요청
-    private IEnumerator GetItemsByCategory(int category, System.Action<List<Item>> callback)
+    // 멀티파트 폼 데이터 생성 함수
+    private byte[] CreateMultipartFormData(string json, byte[] fileData, string filePath, string boundary)
     {
-        string url = $"{baseUrl}/items?category=" + category;
+        var formData = new List<byte>();
+
+        // JSON 데이터 추가
+        string jsonPart = $"--{boundary}\r\n" +
+                          "Content-Disposition: form-data; name=\"metadata\"\r\n\r\n" +
+                          $"{json}\r\n";
+        formData.AddRange(Encoding.UTF8.GetBytes(jsonPart));
+
+        // 파일 데이터 추가
+        string fileHeader = $"--{boundary}\r\n" +
+                            $"Content-Disposition: form-data; name=\"file\"; filename=\"{Path.GetFileName(filePath)}\"\r\n" +
+                            "Content-Type: image/png\r\n\r\n";
+        formData.AddRange(Encoding.UTF8.GetBytes(fileHeader));
+        formData.AddRange(fileData);
+        formData.AddRange(Encoding.UTF8.GetBytes("\r\n"));
+
+        // 끝 경계 추가
+        string endBoundary = $"--{boundary}--\r\n";
+        formData.AddRange(Encoding.UTF8.GetBytes(endBoundary));
+
+        return formData.ToArray();
+    }
+
+    private IEnumerator GetItemsByCategory(System.Action<List<Item>> callback)
+    {
+        string url = $"{baseUrl}/item";
 
         using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
             yield return www.SendWebRequest();
-
             if (www.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError("Error fetching items: " + www.error);
-
+                Debug.LogError($"Error fetching items: {www.error}");
             }
             else
             {
@@ -311,35 +387,70 @@ public class MarketplaceUI : MonoBehaviour
         }
     }
 
-    // 서버에 구매 요청
     private IEnumerator PurchaseItem(string itemId, System.Action<bool> callback)
     {
-        string url = $"{baseUrl}/purchase";
-        WWWForm form = new WWWForm();
-        form.AddField("itemId", itemId);
+        Debug.Log($"Attempting purchase for Item ID: {itemId}");
+        string url = $"{baseUrl}/item/{itemId}"; // 구매 API URL
 
-        using (UnityWebRequest www = UnityWebRequest.Post(url, form))
+        using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
             yield return www.SendWebRequest();
 
             if (www.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError("Error purchasing item: " + www.error);
+                Debug.LogError($"Purchase failed: {www.error}");
                 callback(false);
             }
             else
             {
-                Debug.Log("Item purchased successfully: " + www.downloadHandler.text);
-                callback(true);
+                try
+                {
+                    // 서버에서 반환된 JSON
+                    string json = www.downloadHandler.text;
+
+                    // JSON을 단일 객체로 역직렬화
+                    Item purchasedItem = JsonConvert.DeserializeObject<Item>(json);
+
+                    if (purchasedItem != null)
+                    {
+                        // DontDestroyOnLoad 오브젝트에 추가
+                        ItemManager.Instance.AddItems(new List<Item> { purchasedItem });
+
+                        Debug.Log($"Purchase successful: {purchasedItem.name}");
+                        callback(true);
+                    }
+                    else
+                    {
+                        Debug.LogError("Purchase response is invalid.");
+                        callback(false);
+                    }
+                }
+                catch (JsonSerializationException ex)
+                {
+                    Debug.LogError($"JSON Deserialization Error: {ex.Message}");
+                    callback(false);
+                }
             }
         }
     }
+
 }
 
 public class Item
 {
-    public string id;
+    public string itemId { get; set; }
+    public int makerId { get; set; }
+    public string name { get; set; }
+    public string description { get; set; }
+    public string category { get; set; }
+}
+
+[System.Serializable]
+public class UploadItemRequest
+{
+    public int makerId;
     public string name;
-    public string imageUrl;
-    public int category;
+    public string description;
+    public float price;
+    public string category;
 }

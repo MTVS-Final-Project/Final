@@ -8,11 +8,14 @@ public class PlaceButtonScript : MonoBehaviour
     public GameObject selected;
     public GameObject AlertText;
 
+    public CatAIFSM catAI;
+
     //public GameObject lines; //편집완료할때 꺼질애들
     //public GameObject placeCanvas;
     //public GameObject GaguCanvas;
     //public GameObject RoomModify;
     public ModifySetup ms; //참조해서 편집완료할때 끄는 함수 실행
+    public GameObject gp;//가구들 들어있는 부모오브젝트
 
     public bool gaguOnGagu;
     public bool itemOn;
@@ -21,11 +24,19 @@ public class PlaceButtonScript : MonoBehaviour
     void Start()
     {
         AlertText = transform.GetChild(4).gameObject;
+        if (gp == null)
+        {
+            gp = GameObject.Find("GaguParent");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (catAI != null)
+        {
+            GameObject.Find("Cat").GetComponent<CatAIFSM>();
+        }
         //if (lines == null)
         //{
         //    lines = GameObject.Find("LineParent");
@@ -56,6 +67,13 @@ public class PlaceButtonScript : MonoBehaviour
             itemOn = true;
         }
     }
+    //고양이가 가구수정된 위치 찾아가는 코드
+    //public void PosUpdate()
+    //{
+    //    catAI.GetGaguPosition();
+    //}
+
+
     public void PlaceOBJ()
     {
         //GameObject go = GameObject.Find("OBJPreview");
@@ -74,8 +92,18 @@ public class PlaceButtonScript : MonoBehaviour
     }
     public void Cancel()
     {
-       // GameObject go = GameObject.Find("OBJPreview");
-        Destroy(selected);
+        // GameObject go = GameObject.Find("OBJPreview");
+        // Destroy(selected);
+        for (int i = 0; i < gp.transform.childCount; i++)
+        {
+            GameObject childObject = gp.transform.GetChild(i).gameObject;
+            if (childObject.GetComponent<DragObject>().isActiveAndEnabled)
+            {
+                Destroy(childObject);
+            }
+            //Debug.Log("자식 오브젝트: " + childObject.name);
+        }
+
         selected = null;
     }
 

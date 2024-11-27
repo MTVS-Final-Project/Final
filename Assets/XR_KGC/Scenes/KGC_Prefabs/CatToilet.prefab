@@ -39,6 +39,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1193022341487774967, guid: 17ff07928cfe64141ac0a3f2f056b715,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2741063926562249564, guid: 17ff07928cfe64141ac0a3f2f056b715,
         type: 3}
       propertyPath: m_Size.x
@@ -162,7 +167,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RoomModify: {fileID: 0}
   toilet: {fileID: 0}
+  player: {fileID: 0}
   pm: {fileID: 0}
+  quantity: 0
 --- !u!4 &6430900047211479371 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6066558071972036446, guid: 17ff07928cfe64141ac0a3f2f056b715,

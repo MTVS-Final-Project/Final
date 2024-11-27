@@ -34,19 +34,15 @@ MonoBehaviour:
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
+  - AddChat
   - ClickRpc
   - DestroyRpc
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
   - Swap
-  - SyncCharacterAppearance
   - SyncFlip
-  - UpdateCustomization
   - UpdateSpriteForAllPlayers
-  - UpdateTargetPosition
-  - SyncPosition
-  - ApplyCustomization
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
