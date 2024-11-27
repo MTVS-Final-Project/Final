@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ public class CatAIFSM : MonoBehaviour
     public Transform towerBottom; // 타워 올라가기 전 위치
 
     // 고양이 상태 관련 수치
+    public string personality;    //고양이 성격
     public float sleepy = 100;    // 수면욕구
     public float friendly = 100f; // 우호도
     public float mood = 100;      // 기분, 높으면 우호도가 빨리 오름
@@ -32,6 +34,9 @@ public class CatAIFSM : MonoBehaviour
     public float discharge = 0;   // 화장실 사용 욕구
     public float metabolism = 1;  // 신진대사, 높을수록 배고픔이 빨리 줄고 수면을 짧게 해도 됨
     public float weight = 3; //고양이 몸무게
+    public float age = 0.3f; //고양이 나이
+    public bool male = false; //암,수 구분
+    
 
     // 고양이 속도 관련
     public float speed = 1;       // 고양이 속도, 기분/허기 상태에 따라 다름 낮아야 빠름
@@ -57,6 +62,7 @@ public class CatAIFSM : MonoBehaviour
     [System.Serializable]
     public class CatStats
     {
+        public string personality;
         public float sleepy;
         public float friendly;
         public float mood;
@@ -69,11 +75,14 @@ public class CatAIFSM : MonoBehaviour
         public float speed;
         public float eatSpeed;
         public int CatIndex;
+        public float age;
+        public bool male;
 
-        public CatStats(float sleepy, float friendly, float mood, float hunger, float moveTerm,
+        public CatStats(string personality, float sleepy, float friendly, float mood, float hunger, float moveTerm,
             float moveRange, float discharge, float metabolism, float weight, float speed,
-            float eatSpeed, int CatIndex)
+            float eatSpeed, int CatIndex, bool male,float age)
         {
+            this.personality = personality;
             this.sleepy = sleepy;
             this.friendly = friendly;
             this.mood = mood;
@@ -86,6 +95,8 @@ public class CatAIFSM : MonoBehaviour
             this.speed = speed;
             this.eatSpeed = eatSpeed;
             this.CatIndex = CatIndex;
+            this.male = male;
+            this.age = age;
         }
     }
 
