@@ -1,6 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/XR_LJS/SFX.meta
 guid: c97f1a1951311274b8224f82af7ec563
 folderAsset: yes
+========
+guid: 1e9d6d5391f42ac4887a4f1d07bf92f6
+>>>>>>>> 8c48699fd3bb0adca1576664c3a3fcf219d5e64a:Assets/XR_KGC/Scenes/UISample_KGC.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
