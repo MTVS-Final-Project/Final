@@ -10,6 +10,8 @@ using SFB;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using System.Text;
+using System.Reflection.Emit;
+using UnityEngine.EventSystems;
 
 public class MarketplaceUI : MonoBehaviour
 {
@@ -38,6 +40,8 @@ public class MarketplaceUI : MonoBehaviour
 
     public GameObject chu;
     public GameObject gumae;
+
+    public TextMeshProUGUI itemName;
 
     private void Start()
     {
@@ -150,6 +154,7 @@ public class MarketplaceUI : MonoBehaviour
         string category = "카테고리1"; // 선택된 카테고리
         string filePath = selectedFilePath;
 
+        
         if (!string.IsNullOrEmpty(filePath) && !string.IsNullOrEmpty(itemName) && !string.IsNullOrEmpty(category))
         {
             Debug.Log($"Uploading item: {itemName} in Category {category}");
@@ -207,16 +212,15 @@ public class MarketplaceUI : MonoBehaviour
             GameObject itemObj = Instantiate(itemPrefab, content);
             if (itemObj == null) continue; // 아이템 객체 생성에 실패할 경우 건너뛰기
 
-            // 4. UI 요소에 아이템 이름 설정
-            //Text itemNameText = itemObj.transform.Find("ItemName")?.GetComponent<Text>();
-            //if (itemNameText != null)
-            //{
-            //    itemNameText.text = item.name;
-            //}
-            //else
-            //{
-            //    Debug.LogError("Item name UI element not found.");
-            //}
+            
+            if (itemName != null)
+            {
+                itemName.text = item.name;
+            }
+            else
+            {
+                Debug.LogError("Item name UI element not found.");
+            }
 
             // 5. 아이템 클릭 시 선택하도록 이벤트 추가
             Button itemButton = itemObj.GetComponent<Button>();
@@ -233,7 +237,7 @@ public class MarketplaceUI : MonoBehaviour
             Image itemImage = itemObj.transform.Find("ItemImage")?.GetComponent<Image>();
             if (itemImage != null)
             {
-                StartCoroutine(LoadImage(item.imageUrl, itemImage));
+                // StartCoroutine(LoadImage(item.imageUrl, itemImage));
             }
             else
             {
@@ -246,16 +250,17 @@ public class MarketplaceUI : MonoBehaviour
 
     public void SelectItemForPurchase(Item item)
     {
-        Debug.Log($"Item Selected for Purchase: {item.name} (ID: {item.id})");
+        Debug.Log($"Item Selected for Purchase: {item.name} (ID: {item.itemId})");
         selectedItemForPurchase = item;
+        itemName.text = item.name;
     }
 
     public void PurchaseSelectedItem()
     {
         if (selectedItemForPurchase != null)
         {
-            Debug.Log($"Attempting to purchase: {selectedItemForPurchase.name} (ID: {selectedItemForPurchase.id})");
-            StartCoroutine(PurchaseItem(selectedItemForPurchase.id, success =>
+            Debug.Log($"Attempting to purchase: {selectedItemForPurchase.name} (ID: {selectedItemForPurchase.itemId})");
+            StartCoroutine(PurchaseItem(selectedItemForPurchase.itemId, success =>
             {
                 if (success)
                 {
@@ -385,11 +390,12 @@ public class MarketplaceUI : MonoBehaviour
     private IEnumerator PurchaseItem(string itemId, System.Action<bool> callback)
     {
         Debug.Log($"Attempting purchase for Item ID: {itemId}");
-        string url = $"{baseUrl}/item?itemId={UnityWebRequest.EscapeURL(itemId)}"; // 쿼리 문자열로 itemId 추가
+        string url = $"{baseUrl}/item/{itemId}"; // 구매 API URL
 
         using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
             yield return www.SendWebRequest();
+
             if (www.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError($"Purchase failed: {www.error}");
@@ -397,8 +403,33 @@ public class MarketplaceUI : MonoBehaviour
             }
             else
             {
-                Debug.Log($"Purchase successful: {www.downloadHandler.text}");
-                callback(true);
+                try
+                {
+                    // 서버에서 반환된 JSON
+                    string json = www.downloadHandler.text;
+
+                    // JSON을 단일 객체로 역직렬화
+                    Item purchasedItem = JsonConvert.DeserializeObject<Item>(json);
+
+                    if (purchasedItem != null)
+                    {
+                        // DontDestroyOnLoad 오브젝트에 추가
+                        ItemManager.Instance.AddItems(new List<Item> { purchasedItem });
+
+                        Debug.Log($"Purchase successful: {purchasedItem.name}");
+                        callback(true);
+                    }
+                    else
+                    {
+                        Debug.LogError("Purchase response is invalid.");
+                        callback(false);
+                    }
+                }
+                catch (JsonSerializationException ex)
+                {
+                    Debug.LogError($"JSON Deserialization Error: {ex.Message}");
+                    callback(false);
+                }
             }
         }
     }
@@ -407,10 +438,11 @@ public class MarketplaceUI : MonoBehaviour
 
 public class Item
 {
-    public string id;
-    public string name;
-    public string imageUrl;
-    public string category;
+    public string itemId { get; set; }
+    public int makerId { get; set; }
+    public string name { get; set; }
+    public string description { get; set; }
+    public string category { get; set; }
 }
 
 [System.Serializable]
