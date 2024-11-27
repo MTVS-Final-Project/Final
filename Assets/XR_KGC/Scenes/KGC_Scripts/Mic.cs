@@ -136,7 +136,7 @@ public class Mic : MonoBehaviour
             Debug.Log("반응하지 않음");
         }
         // 두 값 출력
-       // result_text.text = $"Similarity: {response.Similarity}\nis_same_voice: {response.is_same_voice}";
+        result_text.text = $"Similarity: {response.Similarity}\nis_same_voice: {response.is_same_voice} final_result{response.final_result}command_match{response.command_match}";
 
         
     }
@@ -266,4 +266,6 @@ public class ServerResponse
 {
     public float Similarity;     // 서버에서 전달받을 Similarity 값
     public bool is_same_voice;   // 서버에서 전달받을 is_same_voice 값
+    public string command_match; //내부적인거
+    public bool final_result;    //최종적으로 트루펄스
 }

@@ -12,6 +12,10 @@ public class ModifySetup : MonoBehaviour
     public GameObject lines; //격자무늬
     public GameObject GaguCanvas;//가구 선택창
     public GameObject PlaceCanvas;//가구 회전 배치 버튼모음
+    public GameObject catStatusCanvas;
+    public GameObject MenuCanvas;
+
+
     public Camera camera;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -21,6 +25,9 @@ public class ModifySetup : MonoBehaviour
         RoomModify = GameObject.Find("RoomModify");
         GaguCanvas = GameObject.Find("GaguCanvas");
         PlaceCanvas = GameObject.Find("PlaceCanvas");
+        catStatusCanvas = GameObject.Find("CatStatusCanvas");
+        MenuCanvas = GameObject.Find("MenuCanvas");
+
         RoomModify.SetActive(false);
         GaguCanvas.SetActive(false);
         PlaceCanvas.SetActive(false);
@@ -56,6 +63,7 @@ public class ModifySetup : MonoBehaviour
         GaguCanvas.SetActive(true);
         RoomModify.SetActive(true);
         PlaceCanvas.SetActive(true);
+
     }
     public void EndModify()
     {
