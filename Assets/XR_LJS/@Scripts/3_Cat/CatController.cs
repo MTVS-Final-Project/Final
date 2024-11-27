@@ -38,6 +38,7 @@ public class CatController : MonoBehaviour
     public GameObject bar;
     public GameObject feather;
     public GameObject snack;
+    public GameObject menuButton;
 
     public GameObject player; // Unity Inspector에서 플레이어 오브젝트 할당
     private float interactionDistance = 0.5f; // 상호작용 가능 거리
@@ -66,7 +67,7 @@ public class CatController : MonoBehaviour
         //bodyOriginalOffset = bodyCollider.offset;
 
         //player = GameObject.Find("ChairDinningB").GetComponent<Transform>();
-
+        menuButton = GameObject.Find("MenuButton");
         // 돌아가기 버튼을 초기 비활성화
         backButton.SetActive(false);
         toyButton.SetActive(false);
@@ -180,6 +181,7 @@ public class CatController : MonoBehaviour
         yield return new WaitForSeconds(smoothTime);
         backButton.SetActive(true);
         toyButton.SetActive(true);
+        menuButton.SetActive(false);
     }
 
     public void ZoomOut()
@@ -191,6 +193,8 @@ public class CatController : MonoBehaviour
     {
         targetZoom = maxZoom;
         isZoomedIn = false;
+        menuButton.SetActive(true);
+
         backButton.SetActive(false); // 줌아웃 시 버튼 비활성화
         toyButton.SetActive(false);
         ToyExitButton.SetActive(false);

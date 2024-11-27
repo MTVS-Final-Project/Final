@@ -167,7 +167,8 @@ public class HomeSceneUIScripts : MonoBehaviourPunCallbacks
 
     public void Btn_castle()
     {
-        castle.SetActive(true);
+        //castle.SetActive(true);
+        SceneManager.LoadScene("Castle_KGC");
     }
     public void Btn_castleClose()
     {

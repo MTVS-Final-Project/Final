@@ -14,11 +14,16 @@ public class ModifySetup : MonoBehaviour
     public GameObject PlaceCanvas;//가구 회전 배치 버튼모음
     public GameObject catStatusCanvas;
     public GameObject MenuCanvas;
+    public GameObject MenuButton;
 
 
     public Camera camera;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private void Awake()
+    {
+        MenuButton = GameObject.Find("MenuButton");
+    }
     void Start()
     {
         pm = GameObject.Find("PopupCanvas").GetComponent<ParentManager>();
@@ -37,15 +42,15 @@ public class ModifySetup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         if (!pm.allDeactivated || buttonOff)
-        {
-            transform.GetChild(0).gameObject.SetActive(false);
-        }
-         else if(!buttonOff&&pm.allDeactivated)
-        {
-            transform.GetChild(0).gameObject.SetActive(true);
+        // if (!pm.allDeactivated || buttonOff)
+        //{
+        //    transform.GetChild(0).gameObject.SetActive(false);
+        //}
+        // else if(!buttonOff&&pm.allDeactivated)
+        //{
+        //    transform.GetChild(0).gameObject.SetActive(true);
 
-        }
+        //}
 
         if (lines == null)
         {
@@ -73,6 +78,7 @@ public class ModifySetup : MonoBehaviour
         GaguCanvas.SetActive(false);
         RoomModify.SetActive(false);
         PlaceCanvas.SetActive(false);
+        MenuButton.SetActive(true);
 
         // 씬 내의 모든 DragObject 스크립트를 비활성화 (비활성화된 게임 오브젝트 포함)
         DragObject[] dragObjects = FindObjectsOfType<DragObject>(true);

@@ -34,7 +34,7 @@ public class CatAIFSM : MonoBehaviour
     public float discharge = 0;   // 화장실 사용 욕구
     public float metabolism = 1;  // 신진대사, 높을수록 배고픔이 빨리 줄고 수면을 짧게 해도 됨
     public float weight = 3; //고양이 몸무게
-    public float age = 0.3f; //고양이 나이
+    public float age = 3f; //고양이 나이
     public bool male = false; //암,수 구분
     
 
