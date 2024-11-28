@@ -12,6 +12,7 @@ using Photon.Pun;
 using System.Text;
 using System.Reflection.Emit;
 using UnityEngine.EventSystems;
+using UnityEditor.EditorTools;
 
 public class MarketplaceUI : MonoBehaviour
 {
@@ -21,7 +22,6 @@ public class MarketplaceUI : MonoBehaviour
     public Image showImage;
 
     public TMP_InputField nameInputField;
-    public TMP_Dropdown categoryDropdown;
     public Button uploadButton;
     public Button purchaseButton;
     public Transform content;
@@ -30,18 +30,25 @@ public class MarketplaceUI : MonoBehaviour
     private int selectedCategory;
     private string selectedFilePath;
     private List<Item> displayedItems;
+    private List<Room1> displayedRooms;
     private Item selectedItemForPurchase;
+    private Room1 selectedRoomForPurchase;
 
     public GameObject menuBtn;
     public GameObject downPop;
+    public GameObject downPop2;
     public GameObject upPop;
 
     public TextMeshProUGUI money;
 
     public GameObject chu;
+    public GameObject chu2;
     public GameObject gumae;
+    public GameObject gumae2;
 
     public TextMeshProUGUI itemName;
+    public GameObject whatPop;
+    public GameObject whatGumae;
 
     private void Start()
     {
@@ -49,12 +56,42 @@ public class MarketplaceUI : MonoBehaviour
 
         uploadButton.onClick.AddListener(OpenFilePicker);
         purchaseButton.onClick.AddListener(PurchaseSelectedItem);
+        whatPop.SetActive(false);
+        whatGumae.SetActive(false);
         menuBtn.SetActive(true);
         downPop.SetActive(false);
+        downPop2.SetActive(false);
         upPop.SetActive(false);
         chu.SetActive(false);
+        chu2.SetActive(false);
         gumae.SetActive(false);
+        gumae2.SetActive(false);
     }
+
+    public void gumaehagi()
+    {
+        gumae.SetActive(true);
+    }
+
+    public void WhatsPopup()
+    {
+        whatPop.SetActive(true);
+    }
+
+    public void WhatsPopupClose()
+    {
+        whatPop.SetActive(false);
+    }
+
+    public void WhatsGumae()
+    {
+        whatGumae.SetActive(true);
+    }
+    public void WhatsGumaeClose()
+    {
+        whatGumae.SetActive(false);
+    }
+
 
     public void OnCategoryButtonClicked()
     {
@@ -64,13 +101,24 @@ public class MarketplaceUI : MonoBehaviour
     public void OpenDownloadPopUp()
     {
         Debug.Log("Opening Download Popup");
+        whatGumae.SetActive(false);
         menuBtn.SetActive(false);
         downPop.SetActive(true);
+        downPop2.SetActive(false);
+    }
+    public void OpenDownloadPopUp2()
+    {
+        Debug.Log("Opening Download Popup");
+        whatGumae.SetActive(false);
+        menuBtn.SetActive(false);
+        downPop.SetActive(false);
+        downPop2.SetActive(true);
     }
 
     public void OpenUploadPopUp()
     {
         Debug.Log("Opening Upload Popup");
+        whatPop.SetActive(false);
         menuBtn.SetActive(false);
         upPop.SetActive(true);
     }
@@ -87,7 +135,14 @@ public class MarketplaceUI : MonoBehaviour
     {
         Debug.Log("Closing Purchase Feedback Popups");
         chu.SetActive(false);
+        chu2.SetActive(false );
         gumae.SetActive(false);
+        gumae2.SetActive(false);
+    }
+
+    public void Gumaebulga()
+    {
+        gumae2.SetActive(true);
     }
 
     public void Backback()
@@ -102,6 +157,7 @@ public class MarketplaceUI : MonoBehaviour
             Debug.Log("Returning to Main Menu");
             menuBtn.SetActive(true);
             downPop.SetActive(false);
+            downPop2.SetActive(false);
             upPop.SetActive(false);
         }
     }
@@ -120,7 +176,6 @@ public class MarketplaceUI : MonoBehaviour
             Debug.LogWarning("No file selected.");
         }
         nameInputField.text = null;
-        categoryDropdown.value = 0;
     }
 
     private void ReplaceSprite(string filePath)
@@ -154,12 +209,30 @@ public class MarketplaceUI : MonoBehaviour
         string category = "카테고리1"; // 선택된 카테고리
         string filePath = selectedFilePath;
 
-        
+
         if (!string.IsNullOrEmpty(filePath) && !string.IsNullOrEmpty(itemName) && !string.IsNullOrEmpty(category))
         {
             Debug.Log($"Uploading item: {itemName} in Category {category}");
             StartCoroutine(UploadItem(itemName, description, price, makerId, category, filePath));
             chu.SetActive(true); // 업로드 상태 UI 활성화
+        }
+        else
+        {
+            Debug.LogError("Upload failed: Please provide all required information.");
+        }
+    }
+    public void OnUploadButtonClickRoom()
+    {
+        string roomId = "0";
+        int price = int.Parse("20");
+        int makerId = 0;
+
+        if (!string.IsNullOrEmpty(roomId))
+        {
+            Debug.Log($"Uploading item: {itemName}");
+            StartCoroutine(UploadRoom(roomId, price));
+            whatPop.SetActive(false);
+            chu2.SetActive(true); // 업로드 상태 UI 활성화
         }
         else
         {
@@ -182,6 +255,25 @@ public class MarketplaceUI : MonoBehaviour
                 string json = www.downloadHandler.text;
                 List<Item> items = JsonConvert.DeserializeObject<List<Item>>(json); // 아이템 목록 파싱
                 callback(items); // 아이템 목록을 콜백으로 전달
+            }
+        }
+    }
+    private IEnumerator GetAllRooms(System.Action<List<Room1>> callback)
+    {
+        string url = $"{baseUrl}/room"; // 전체 아이템을 가져오는 API URL
+
+        using (UnityWebRequest www = UnityWebRequest.Get(url))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError($"Error fetching items: {www.error}");
+            }
+            else
+            {
+                string json = www.downloadHandler.text;
+                List<Room1> rooms = JsonConvert.DeserializeObject<List<Room1>>(json); // 아이템 목록 파싱
+                callback(rooms); // 아이템 목록을 콜백으로 전달
             }
         }
     }
@@ -212,7 +304,7 @@ public class MarketplaceUI : MonoBehaviour
             GameObject itemObj = Instantiate(itemPrefab, content);
             if (itemObj == null) continue; // 아이템 객체 생성에 실패할 경우 건너뛰기
 
-            
+
             if (itemName != null)
             {
                 itemName.text = item.name;
@@ -248,11 +340,69 @@ public class MarketplaceUI : MonoBehaviour
         }
     }
 
+    private void DisplayRooms(List<Room1> rooms)
+    {
+        Debug.Log($"Displaying {rooms.Count} items");
+
+        // 1. 아이템 리스트가 null인지 확인
+        if (rooms == null || rooms.Count == 0)
+        {
+            Debug.LogWarning("No items to display.");
+            return;
+        }
+
+        displayedRooms = rooms;
+
+        // 2. 콘텐츠 영역에 기존 아이템을 모두 삭제
+        foreach (Transform child in content)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // 3. 아이템 생성 및 UI에 추가
+        foreach (Room1 room in rooms)
+        {
+            if (room == null) continue;  // 아이템이 null일 경우 건너뛰기
+
+            GameObject itemObj = Instantiate(itemPrefab, content);
+            if (itemObj == null) continue; // 아이템 객체 생성에 실패할 경우 건너뛰기
+
+            // 5. 아이템 클릭 시 선택하도록 이벤트 추가
+            Button itemButton = itemObj.GetComponent<Button>();
+            if (itemButton != null)
+            {
+                itemButton.onClick.AddListener(() => SelectRoomForPurchase(room));
+            }
+            else
+            {
+                Debug.LogError("Button component not found in item prefab.");
+            }
+
+            // 6. 이미지 로딩 (UI 요소가 null인지 체크)
+            Image itemImage = itemObj.transform.Find("ItemImage")?.GetComponent<Image>();
+            if (itemImage != null)
+            {
+                // StartCoroutine(LoadImage(item.imageUrl, itemImage));
+            }
+            else
+            {
+                Debug.Log("Image component not found in item prefab.");
+            }
+
+            Debug.Log($"Item Added: {room.roomId}");
+        }
+    }
+
     public void SelectItemForPurchase(Item item)
     {
         Debug.Log($"Item Selected for Purchase: {item.name} (ID: {item.itemId})");
         selectedItemForPurchase = item;
         itemName.text = item.name;
+    }
+    public void SelectRoomForPurchase(Room1 room)
+    {
+        Debug.Log($"Item Selected for Purchase: {room.roomId} (ID: {room.roomId})");
+        selectedRoomForPurchase = room;
     }
 
     public void PurchaseSelectedItem()
@@ -260,12 +410,36 @@ public class MarketplaceUI : MonoBehaviour
         if (selectedItemForPurchase != null)
         {
             Debug.Log($"Attempting to purchase: {selectedItemForPurchase.name} (ID: {selectedItemForPurchase.itemId})");
-            StartCoroutine(PurchaseItem(selectedItemForPurchase.itemId, success =>
+            StartCoroutine(PurchaseItem(0, 0, success =>
             {
                 if (success)
                 {
                     Debug.Log($"Purchase successful for {selectedItemForPurchase.name}");
                     StartCoroutine(GetItemsByCategory(DisplayItems));
+                }
+                else
+                {
+                    Debug.LogError("Purchase failed.");
+                }
+            }));
+        }
+        else
+        {
+            Debug.LogError("No item selected for purchase.");
+        }
+    }
+
+    public void PurchaseSelectedRoom()
+    {
+        if (selectedRoomForPurchase != null)
+        {
+            Debug.Log($"Attempting to purchase: {selectedRoomForPurchase.roomId} (ID: {selectedRoomForPurchase.roomId})");
+            StartCoroutine(PurchaseRoom(selectedRoomForPurchase.roomId, 0, success =>
+            {
+                if (success)
+                {
+                    Debug.Log($"Purchase successful for {selectedRoomForPurchase.roomId}");
+                    StartCoroutine(GetRoomsByCategory(DisplayRooms));
                 }
                 else
                 {
@@ -295,6 +469,56 @@ public class MarketplaceUI : MonoBehaviour
             else
             {
                 Debug.LogError($"Error loading image: {www.error}");
+            }
+        }
+    }
+    private IEnumerator UploadRoom(string id, int price)
+    {
+        Debug.Log($"Starting Upload for Room ID {id} with Price {price}");
+        string url = $"{baseUrl}/room";
+
+        // JSON 데이터 생성
+        UploadRoomRequest jsonData = new UploadRoomRequest
+        {
+            id = id,
+            price = price,
+            furnitureList = new List<Furniture>
+        {
+            new Furniture
+            {
+                size = 10,
+                spriteNumber = 1,
+                positionX = 0,
+                positionY = 0,
+                rotationY = 0
+            }
+        },
+            uploadedAt = System.DateTime.UtcNow.ToString("o") // ISO 8601 형식
+        };
+
+        // JSON 직렬화
+        string jsonString = JsonUtility.ToJson(jsonData);
+        Debug.Log($"Request JSON: {jsonString}");
+
+        using (UnityWebRequest www = new UnityWebRequest(url, "POST"))
+        {
+            // JSON 문자열을 UTF8로 바이트 배열로 변환하여 전송
+            www.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(jsonString));
+            www.downloadHandler = new DownloadHandlerBuffer();
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            // 요청 보내기
+            Debug.Log($"Request JSON: {jsonString}");
+            yield return www.SendWebRequest();
+
+            // 응답 확인
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError($"Upload failed: {www.error}\nResponse: {www.downloadHandler.text}");
+            }
+            else
+            {
+                Debug.Log($"Upload successful: {www.downloadHandler.text}");
             }
         }
     }
@@ -386,14 +610,40 @@ public class MarketplaceUI : MonoBehaviour
             }
         }
     }
-
-    private IEnumerator PurchaseItem(string itemId, System.Action<bool> callback)
+    private IEnumerator GetRoomsByCategory(System.Action<List<Room1>> callback)
     {
-        Debug.Log($"Attempting purchase for Item ID: {itemId}");
-        string url = $"{baseUrl}/item/{itemId}"; // 구매 API URL
+        string url = $"{baseUrl}/room";
 
         using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError($"Error fetching items: {www.error}");
+            }
+            else
+            {
+                string json = www.downloadHandler.text;
+                List<Room1> rooms = JsonConvert.DeserializeObject<List<Room1>>(json);
+                callback(rooms);
+            }
+        }
+    }
+    private IEnumerator PurchaseItem(int itemId, int userId, System.Action<bool> callback)
+    {
+        Debug.Log($"Attempting purchase for Item ID: {0}");
+        string url = $"{baseUrl}/trade/item/{0}"; // 구매 API URL
+
+        // 요청 데이터를 JSON으로 직렬화
+        string jsonData = JsonConvert.SerializeObject(new { userId = 0 });
+
+        using (UnityWebRequest www = new UnityWebRequest(url, "POST"))
+        {
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
+            www.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            www.downloadHandler = new DownloadHandlerBuffer();
+            www.SetRequestHeader("Content-Type", "application/json");
+
             yield return www.SendWebRequest();
 
             if (www.result != UnityWebRequest.Result.Success)
@@ -433,6 +683,57 @@ public class MarketplaceUI : MonoBehaviour
             }
         }
     }
+    private IEnumerator PurchaseRoom(string roomId, int userId, System.Action<bool> callback)
+    {
+        Debug.Log($"Attempting purchase for Room ID: {roomId}");
+        string url = $"{baseUrl}/trade/room/{roomId}"; // 구매 API URL
+        string jsonData = JsonConvert.SerializeObject(new { userId = userId });
+
+        using (UnityWebRequest www = UnityWebRequest.Get(url))
+        {
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
+            www.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            www.downloadHandler = new DownloadHandlerBuffer();
+            www.SetRequestHeader("Content-Type", "application/json");
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError($"Purchase failed: {www.error}");
+                callback(false);
+            }
+            else
+            {
+                try
+                {
+                    // 서버에서 반환된 JSON
+                    string json = www.downloadHandler.text;
+
+                    // JSON을 단일 객체로 역직렬화
+                    Room1 purchasedRoom = JsonConvert.DeserializeObject<Room1>(json);
+
+                    if (purchasedRoom != null)
+                    {
+                        // DontDestroyOnLoad 오브젝트에 추가
+                        RoomManager.Instance.AddRooms(new List<Room1> { purchasedRoom });
+
+                        Debug.Log($"Purchase successful: {purchasedRoom.roomId}");
+                        callback(true);
+                    }
+                    else
+                    {
+                        Debug.LogError("Purchase response is invalid.");
+                        callback(false);
+                    }
+                }
+                catch (JsonSerializationException ex)
+                {
+                    Debug.LogError($"JSON Deserialization Error: {ex.Message}");
+                    callback(false);
+                }
+            }
+        }
+    }
 
 }
 
@@ -453,4 +754,19 @@ public class UploadItemRequest
     public string description;
     public float price;
     public string category;
+}
+
+[System.Serializable]
+public class UploadRoomRequest
+{
+    public string id; // roomId -> id로 변경
+    public int makerId; // 추가
+    public int price;
+    public List<Furniture> furnitureList; // 추가
+    public string uploadedAt; // 추가
+}
+public class Room1
+{
+    public string roomId { get; set; }
+    public int price { get; set; }
 }
